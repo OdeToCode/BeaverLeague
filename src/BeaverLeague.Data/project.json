@@ -2,7 +2,9 @@
   "version": "1.0.0-*",
 
   "dependencies": {
-    "NETStandard.Library": "1.6.0"
+    "NETStandard.Library": "1.6.0",
+    "BeaverLeague.Core": "1.0.0-*",
+    "Microsoft.EntityFrameworkCore.SqlServer": "1.0.0"
   },
 
   "frameworks": {
