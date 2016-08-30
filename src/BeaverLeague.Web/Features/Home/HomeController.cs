@@ -3,12 +3,11 @@
 namespace BeaverLeague.Web.Features.Home
 {
     [Route("[controller]/[action]"), Route("")]
-    public class HomeController
+    public class HomeController : Controller
     {
-        [Route("")]
-        public string Dashboard()
+        public ViewResult Home()
         {
-            return "Hello!";
+            return View();
         }
     }
 }

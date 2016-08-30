@@ -6,6 +6,7 @@
     "dotnet-test-xunit": "2.2.0-preview2-build1029",
     "BeaverLeague.Core": "1.0.0-*",
     "BeaverLeague.Data": "1.0.0-*",
+    "BeaverLeague.Web": "1.0.0-*",
     "Microsoft.EntityFrameworkCore.InMemory": "1.0.0"
   },
   "frameworks": {
