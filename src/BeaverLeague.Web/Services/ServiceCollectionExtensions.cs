@@ -7,12 +7,15 @@ namespace BeaverLeague.Web.Services
     {
         public static IServiceCollection AddCustomizedMvc(this IServiceCollection services)
         {
+            var locationFormat = @"Features\Shared\{0}.cshtml";
+            var expander = new ViewWithControllerViewLocationExpander();
+
             services.AddMvc()
                .AddRazorOptions(options =>
                {
                    options.ViewLocationFormats.Clear();
-                   options.ViewLocationFormats.Add(@"Features\Shared\{0}.cshtml");
-                   options.ViewLocationExpanders.Add(new ViewWithControllerViewLocationExpander());
+                   options.ViewLocationFormats.Add(locationFormat);
+                   options.ViewLocationExpanders.Add(expander);
                });
 
             return services;

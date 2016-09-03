@@ -1,5 +1,5 @@
 ﻿<!DOCTYPE html>
- 
+
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
@@ -7,8 +7,18 @@
     <link href="~/Supernice.css" rel="stylesheet" />
 </head>
 <body>
-    <div>
-        @RenderBody()
+    @await Component.InvokeAsync("MainMenu")
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-10">                
+                @RenderBody()
+            </div>
+            <div class="col-md-2">
+                <img src="~/bccclogo.png" alt="Beaver Creek Country Club" 
+                     class="img-responsive" />
+            </div>
+        </div>
     </div>
 </body>
 </html>
