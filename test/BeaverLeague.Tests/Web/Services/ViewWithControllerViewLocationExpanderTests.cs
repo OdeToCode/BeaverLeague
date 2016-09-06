@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using BeaverLeague.Web.Features.Home;
 using BeaverLeague.Web.Services;
 using Microsoft.AspNetCore.Mvc;
@@ -13,22 +14,25 @@ namespace BeaverLeague.Tests.Web.Services
     public class ViewWithControllerViewLocationExpanderTests
     {
         [Fact]
-        public void CanBuildPathFromControllerNamespace()
+        public void CanFindFeature()
         {
-            var service = new ViewWithControllerViewLocationExpander();
+            var expectedFeature = "testfeature";
+            var service = new FeatureViewLocationExpander();
             var controllerContext = new ControllerContext
             {
                 ActionDescriptor = new ControllerActionDescriptor()
                 {
-                    ControllerTypeInfo = typeof(HomeController).GetTypeInfo()
+                    ControllerTypeInfo = typeof(HomeController).GetTypeInfo(),
+                    Properties = { { "feature", expectedFeature} }
                 }
             };           
             var expanderContext = new ViewLocationExpanderContext(controllerContext, "", "", "", false);
+            var viewLocations = new List<string> {@"{3}\{0}.cshtml"};
 
-            var result = service.ExpandViewLocations(expanderContext, Enumerable.Empty<string>()).ToList();
+            var result = service.ExpandViewLocations(expanderContext, viewLocations).ToList();
 
             True(result.Count == 1, "Expand view locations should return 1 entry");
-            Equal(@"Features\Home\{0}.cshtml", result[0]);
+            Equal($"{expectedFeature}\\{{0}}.cshtml", result[0]);
         }
     }
 }
