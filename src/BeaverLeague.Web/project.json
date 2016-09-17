@@ -1,16 +1,22 @@
 ﻿{
   "dependencies": {
     "Microsoft.NETCore.App": {
-      "version": "1.0.0",
+      "version": "1.0.1",
       "type": "platform"
     },
-    "Microsoft.AspNetCore.Diagnostics": "1.0.0",
-    "Microsoft.AspNetCore.Mvc": "1.0.0",
-    "Microsoft.AspNetCore.Server.IISIntegration": "1.0.0",
-    "Microsoft.AspNetCore.Server.Kestrel": "1.0.0",
-    "Microsoft.Extensions.Logging.Console": "1.0.0",
-    "Microsoft.AspNetCore.StaticFiles": "1.0.0",
-    "Microsoft.AspNetCore.Mvc.TagHelpers": "1.0.0",
+    "Microsoft.AspNetCore.Diagnostics": "1.0.*",
+    "Microsoft.AspNetCore.Mvc": "1.0.*",
+    "Microsoft.AspNetCore.Server.IISIntegration": "1.0.*",
+    "Microsoft.AspNetCore.Server.Kestrel": "1.0.*",
+    "Microsoft.Extensions.Logging.Console": "1.0.*",
+    "Microsoft.AspNetCore.StaticFiles": "1.0.*",
+    "Microsoft.AspNetCore.Mvc.TagHelpers": "1.0.*",
+    "MediatR.Extensions.Microsoft.DependencyInjection": "1.0.*",
+    "BeaverLeague.Core": "1.0.0-*",
+    "BeaverLeague.Data": "1.0.0-*",
+    "Microsoft.EntityFrameworkCore.SqlServer": "1.0.1",
+    "Microsoft.Extensions.Configuration.FileExtensions": "1.0.0",
+    "Microsoft.Extensions.Configuration.Json": "1.0.0",
     "Microsoft.AspNetCore.Razor.Tools": {
       "version": "1.0.0-preview2-final",
       "type": "build"
@@ -19,7 +25,7 @@
 
   "tools": {
     "Microsoft.AspNetCore.Server.IISIntegration.Tools": "1.0.0-preview2-final",
-    "Microsoft.AspNetCore.Razor.Tools":  "1.0.0-preview2-final" 
+    "Microsoft.AspNetCore.Razor.Tools": "1.0.0-preview2-final"
   },
 
   "frameworks": {
