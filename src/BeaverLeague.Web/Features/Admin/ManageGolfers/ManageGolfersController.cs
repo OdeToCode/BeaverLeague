@@ -1,4 +1,5 @@
-﻿using MediatR;
+﻿using BeaverLeague.Web.Messaging.Queries;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BeaverLeague.Web.Features.Admin.ManageGolfers

@@ -1,6 +1,24 @@
-﻿@model string
+﻿@model List<Golfer>
 <h3>All Golfers</h3>
 
-<a class="btn btn-primary" asp-action="Create">Create a golfer</a>
-...
-@Model
+<table class="table table-condensed table-hover">
+    <thead>
+    <tr>
+        <th>Member #</th>
+        <th>Name</th>
+        <th>Handicap</th>
+    </tr>
+    </thead>
+    <tbody>
+    @foreach (var golfer in @Model)
+    {
+        <tr>
+            <td class="text-right">@golfer.MembershipId</td>
+            <td>@golfer.LastName, @golfer.FirstName</td>
+            <td>@golfer.Handicap</td>
+        </tr>
+    }
+    </tbody>
+</table>
+
+<a class="btn btn-primary" asp-action="Create">Add a golfer</a>

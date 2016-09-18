@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Hosting;
 using BeaverLeague.Data;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
+using BeaverLeague.Data.Seed;
 
 namespace BeaverLeague.Web
 {
@@ -20,14 +21,15 @@ namespace BeaverLeague.Web
          
             if (args.Contains("migrate"))
             {
-                var db = GetLeagueDb(host);
                 Console.WriteLine("Migrating database");
+                var db = GetLeagueDb(host);                
                 db.Database.Migrate();
             }
             if (args.Contains("seed"))
             {
-                var db = GetLeagueDb(host);
                 Console.WriteLine("Seeding database");
+                var db = GetLeagueDb(host);
+                db.Seed();
             }
 
             host.Run();
