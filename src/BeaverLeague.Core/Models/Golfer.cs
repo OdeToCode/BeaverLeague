@@ -15,5 +15,11 @@ namespace BeaverLeague.Core.Models
 
         [MaxLength(80), Required]
         public string LastName { get; set; }
+
+        [MaxLength(80)]
+        public string Username { get; set; }
+
+        [MaxLength(255)]
+        public string PasswordHash { get; set; }
     }
 }

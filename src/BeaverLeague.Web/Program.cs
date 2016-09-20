@@ -18,21 +18,32 @@ namespace BeaverLeague.Web
                 .UseIISIntegration()
                 .UseStartup<Startup>()
                 .Build();
-         
-            if (args.Contains("migrate"))
+
+            ProcessDbCommands(args, host);
+
+            host.Run();
+        }
+
+        private static void ProcessDbCommands(string[] args, IWebHost host)
+        {
+            if (args.Contains("dropdb"))
+            {
+                Console.WriteLine("Dropping database");
+                var db = GetLeagueDb(host);
+                db.Database.EnsureDeleted();
+            }
+            if (args.Contains("migratedb"))
             {
                 Console.WriteLine("Migrating database");
-                var db = GetLeagueDb(host);                
+                var db = GetLeagueDb(host);
                 db.Database.Migrate();
             }
-            if (args.Contains("seed"))
+            if (args.Contains("seeddb"))
             {
                 Console.WriteLine("Seeding database");
                 var db = GetLeagueDb(host);
                 db.Seed();
             }
-
-            host.Run();
         }
 
         private static LeagueDb GetLeagueDb(IWebHost host)

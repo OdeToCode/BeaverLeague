@@ -8,13 +8,13 @@ namespace BeaverLeague.Tests.Data
     {
         public Db(Func<DbContextOptions<T>, T> factory)
         {
-            var serviceProvider = new ServiceCollection()
+            _provider = new ServiceCollection()
              .AddEntityFrameworkInMemoryDatabase()
              .BuildServiceProvider();
 
             var builder = new DbContextOptionsBuilder<T>();
             builder.UseInMemoryDatabase()
-                   .UseInternalServiceProvider(serviceProvider);
+                   .UseInternalServiceProvider(_provider);
 
             _options = builder.Options;
             _factory = factory;
@@ -25,6 +25,9 @@ namespace BeaverLeague.Tests.Data
             return _factory(_options);
         }
 
+        public IServiceProvider Provider => _provider;
+
+        private readonly IServiceProvider _provider;
         private readonly DbContextOptions<T> _options;
         private readonly Func<DbContextOptions<T>, T> _factory;
     }

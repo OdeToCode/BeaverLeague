@@ -13,7 +13,8 @@ namespace BeaverLeague.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {           
             base.OnModelCreating(modelBuilder);
-            modelBuilder.Entity<Golfer>().HasIndex(g => g.MembershipId);            
+            modelBuilder.Entity<Golfer>().HasIndex(g => g.MembershipId).IsUnique();
+            modelBuilder.Entity<Golfer>().HasIndex(g => g.Username).IsUnique();
         }
 
         public DbSet<Golfer> Golfers { get; set; }
