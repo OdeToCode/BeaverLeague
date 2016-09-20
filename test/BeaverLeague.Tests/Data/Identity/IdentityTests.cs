@@ -1,11 +1,6 @@
 ﻿using System.Threading.Tasks;
 using BeaverLeague.Core.Models;
 using BeaverLeague.Data;
-using BeaverLeague.Data.Identity;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
 using Xunit;
 using static Xunit.Assert;
 using System.Linq;
@@ -14,59 +9,67 @@ namespace BeaverLeague.Tests.Data.Identity
 {
     public class IdentityTests
     {
+        public IdentityTests()
+        {
+            _db =  new Db<LeagueDb>(options => new LeagueDb(options));
+            _managers = new SecurityManagers(_db);
+        }
+
         [Fact]
         public async Task CanAddUserToDatbase()
         {
-            var manager = CreateGolferManager();
-            var golfer = new Golfer()
-            {
-                FirstName = "Scott",
-                LastName = "Allen",
-                Handicap = 2,
-                MembershipId= 2,
-                Username = "sallen"
-            };
+            var manager = _managers.GolferManager;
+            var golfer = CreateGolfer();
 
             var result = await manager.CreateAsync(golfer);
 
             var db = _db.NewContext();
-
             var user = db.Golfers.Single();
-
-            True(result.Succeeded, "IdentityResult not succedded");
+            True(result.Succeeded, "CreateAsync failed");
             Equal(golfer.FirstName, user.FirstName);
         }
-     
+
         [Fact]
         public async Task CanLoginUser()
         {
-            True(false);
+            var manager = _managers.GolferManager;
+            var signIn = _managers.GolferSignInManager;
+            var golfer = CreateGolfer();
+            await manager.CreateAsync(golfer, "123abcABC#@!");
+            
+            var signInResult = await signIn.PasswordSignInAsync(golfer, "123abcABC#@!", false, false);
+
+            Equal(true, signInResult.Succeeded);
         }
 
         [Fact]
         public async Task CanFailLogin()
         {
-            True(false);
+            var manager = _managers.GolferManager;
+            var signIn = _managers.GolferSignInManager;
+            var golfer = CreateGolfer();
+            await manager.CreateAsync(golfer, "123abcABC#@!");
+            
+            var signInResult = await signIn.PasswordSignInAsync(golfer, "123", false, false);
+
+            Equal(false, signInResult.Succeeded);
         }
 
-        private GolferManager CreateGolferManager()
+        private static Golfer CreateGolfer()
         {
-            var store = new GolferStore(_db.NewContext());
-            var options = Options.Create(new IdentityOptions());
-            var hasher = new PasswordHasher<Golfer>();
-            var userValidators = new[] {new UserValidator<Golfer>()};
-            var passwordValidators = new[] {new PasswordValidator<Golfer>()};
-            var lookup = new UpperInvariantLookupNormalizer();
-            var errors = new IdentityErrorDescriber();
-            var provider = _db.Provider;
-            var logger = new LoggerFactory().CreateLogger<GolferManager>();
-
-            var manager = new GolferManager(store, options, hasher, userValidators, 
-                                passwordValidators, lookup, errors, provider, logger);
-            return manager;
+            var golfer = new Golfer()
+            {
+                FirstName = "Scott",
+                LastName = "Allen",
+                Handicap = 2,
+                MembershipId = 2,
+                Username = "sallen"
+            };
+            return golfer;
         }
 
-        readonly Db<LeagueDb> _db = new Db<LeagueDb>(
-            options => new LeagueDb(options));
+
+        readonly Db<LeagueDb> _db;
+        readonly SecurityManagers _managers;
     }
 }

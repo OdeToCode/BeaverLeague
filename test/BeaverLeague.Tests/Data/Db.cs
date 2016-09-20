@@ -24,9 +24,7 @@ namespace BeaverLeague.Tests.Data
         {
             return _factory(_options);
         }
-
-        public IServiceProvider Provider => _provider;
-
+     
         private readonly IServiceProvider _provider;
         private readonly DbContextOptions<T> _options;
         private readonly Func<DbContextOptions<T>, T> _factory;
