@@ -4,6 +4,7 @@ using BeaverLeague.Data;
 using Xunit;
 using static Xunit.Assert;
 using System.Linq;
+using BeaverLeague.Web.Messaging;
 
 namespace BeaverLeague.Tests.Data.Identity
 {
@@ -16,9 +17,28 @@ namespace BeaverLeague.Tests.Data.Identity
         }
 
         [Fact]
+        public async Task LoginUserCommandCanLoginUser()
+        {
+            var password = "123aBc!@#";
+            var manager = _managers.UserManager;
+            var golfer = CreateGolfer();
+            await manager.CreateAsync(golfer, password);
+            var command = new LoginUserCommand()
+            {
+                EmailAddress = "scott@OdeToCode.com",
+                Password = password,
+                RememberMe = true
+            };
+            var handler = new LoginUserCommandHandler(_managers.UserManager, _managers.SignInManager);
+            var result = await handler.Handle(command);
+
+            Equal(result.Success, true);
+        }
+
+        [Fact]
         public async Task CanAddUserToDatbase()
         {
-            var manager = _managers.GolferManager;
+            var manager = _managers.UserManager;
             var golfer = CreateGolfer();
 
             var result = await manager.CreateAsync(golfer);
@@ -32,8 +52,8 @@ namespace BeaverLeague.Tests.Data.Identity
         [Fact]
         public async Task CanLoginUser()
         {
-            var manager = _managers.GolferManager;
-            var signIn = _managers.GolferSignInManager;
+            var manager = _managers.UserManager;
+            var signIn = _managers.SignInManager;
             var golfer = CreateGolfer();
             await manager.CreateAsync(golfer, "123abcABC#@!");
             
@@ -45,8 +65,8 @@ namespace BeaverLeague.Tests.Data.Identity
         [Fact]
         public async Task CanFailLogin()
         {
-            var manager = _managers.GolferManager;
-            var signIn = _managers.GolferSignInManager;
+            var manager = _managers.UserManager;
+            var signIn = _managers.SignInManager;
             var golfer = CreateGolfer();
             await manager.CreateAsync(golfer, "123abcABC#@!");
             

@@ -1,7 +1,6 @@
-﻿using System;
-using BeaverLeague.Core.Models;
+﻿using BeaverLeague.Core.Models;
 using BeaverLeague.Data;
-using Microsoft.AspNetCore.Authentication;
+using BeaverLeague.Data.Identity;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -12,31 +11,20 @@ namespace BeaverLeague.Web.Services
 {
     public static class ServiceCollectionExtensions
     {
-
         public static IServiceCollection AddIdentityAndAuthorization(this IServiceCollection services)
         {
             services.AddAuthentication(options => options.SignInScheme = new IdentityCookieOptions().ExternalCookieAuthenticationScheme);
             services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.TryAddSingleton<IdentityMarkerService>();
-            //services.TryAddScoped<IUserValidator<TUser>, UserValidator<TUser>>();
-            //services.TryAddScoped<IPasswordValidator<TUser>, PasswordValidator<TUser>>();
-            //services.TryAddScoped<IPasswordHasher<TUser>, PasswordHasher<TUser>>();
-            //services.TryAddScoped<ILookupNormalizer, UpperInvariantLookupNormalizer>();
-            //services.TryAddScoped<IRoleValidator<TRole>, RoleValidator<TRole>>();
-            //services.TryAddScoped<IdentityErrorDescriber>();
-            //services.TryAddScoped<ISecurityStampValidator, SecurityStampValidator<TUser>>();
-            //services.TryAddScoped<IUserClaimsPrincipalFactory<TUser>, UserClaimsPrincipalFactory<TUser, TRole>>();
-            //services.TryAddScoped<UserManager<TUser>, UserManager<TUser>>();
-            //services.TryAddScoped<SignInManager<TUser>, SignInManager<TUser>>();
-            //services.TryAddScoped<RoleManager<TRole>, RoleManager<TRole>>();
-            //services.AddAuthorization(options =>
-            //{
-            //    options.AddPolicy("isAdmin", policy =>
-            //    {
-            //        policy.RequireClaim("isAdmin");
-            //    });
-            //});
-
+            services.TryAddScoped<IPasswordHasher<Golfer>, PasswordHasher<Golfer>>();
+            services.TryAddScoped<ILookupNormalizer, UpperInvariantLookupNormalizer>();
+            services.TryAddScoped<IdentityErrorDescriber>();
+            services.TryAddScoped<IUserClaimsPrincipalFactory<Golfer>, UserClaimsPrincipalFactory<Golfer, GolferClaim>>();
+            services.TryAddScoped<IUserStore<Golfer>, GolferStore>();
+            services.TryAddScoped<IRoleStore<GolferClaim>, GolferClaimStore>();
+            services.TryAddScoped<UserManager<Golfer>, UserManager<Golfer>>();
+            services.TryAddScoped<SignInManager<Golfer>, SignInManager<Golfer>>();
+            services.TryAddScoped<RoleManager<GolferClaim>, RoleManager<GolferClaim>>();            
             return services;
         }
 

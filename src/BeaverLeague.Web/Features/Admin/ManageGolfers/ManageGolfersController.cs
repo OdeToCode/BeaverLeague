@@ -1,5 +1,4 @@
-﻿using BeaverLeague.Web.Messaging.Queries;
-using BeaverLeague.Web.Security;
+﻿using BeaverLeague.Web.Security;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 

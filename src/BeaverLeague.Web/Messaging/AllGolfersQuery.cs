@@ -4,7 +4,7 @@ using BeaverLeague.Core.Models;
 using BeaverLeague.Data;
 using MediatR;
 
-namespace BeaverLeague.Web.Messaging.Queries
+namespace BeaverLeague.Web.Features.Admin.ManageGolfers
 {
     public class AllGolfersQuery : IRequest<List<Golfer>>
     {

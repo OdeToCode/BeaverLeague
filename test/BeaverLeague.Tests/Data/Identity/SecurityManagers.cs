@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Threading;
-using System.Threading.Tasks;
 using BeaverLeague.Core.Models;
 using BeaverLeague.Data;
 using BeaverLeague.Data.Identity;
@@ -24,11 +22,11 @@ namespace BeaverLeague.Tests.Data.Identity
                 .Services.BuildServiceProvider();
                             
                                                
-            GolferManager = CreateGolferManager();
-            GolferSignInManager = CreateSignInManager();
+            UserManager = CreateGolferManager();
+            SignInManager = CreateSignInManager();
         }
 
-        private GolferManager CreateGolferManager()
+        private UserManager<Golfer> CreateGolferManager()
         {
             _store = new GolferStore(_db.NewContext());
             _options = Options.Create(new IdentityOptions());
@@ -39,13 +37,13 @@ namespace BeaverLeague.Tests.Data.Identity
             var userValidators = new[] { new UserValidator<Golfer>() };
             var passwordValidators = new[] { new PasswordValidator<Golfer>() };
     
-            var logger = _loggerFactory.CreateLogger<GolferManager>();
-            var manager = new GolferManager(_store, _options, hasher, userValidators,
+            var logger = _loggerFactory.CreateLogger<UserManager<Golfer>>();
+            var manager = new UserManager<Golfer>(_store, _options, hasher, userValidators,
                                 passwordValidators, _lookup, _errorDescriber, _provider, logger);
             return manager;
         }
 
-        private GolferSignInManager CreateSignInManager()
+        private SignInManager<Golfer> CreateSignInManager()
         {
             var context = new DefaultHttpContext();
             context.Features.Set<IHttpAuthenticationFeature>(new HttpAuthenticationFeature() {  Handler = new FakeAuthenticationHandler() });
@@ -55,15 +53,15 @@ namespace BeaverLeague.Tests.Data.Identity
             var roleManager = new RoleManager<Golfer>(new FakeRoleStore(), roleValidators, 
                                                       _lookup, _errorDescriber,
                                                       roleLogger, accessor);
-            var claimsFactory = new UserClaimsPrincipalFactory<Golfer, Golfer>(GolferManager, roleManager, _options);
+            var claimsFactory = new UserClaimsPrincipalFactory<Golfer, Golfer>(UserManager, roleManager, _options);
             var logger = new LoggerFactory().CreateLogger<SignInManager<Golfer>>();
-            var manager = new GolferSignInManager(GolferManager, accessor, claimsFactory, _options, logger);
+            var manager = new SignInManager<Golfer>(UserManager, accessor, claimsFactory, _options, logger);
 
             return manager;
         }
 
-        public GolferManager GolferManager { get; protected set; }
-        public GolferSignInManager GolferSignInManager { get; protected set; }
+        public UserManager<Golfer> UserManager { get; protected set; }
+        public SignInManager<Golfer> SignInManager { get; protected set; }
 
         private readonly Db<LeagueDb> _db;
         private readonly IServiceProvider _provider;
@@ -72,93 +70,5 @@ namespace BeaverLeague.Tests.Data.Identity
         private UpperInvariantLookupNormalizer _lookup;
         private IdentityErrorDescriber _errorDescriber;
         private ILoggerFactory _loggerFactory;
-    }
-
-    class FakeAuthenticationHandler : IAuthenticationHandler
-    {
-        public void GetDescriptions(DescribeSchemesContext context)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task AuthenticateAsync(AuthenticateContext context)
-        {
-            context.NotAuthenticated();
-            return Task.FromResult(0);
-        }
-
-        public Task ChallengeAsync(ChallengeContext context)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task SignInAsync(SignInContext context)
-        {
-            context.Accept();
-            return Task.FromResult(0);
-        }
-
-        public Task SignOutAsync(SignOutContext context)
-        {
-            throw new NotImplementedException();
-        }
-    }
-
-    class FakeRoleStore : IRoleStore<Golfer>
-    {
-        public void Dispose()
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public Task<IdentityResult> CreateAsync(Golfer role, CancellationToken cancellationToken)
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public Task<IdentityResult> UpdateAsync(Golfer role, CancellationToken cancellationToken)
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public Task<IdentityResult> DeleteAsync(Golfer role, CancellationToken cancellationToken)
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public Task<string> GetRoleIdAsync(Golfer role, CancellationToken cancellationToken)
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public Task<string> GetRoleNameAsync(Golfer role, CancellationToken cancellationToken)
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public Task SetRoleNameAsync(Golfer role, string roleName, CancellationToken cancellationToken)
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public Task<string> GetNormalizedRoleNameAsync(Golfer role, CancellationToken cancellationToken)
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public Task SetNormalizedRoleNameAsync(Golfer role, string normalizedName, CancellationToken cancellationToken)
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public Task<Golfer> FindByIdAsync(string roleId, CancellationToken cancellationToken)
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public Task<Golfer> FindByNameAsync(string normalizedRoleName, CancellationToken cancellationToken)
-        {
-            throw new System.NotImplementedException();
-        }
     }
 }
