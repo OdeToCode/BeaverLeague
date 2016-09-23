@@ -12,8 +12,7 @@
       "type": "build",
       "version": "1.0.0-preview2-final"
     },
-    "Microsoft.Extensions.PlatformAbstractions": "1.0.0",
-    "Microsoft.AspNetCore.Identity": "1.0.0"
+    "Microsoft.Extensions.PlatformAbstractions": "1.0.0"
   },
 
   "tools": {

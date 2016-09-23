@@ -5,6 +5,7 @@ using BeaverLeague.Data;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using BeaverLeague.Data.Seed;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace BeaverLeague.Web
 {
@@ -26,33 +27,34 @@ namespace BeaverLeague.Web
 
         private static void ProcessDbCommands(string[] args, IWebHost host)
         {
-            if (args.Contains("dropdb"))
+            var services = (IServiceScopeFactory)host.Services.GetService(typeof(IServiceScopeFactory));
+
+            using (var scope = services.CreateScope())
             {
-                Console.WriteLine("Dropping database");
-                var db = GetLeagueDb(host);
-                db.Database.EnsureDeleted();
-            }
-            if (args.Contains("migratedb"))
-            {
-                Console.WriteLine("Migrating database");
-                var db = GetLeagueDb(host);
-                db.Database.Migrate();
-            }
-            if (args.Contains("seeddb"))
-            {
-                Console.WriteLine("Seeding database");
-                var db = GetLeagueDb(host);
-                db.Seed();
-            }
+                if (args.Contains("dropdb"))
+                {
+                    Console.WriteLine("Dropping database");
+                    var db = GetLeagueDb(scope);
+                    db.Database.EnsureDeleted();
+                }
+                if (args.Contains("migratedb"))
+                {
+                    Console.WriteLine("Migrating database");
+                    var db = GetLeagueDb(scope);
+                    db.Database.Migrate();
+                }
+                if (args.Contains("seeddb"))
+                {
+                    Console.WriteLine("Seeding database");
+                    var db = GetLeagueDb(scope);
+                    db.Seed();
+                }
+            }        
         }
 
-        private static LeagueDb GetLeagueDb(IWebHost host)
+        private static LeagueDb GetLeagueDb(IServiceScope services)
         {
-            var db = host.Services.GetService(typeof(LeagueDb)) as LeagueDb;
-            if (db == null)
-            {
-                throw new InvalidOperationException("Could not create LeagueDb");
-            }
+            var db = services.ServiceProvider.GetRequiredService<LeagueDb>();           
             return db;
         }
     }

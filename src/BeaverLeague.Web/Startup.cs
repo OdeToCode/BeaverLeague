@@ -30,9 +30,6 @@ namespace BeaverLeague.Web
             services.AddCustomizedMvc();
             services.AddMediatR(typeof(Startup));
             services.AddDataStores(Configuration.GetConnectionString(nameof(LeagueDb)));
-            services.AddIdentityAndAuthorization();
-
-            
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)

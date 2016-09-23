@@ -17,7 +17,7 @@ namespace BeaverLeague.Core.Models
         public string LastName { get; set; }
 
         [MaxLength(80)]
-        public string Username { get; set; }
+        public string EmailAdress { get; set; }
 
         [MaxLength(255)]
         public string PasswordHash { get; set; }
