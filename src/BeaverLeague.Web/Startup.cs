@@ -1,4 +1,5 @@
 ﻿using BeaverLeague.Data;
+using BeaverLeague.Web.Security;
 using BeaverLeague.Web.Services;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
@@ -36,8 +37,9 @@ namespace BeaverLeague.Web
         {
             loggerFactory.AddConsole(LogLevel.Trace);
             app.UseDeveloperExceptionPage();
+
             app.UseFileServer();
-            app.UseCookieAuthentication();
+            app.UseCookieAuthentication(AppCookieAuthentication.Options);
             app.UseMvc();
         }
     }

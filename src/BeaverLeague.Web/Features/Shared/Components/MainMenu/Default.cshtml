@@ -19,6 +19,7 @@
             <ul class="nav navbar-nav navbar-right">
                 @if (User.Identity.IsAuthenticated)
                 {
+                    <li class="navbar-text">Hi, @User.Identity.Name!</li>
                     <li><a asp-controller="Account" asp-action="Logout">Logout</a></li>
                 }
                 else

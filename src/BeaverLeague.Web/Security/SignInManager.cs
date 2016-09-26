@@ -72,7 +72,8 @@ namespace BeaverLeague.Web.Security
             var principal = new ClaimsPrincipal();
             var identity = new ClaimsIdentity(_schemeName);
             identity.AddClaim(new Claim(ClaimTypes.Email, golfer.EmailAddress));
-            identity.AddClaim(new Claim(identity.NameClaimType, golfer.FirstName));                       
+            identity.AddClaim(new Claim(identity.NameClaimType, golfer.FirstName));
+            principal.AddIdentity(identity);
             return principal;
         }
     }

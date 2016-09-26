@@ -1,4 +1,5 @@
-﻿using System.Security.Claims;
+﻿using System;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.Features;
@@ -48,6 +49,10 @@ namespace BeaverLeague.Tests.Web.Features.Account
 
         public Task SignInAsync(SignInContext context)
         {
+            if (context.Principal.Identity == null)
+            {
+                throw new InvalidOperationException("Principal has no identity");
+            }
             context.Accept();
             return Task.FromResult(0);
         }

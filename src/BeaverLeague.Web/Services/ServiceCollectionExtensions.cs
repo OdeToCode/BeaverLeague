@@ -10,8 +10,6 @@ namespace BeaverLeague.Web.Services
     {
         public static IServiceCollection AddSecurity(this IServiceCollection services)
         {
-            services.AddAuthentication();
-            services.AddAuthorization();
             services.AddTransient<SignInManager>();
             services.AddTransient<PasswordManager>();
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
