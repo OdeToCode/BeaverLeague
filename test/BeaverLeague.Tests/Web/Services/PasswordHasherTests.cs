@@ -14,6 +14,7 @@ namespace BeaverLeague.Tests.Web.Services
             var golfer = new Golfer();
 
             hasher.SetPassword(golfer, "123abc!@#");
+            Assert.True(!string.IsNullOrEmpty(golfer.PasswordHash));
             Assert.Equal(true, hasher.VerifyPassword(golfer, "123abc!@#"));
         }
 

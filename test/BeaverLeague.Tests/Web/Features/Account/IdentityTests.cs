@@ -3,6 +3,7 @@ using BeaverLeague.Data;
 using BeaverLeague.Tests.Data;
 using BeaverLeague.Web.Messaging;
 using BeaverLeague.Web.Security;
+using Microsoft.Extensions.Logging;
 using Xunit;
 
 namespace BeaverLeague.Tests.Web.Features.Account
@@ -14,7 +15,8 @@ namespace BeaverLeague.Tests.Web.Features.Account
             _db =  new Db<LeagueDb>(options => new LeagueDb(options));
             _passwordManager = new PasswordManager();
             _context = new HttpContextWithAuthentication();
-            _signInManager = new SignInManager(_db.NewContext(), _passwordManager, _context);
+            _logger = new LoggerFactory().CreateLogger<SignInManager>();
+            _signInManager = new SignInManager(_db.NewContext(), _passwordManager, _context, _logger);
 
             SetupDatabaseState();
         }
@@ -22,11 +24,7 @@ namespace BeaverLeague.Tests.Web.Features.Account
         [Fact]
         public async void CanLoginUser()
         {
-            var command = new LoginUserCommand()
-            {
-                EmailAddress = "person@server.com",
-                Password = "123abc!@#"
-            };
+            var command = new LoginUserCommand("person@server.com", "123abc!@#", false);        
             var handler = new LoginUserCommandHandler(_signInManager);
             var result = await handler.Handle(command);
 
@@ -36,11 +34,7 @@ namespace BeaverLeague.Tests.Web.Features.Account
         [Fact]
         public async void CanFailLoginWithBadPassword()
         {
-            var command = new LoginUserCommand()
-            {
-                EmailAddress = "person@server.com",
-                Password = "123"
-            };
+            var command = new LoginUserCommand("person@server.com", "123", false);       
             var handler = new LoginUserCommandHandler(_signInManager);
 
             var result = await handler.Handle(command);
@@ -54,7 +48,7 @@ namespace BeaverLeague.Tests.Web.Features.Account
             var golfer = new Golfer()
             {
                 FirstName = "Person",
-                EmailAdress = "person@server.com"
+                EmailAddress = "person@server.com"
             };
             _passwordManager.SetPassword(golfer, "123abc!@#");
 
@@ -67,5 +61,6 @@ namespace BeaverLeague.Tests.Web.Features.Account
         readonly PasswordManager _passwordManager;
         readonly SignInManager _signInManager;
         readonly HttpContextWithAuthentication _context;
+        private ILogger<SignInManager> _logger;
     }
 }

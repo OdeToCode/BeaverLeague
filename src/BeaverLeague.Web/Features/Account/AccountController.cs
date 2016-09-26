@@ -18,17 +18,25 @@ namespace BeaverLeague.Web.Features.Account
         [HttpGet]
         public IActionResult Login()
         {
-            return View();
+            var model = new LoginViewModel();
+            return View(model);
         }
 
-        [HttpPost]
+        [HttpPost, ValidateAntiForgeryToken]
         public async Task<IActionResult> Login(LoginViewModel model)
         {
             if (ModelState.IsValid)
             {
-                var command = new LoginUserCommand();
+                var command = new LoginUserCommand(model);
                 var result = await _mediatr.SendAsync(command);
-                return Content(result.Success.ToString());
+                if (result.Success)
+                {
+                    return Redirect("/");
+                }
+                foreach (var error in result.Errors)
+                {
+                    ModelState.AddModelError("", error);
+                }
             }
             return View(model);
         }

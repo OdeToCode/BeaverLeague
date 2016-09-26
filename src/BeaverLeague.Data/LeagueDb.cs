@@ -14,7 +14,7 @@ namespace BeaverLeague.Data
         {           
             base.OnModelCreating(modelBuilder);
             modelBuilder.Entity<Golfer>().HasIndex(g => g.MembershipId).IsUnique();
-            modelBuilder.Entity<Golfer>().HasIndex(g => g.EmailAdress).IsUnique();
+            modelBuilder.Entity<Golfer>().HasIndex(g => g.EmailAddress).IsUnique();
         }
 
         public DbSet<Golfer> Golfers { get; set; }

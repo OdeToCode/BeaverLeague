@@ -1,19 +1,29 @@
-﻿using System.Collections.Generic;
-using System.Security.Claims;
-using System.Threading.Tasks;
-using BeaverLeague.Data;
+﻿using System.Threading.Tasks;
+using BeaverLeague.Web.Features.Account;
 using BeaverLeague.Web.Security;
-using BeaverLeague.Web.Services;
 using MediatR;
-using Microsoft.EntityFrameworkCore;
 
 namespace BeaverLeague.Web.Messaging
 {
     public class LoginUserCommand : IAsyncRequest<SignInResult>
     {
-        public string EmailAddress { get; set; }
-        public string Password { get; set; }
-        public bool RememberMe { get; set; }
+        public LoginUserCommand(LoginViewModel model)
+        {
+            EmailAddress = model.EmailAddress;
+            Password = model.Password;
+            RememberMe = model.RememberMe;
+        }
+
+        public LoginUserCommand(string emailAddress, string password, bool rememberMe)
+        {
+            EmailAddress = emailAddress;
+            Password = password;
+            RememberMe = rememberMe;
+        }
+
+        public string EmailAddress { get; protected set; }
+        public string Password { get; protected set; }
+        public bool RememberMe { get; protected set; }
     }
 
     public class LoginUserCommandHandler : IAsyncRequestHandler<LoginUserCommand, SignInResult>

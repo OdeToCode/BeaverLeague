@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Hosting;
 using BeaverLeague.Data;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
-using BeaverLeague.Data.Seed;
+using BeaverLeague.Web.Data;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace BeaverLeague.Web

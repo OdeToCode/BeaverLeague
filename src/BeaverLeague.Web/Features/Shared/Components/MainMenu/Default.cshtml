@@ -17,7 +17,14 @@
                 <li><a asp-controller="Admin" asp-action="Admin">Admin</a></li>
             </ul>               
             <ul class="nav navbar-nav navbar-right">
-                <li><a>Login</a></li>
+                @if (User.Identity.IsAuthenticated)
+                {
+                    <li><a asp-controller="Account" asp-action="Logout">Logout</a></li>
+                }
+                else
+                {
+                    <li><a asp-controller="Account" asp-action="Login">Login</a></li>
+                }
             </ul>
         </div>
     </div>

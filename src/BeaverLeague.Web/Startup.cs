@@ -1,5 +1,4 @@
-﻿using BeaverLeague.Core.Models;
-using BeaverLeague.Data;
+﻿using BeaverLeague.Data;
 using BeaverLeague.Web.Services;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
@@ -28,21 +27,17 @@ namespace BeaverLeague.Web
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddCustomizedMvc();
+            services.AddSecurity();
             services.AddMediatR(typeof(Startup));
             services.AddDataStores(Configuration.GetConnectionString(nameof(LeagueDb)));
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
-            loggerFactory.AddConsole();
-
-            if (env.IsDevelopment())
-            {
-                app.UseDeveloperExceptionPage();
-            }
-
+            loggerFactory.AddConsole(LogLevel.Trace);
+            app.UseDeveloperExceptionPage();
             app.UseFileServer();
-            app.UseIdentity();
+            app.UseCookieAuthentication();
             app.UseMvc();
         }
     }
