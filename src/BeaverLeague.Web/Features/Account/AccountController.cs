@@ -41,6 +41,14 @@ namespace BeaverLeague.Web.Features.Account
             return View(model);
         }
 
+        [HttpPost]
+        public async Task<IActionResult> Logout()
+        {
+            var command = new LogoutUserCommand();
+            await _mediatr.SendAsync(command);
+            return Redirect("~/");
+        }
+
         [HttpGet]
         public IActionResult Register()
         {

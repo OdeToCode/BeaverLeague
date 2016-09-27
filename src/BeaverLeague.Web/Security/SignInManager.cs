@@ -40,6 +40,12 @@ namespace BeaverLeague.Web.Security
             return result;
         }
 
+        public async Task<bool> SignOutGolferAsync()
+        {
+            await _contextAccessor.HttpContext.Authentication.SignOutAsync(_schemeName);
+            return true;
+        }
+
         private static void AddErrorsOnFailure(SignInResult result)
         {
             if (!result.Success && result.Errors.Count == 0)

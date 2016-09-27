@@ -20,7 +20,11 @@
                 @if (User.Identity.IsAuthenticated)
                 {
                     <li class="navbar-text">Hi, @User.Identity.Name!</li>
-                    <li><a asp-controller="Account" asp-action="Logout">Logout</a></li>
+                    <li class="navbar-text">
+                        <form asp-controller="Account" asp-action="Logout" asp-antiforgery="true">
+                            <input class="btn btn-default btn-xs" type="submit" value="Logout"/>
+                        </form>
+                    </li>
                 }
                 else
                 {
