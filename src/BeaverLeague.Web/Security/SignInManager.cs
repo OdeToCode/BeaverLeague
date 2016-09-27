@@ -12,12 +12,8 @@ namespace BeaverLeague.Web.Security
 {
     public class SignInManager
     {
-        private readonly string _schemeName = CookieAuthenticationDefaults.AuthenticationScheme;
-        private readonly LeagueDb _db;
-        private readonly PasswordManager _passwordManager;
-        private readonly IHttpContextAccessor _contextAccessor;
-        private readonly ILogger<SignInManager> _logger;
-
+        public static readonly string SchemeName = CookieAuthenticationDefaults.AuthenticationScheme;
+        
         public SignInManager(LeagueDb db, 
                              PasswordManager passwordManager,
                              IHttpContextAccessor contextAccessor, 
@@ -42,7 +38,7 @@ namespace BeaverLeague.Web.Security
 
         public async Task<bool> SignOutGolferAsync()
         {
-            await _contextAccessor.HttpContext.Authentication.SignOutAsync(_schemeName);
+            await _contextAccessor.HttpContext.Authentication.SignOutAsync(SchemeName);
             return true;
         }
 
@@ -62,7 +58,7 @@ namespace BeaverLeague.Web.Security
                 if (_passwordManager.VerifyPassword(golfer, password))
                 {
                     var identity = CreateIdentity(golfer);
-                    await _contextAccessor.HttpContext.Authentication.SignInAsync(_schemeName, identity);
+                    await _contextAccessor.HttpContext.Authentication.SignInAsync(SchemeName, identity);
                     result.Success = true;
                     _logger.LogTrace($"User {golfer.FirstName} {golfer.LastName} logged in");
                 }
@@ -76,11 +72,21 @@ namespace BeaverLeague.Web.Security
         private ClaimsPrincipal CreateIdentity(Golfer golfer)
         {
             var principal = new ClaimsPrincipal();
-            var identity = new ClaimsIdentity(_schemeName);
+            var identity = new ClaimsIdentity(SchemeName);
             identity.AddClaim(new Claim(ClaimTypes.Email, golfer.EmailAddress));
             identity.AddClaim(new Claim(identity.NameClaimType, golfer.FirstName));
+            if (golfer.IsAdmin)
+            {
+                identity.AddClaim(new Claim("isAdmin", "true"));
+            }
             principal.AddIdentity(identity);
             return principal;
         }
+
+        private readonly LeagueDb _db;
+        private readonly PasswordManager _passwordManager;
+        private readonly IHttpContextAccessor _contextAccessor;
+        private readonly ILogger<SignInManager> _logger;
+
     }
 }

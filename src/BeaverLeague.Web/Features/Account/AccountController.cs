@@ -49,6 +49,11 @@ namespace BeaverLeague.Web.Features.Account
             return Redirect("~/");
         }
 
+        public IActionResult AccessDenied()
+        {
+            return View();
+        }
+
         [HttpGet]
         public IActionResult Register()
         {

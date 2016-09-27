@@ -19,7 +19,7 @@ namespace BeaverLeague.Web.Data
             {
                 var golfers = new[]
                 {
-                    new Golfer {FirstName = "Scott", EmailAddress="scott@server.com", LastName = "A", Handicap = 18, MembershipId = 5000 },
+                    new Golfer {FirstName = "Scott", EmailAddress="scott@server.com", LastName = "A", Handicap = 18, MembershipId = 5000, IsAdmin=true },
                     new Golfer {FirstName = "Bobby", EmailAddress="bobby@server.com", LastName = "S", Handicap = 14, MembershipId = 5001},
                     new Golfer {FirstName = "Jason", EmailAddress="jason@server.com", LastName = "N", Handicap = 12, MembershipId = 5002},
                     new Golfer {FirstName = "Jake",  EmailAddress="jake@server.com",  LastName = "M", Handicap = 14, MembershipId = 5003}

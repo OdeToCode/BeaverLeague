@@ -30,6 +30,8 @@ namespace BeaverLeague.Data.Migrations
 
                     b.Property<float>("Handicap");
 
+                    b.Property<bool>("IsAdmin");
+
                     b.Property<string>("LastName")
                         .IsRequired()
                         .HasAnnotation("MaxLength", 80);

@@ -21,5 +21,7 @@ namespace BeaverLeague.Core.Models
 
         [MaxLength(255)]
         public string PasswordHash { get; set; }
+
+        public bool IsAdmin { get; set; }
     }
 }
