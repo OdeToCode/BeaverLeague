@@ -20,6 +20,12 @@ Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "BeaverLeague.Tests", "test\
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{9B69FBDE-0DC3-4076-ABF5-DF53B80397C1}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "scripts", "scripts", "{9F38A174-5C9D-4F5A-A006-25E9B732955D}"
+	ProjectSection(SolutionItems) = preProject
+		scripts\addmigration.cmd = scripts\addmigration.cmd
+		scripts\recreatedb.cmd = scripts\recreatedb.cmd
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

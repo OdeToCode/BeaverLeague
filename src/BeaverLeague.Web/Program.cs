@@ -49,7 +49,13 @@ namespace BeaverLeague.Web
                     var db = GetLeagueDb(scope);
                     db.Seed();
                 }
-            }        
+            }
+
+            if (args.Contains("stop"))
+            {
+                Console.WriteLine("Exiting on stop command");
+                Environment.Exit(0);
+            }                 
         }
 
         private static LeagueDb GetLeagueDb(IServiceScope services)

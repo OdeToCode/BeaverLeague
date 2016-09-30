@@ -1,0 +1,15 @@
+﻿@using System.Threading.Tasks
+@using BeaverLeague.Web.Features.Admin.ManageSeason
+@model BeaverLeague.Web.Features.Admin.ManageSeason.CurrentSeasonViewModel
+
+@if (Model.CurrentSeason == null)
+{
+    <div class="panel panel-info">
+        <div class="panel-heading">
+            <h3>No Active Season</h3>
+        </div>
+        <div class="panel-body">
+            <a href="" class="btn btn-primary">Create A New Season</a>
+        </div>
+    </div>
+}

@@ -1,6 +1,7 @@
 ﻿using System.Threading.Tasks;
 using BeaverLeague.Web.Messaging;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BeaverLeague.Web.Features.Account
@@ -42,6 +43,7 @@ namespace BeaverLeague.Web.Features.Account
         }
 
         [HttpPost]
+        [Authorize]
         public async Task<IActionResult> Logout()
         {
             var command = new LogoutUserCommand();

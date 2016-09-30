@@ -8,9 +8,10 @@ using BeaverLeague.Data;
 namespace BeaverLeague.Data.Migrations
 {
     [DbContext(typeof(LeagueDb))]
-    partial class LeagueDbModelSnapshot : ModelSnapshot
+    [Migration("20160928031537_v1.0.1")]
+    partial class v101
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "1.0.0-rtm-21431")

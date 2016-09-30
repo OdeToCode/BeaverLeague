@@ -18,5 +18,6 @@ namespace BeaverLeague.Data
         }
 
         public DbSet<Golfer> Golfers { get; set; }
+        public DbSet<Season> Seasons { get; set; }
     }
 }
