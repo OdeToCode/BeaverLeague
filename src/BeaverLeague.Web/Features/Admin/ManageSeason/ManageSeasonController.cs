@@ -21,5 +21,21 @@ namespace BeaverLeague.Web.Features.Admin.ManageSeason
             var model = await _mediator.SendAsync(query);
             return View(model);
         }
+
+        [HttpGet]
+        public IActionResult Create()
+        {
+            return View();
+        }
+
+        [HttpPost, ValidateAntiForgeryToken]
+        public IActionResult Create(CreateSeasonViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                
+            }
+            return View(model);
+        }
     }
 }
