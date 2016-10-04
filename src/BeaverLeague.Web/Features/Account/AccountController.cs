@@ -1,5 +1,6 @@
 ﻿using System.Threading.Tasks;
 using BeaverLeague.Web.Messaging;
+using BeaverLeague.Web.Services;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -34,10 +35,7 @@ namespace BeaverLeague.Web.Features.Account
                 {
                     return Redirect("/");
                 }
-                foreach (var error in result.Errors)
-                {
-                    ModelState.AddModelError("", error);
-                }
+                ModelState.AddModelErrors(result.Errors);
             }
             return View(model);
         }

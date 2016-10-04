@@ -4,9 +4,9 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace BeaverLeague.Tests.Data
 {
-    public class Db<T> where T : DbContext
+    public class DbInstance<T> where T : DbContext
     {
-        public Db(Func<DbContextOptions<T>, T> factory)
+        public DbInstance(Func<DbContextOptions<T>, T> factory)
         {
             _provider = new ServiceCollection()
              .AddEntityFrameworkInMemoryDatabase()

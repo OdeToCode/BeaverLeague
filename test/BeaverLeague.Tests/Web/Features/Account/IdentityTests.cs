@@ -12,7 +12,7 @@ namespace BeaverLeague.Tests.Web.Features.Account
     {
         public IdentityTests()
         {
-            _db =  new Db<LeagueDb>(options => new LeagueDb(options));
+            _db = new LeagueDbInstance();
             _passwordManager = new PasswordManager();
             _context = new HttpContextWithAuthentication();
             _logger = new LoggerFactory().CreateLogger<SignInManager>();
@@ -57,7 +57,7 @@ namespace BeaverLeague.Tests.Web.Features.Account
             context.SaveChanges();
         }
 
-        readonly Db<LeagueDb> _db;
+        readonly DbInstance<LeagueDb> _db;
         readonly PasswordManager _passwordManager;
         readonly SignInManager _signInManager;
         readonly HttpContextWithAuthentication _context;

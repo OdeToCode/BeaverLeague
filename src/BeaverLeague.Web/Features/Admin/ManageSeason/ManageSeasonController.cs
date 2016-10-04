@@ -1,5 +1,6 @@
 ﻿using System.Threading.Tasks;
 using BeaverLeague.Web.Messaging;
+using BeaverLeague.Web.Services;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -29,11 +30,17 @@ namespace BeaverLeague.Web.Features.Admin.ManageSeason
         }
 
         [HttpPost, ValidateAntiForgeryToken]
-        public IActionResult Create(CreateSeasonViewModel model)
+        public async Task<IActionResult> Create(CreateSeasonViewModel model)
         {
             if (ModelState.IsValid)
             {
-                
+                var command = new CreateSeasonCommand(model);
+                var result = await _mediator.SendAsync(command);
+                if (result.Success)
+                {
+                    return RedirectToAction(nameof(CurrentSeason));
+                }
+                ModelState.AddModelErrors(result.Errors);
             }
             return View(model);
         }
