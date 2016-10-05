@@ -15,7 +15,10 @@
 
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
-                <li><a asp-controller="Admin" asp-action="Admin">Admin</a></li>
+                @if (User.HasClaim("isAdmin", "true"))
+                {
+                    <li><a asp-controller="Admin" asp-action="Admin">Admin</a></li>
+                }
             </ul>               
             <ul class="nav navbar-nav navbar-right">
                 @if (User.Identity.IsAuthenticated)
