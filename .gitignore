@@ -26,6 +26,8 @@ bld/
 .vs/
 # Uncomment if you have tasks that create the project's static files in wwwroot
 #wwwroot/
+**/wwwroot/assets/
+
 
 # MSTest test Results
 [Tt]est[Rr]esult*/
@@ -191,6 +193,7 @@ ClientBin/
 *.pfx
 *.publishsettings
 node_modules/
+typings/
 orleans.codegen.cs
 
 # Since there are multiple workflows, uncomment next line to ignore bower_components
