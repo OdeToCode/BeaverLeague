@@ -37,7 +37,6 @@ namespace BeaverLeague.Web
         {
             loggerFactory.AddConsole(LogLevel.Trace);
             app.UseDeveloperExceptionPage();
-
             app.UseFileServer();
             app.UseCookieAuthentication(AppCookieAuthentication.Options);
             app.UseMvc();
