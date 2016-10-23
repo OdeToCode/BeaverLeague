@@ -1,7 +1,7 @@
 ﻿using BeaverLeague.Core.Models;
 using BeaverLeague.Data;
 using BeaverLeague.Tests.Data;
-using BeaverLeague.Web.Messaging;
+using BeaverLeague.Web.Features.Account;
 using BeaverLeague.Web.Security;
 using Microsoft.Extensions.Logging;
 using Xunit;
@@ -24,7 +24,12 @@ namespace BeaverLeague.Tests.Web.Features.Account
         [Fact]
         public async void CanLoginUser()
         {
-            var command = new LoginUserCommand("person@server.com", "123abc!@#", false);        
+            var command = new LoginUserCommand
+            {
+                EmailAddress = "person@server.com",
+                Password = "123abc!@#",
+                RememberMe = false
+            };
             var handler = new LoginUserCommandHandler(_signInManager);
             var result = await handler.Handle(command);
 
@@ -34,9 +39,13 @@ namespace BeaverLeague.Tests.Web.Features.Account
         [Fact]
         public async void CanFailLoginWithBadPassword()
         {
-            var command = new LoginUserCommand("person@server.com", "123", false);       
+            var command = new LoginUserCommand()
+            {
+                EmailAddress = "person@server.com",
+                Password = "123",
+                RememberMe = false
+            };
             var handler = new LoginUserCommandHandler(_signInManager);
-
             var result = await handler.Handle(command);
 
             Assert.Equal(false, result.Success);

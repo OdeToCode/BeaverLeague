@@ -20,16 +20,15 @@ namespace BeaverLeague.Web.Features.Account
         [HttpGet]
         public IActionResult Login()
         {
-            var model = new LoginViewModel();
+            var model = new LoginUserCommand();
             return View(model);
         }
 
         [HttpPost, ValidateAntiForgeryToken]
-        public async Task<IActionResult> Login(LoginViewModel model)
+        public async Task<IActionResult> Login(LoginUserCommand command)
         {
             if (ModelState.IsValid)
             {
-                var command = new LoginUserCommand(model);
                 var result = await _mediatr.SendAsync(command);
                 if (result.Success)
                 {
@@ -37,7 +36,7 @@ namespace BeaverLeague.Web.Features.Account
                 }
                 ModelState.AddModelErrors(result.Errors);
             }
-            return View(model);
+            return View(command);
         }
 
         [HttpPost]

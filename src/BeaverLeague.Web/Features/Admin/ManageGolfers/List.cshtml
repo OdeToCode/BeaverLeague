@@ -22,11 +22,11 @@
             <td>@golfer.IsAdmin</td>
             <td>@golfer.IsActive</td>
             <td>
-                <a class="btn btn-default">Edit</a>
+                <a class="btn btn-default" asp-action="Edit" asp-route-id="@golfer.Id">Edit</a>
                 <a class="btn btn-default">Delete</a>
             </td>
         </tr>
-    }
+    } 
     </tbody>
 </table>
 
