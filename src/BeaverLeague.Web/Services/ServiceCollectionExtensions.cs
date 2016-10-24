@@ -1,5 +1,6 @@
 ﻿using BeaverLeague.Data;
 using BeaverLeague.Web.Security;
+using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
@@ -8,6 +9,13 @@ namespace BeaverLeague.Web.Services
 {
     public static class ServiceCollectionExtensions
     {
+        public static IServiceCollection AddCustomMediator(this IServiceCollection services)
+        {
+            services.AddMediatR(typeof(Startup));
+            services.AddScoped<IMediator, BeaverMediator>();
+            return services;
+        }
+
         public static IServiceCollection AddSecurity(this IServiceCollection services)
         {
             services.AddAuthorization(options => new AuthorizationPolicies(options).Apply());
@@ -29,7 +37,7 @@ namespace BeaverLeague.Web.Services
             return services;
         }
 
-        public static IServiceCollection AddCustomizedMvc(this IServiceCollection services)
+        public static IServiceCollection AddCustomdMvc(this IServiceCollection services)
         {
             var expander = new FeatureViewLocationExpander();
 

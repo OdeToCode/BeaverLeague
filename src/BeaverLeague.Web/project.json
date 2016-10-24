@@ -21,7 +21,9 @@
     "Microsoft.AspNetCore.Razor.Tools": {
       "version": "1.0.0-preview2-final",
       "type": "build"
-    }
+    },
+    "Serilog.Sinks.RollingFile": "3.1.0",
+    "Serilog.Extensions.Logging": "1.2.0"
   },
     
   "tools": {

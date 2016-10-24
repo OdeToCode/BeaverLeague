@@ -1,18 +1,19 @@
 ﻿using BeaverLeague.Data;
 using BeaverLeague.Web.Security;
 using BeaverLeague.Web.Services;
-using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Serilog;
+using Serilog.Formatting.Json;
 
 namespace BeaverLeague.Web
-{
+{    
     public class Startup
     {
-        public Startup(IHostingEnvironment environment)
+        public Startup(IHostingEnvironment environment, ILoggerFactory loggerFactory)
         {
             Configuration =
                 new ConfigurationBuilder()
@@ -21,21 +22,26 @@ namespace BeaverLeague.Web
                     .AddJsonFile($"appsettings.{environment.EnvironmentName}.json", optional: true)
                     .AddEnvironmentVariables()
                     .Build();
+
+            Log.Logger = new LoggerConfiguration()
+               .MinimumLevel.Verbose()
+               .WriteTo.RollingFile(new JsonFormatter(), "log-{Date}.json")                      
+               .CreateLogger();
+            loggerFactory.AddSerilog();
         }
 
         public IConfiguration Configuration { get; protected set; }
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddCustomizedMvc();
+            services.AddCustomdMvc();
             services.AddSecurity();
-            services.AddMediatR(typeof(Startup));
-            services.AddDataStores(Configuration.GetConnectionString(nameof(LeagueDb)));
+            services.AddCustomMediator();
+            services.AddDataStores(Configuration.GetConnectionString(nameof(LeagueDb)));            
         }
 
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
-        {
-            loggerFactory.AddConsole(LogLevel.Trace);
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        {            
             app.UseDeveloperExceptionPage();
             app.UseFileServer();
             app.UseCookieAuthentication(AppCookieAuthentication.Options);
