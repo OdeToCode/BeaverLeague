@@ -11,9 +11,7 @@ using Microsoft.Extensions.Logging;
 namespace BeaverLeague.Web.Security
 {
     public class SignInManager
-    {
-        public static readonly string SchemeName = CookieAuthenticationDefaults.AuthenticationScheme;
-        
+    {               
         public SignInManager(LeagueDb db, 
                              PasswordManager passwordManager,
                              IHttpContextAccessor contextAccessor, 
@@ -42,6 +40,8 @@ namespace BeaverLeague.Web.Security
             return true;
         }
 
+        public static readonly string SchemeName = CookieAuthenticationDefaults.AuthenticationScheme;
+
         private static void AddErrorsOnFailure(SignInResult result)
         {
             if (!result.Success && result.Errors.Count == 0)
@@ -60,12 +60,12 @@ namespace BeaverLeague.Web.Security
                     var identity = CreateIdentity(golfer);
                     await _contextAccessor.HttpContext.Authentication.SignInAsync(SchemeName, identity);
                     result.Success = true;
-                    _logger.LogTrace($"User {golfer.FirstName} {golfer.LastName} logged in");
+                    _logger.LogInformation("User {@golfer} logged in", golfer);
                 }
             }
             if (!result.Success)
             {
-                _logger.LogWarning($"Invalid login attempt by {emailAddress}");
+                _logger.LogWarning("Invalid login attempt by {emailAddress}", emailAddress);
             }
         }
 

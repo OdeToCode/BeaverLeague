@@ -25,7 +25,7 @@ namespace BeaverLeague.Web
 
             Log.Logger = new LoggerConfiguration()
                .MinimumLevel.Verbose()
-               .WriteTo.RollingFile(new JsonFormatter(), "log-{Date}.json")                      
+               //.WriteTo.RollingFile(new JsonFormatter(), "log-{Date}.json")
                .CreateLogger();
             loggerFactory.AddSerilog();
         }
@@ -40,8 +40,8 @@ namespace BeaverLeague.Web
             services.AddDataStores(Configuration.GetConnectionString(nameof(LeagueDb)));            
         }
 
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
-        {            
+        public void Configure(IApplicationBuilder app)
+        {                       
             app.UseDeveloperExceptionPage();
             app.UseFileServer();
             app.UseCookieAuthentication(AppCookieAuthentication.Options);
