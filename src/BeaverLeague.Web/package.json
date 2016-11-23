@@ -2,9 +2,11 @@
   "name": "beaverleagueweb",
   "version": "1.0.0",
   "scripts": {
-
+    "watch":  "webpack -w" 
   },
   "dependencies": {
+    "@types/react": "^0.14.50",
+    "@types/react-dom": "^0.14.19",
     "bootstrap": "^3.3.7",
     "font-awesome": "^4.6.3",
     "jquery": "^3.1.1",
@@ -15,8 +17,10 @@
     "del": "^2.2.2",
     "gulp": "^3.9.1",
     "gulp-clean-css": "^2.0.13",
+    "run-sequence": "^1.2.2",
     "source-map-loader": "^0.1.5",
     "ts-loader": "1.2.2",
-    "typescript": "2.0.10"
+    "typescript": "2.0.10",
+    "webpack-stream": "^3.2.0"
   }
 }

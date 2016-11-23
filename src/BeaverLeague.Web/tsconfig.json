@@ -1,0 +1,17 @@
+{
+  "compilerOptions": {
+    "noImplicitAny": true,
+    "noEmitOnError": true,
+    "removeComments": false,
+    "sourceMap": true,
+    "module": "commonjs",
+    "target": "es5",
+    "jsx": "react",
+    "moduleResolution": "node"
+  },
+  "compileOnSave": false,
+  "exclude": [
+    "node_modules",
+    "wwwroot"
+  ]
+}

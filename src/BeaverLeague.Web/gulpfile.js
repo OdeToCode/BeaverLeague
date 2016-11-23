@@ -1,29 +1,57 @@
 ﻿var gulp = require("gulp");
 var del = require("del");
-var cleanCss = require("gulp-clean-css");
+var cleancss = require("gulp-clean-css");
+var run = require("run-sequence");
+var exec = require('child_process').exec;
 
-gulp.task("clean:assets",
-    function() {
-        return del("wwwroot/assets");
+gulp.task("clean", function () {
+    return del("wwwroot/assets");
+});
+
+gulp.task("js:vendor", function (done) {
+    exec("webpack --config webpack.vendor.config.js", function(err, stdout, stderr) {
+        console.log(stdout);
+        console.log(stderr);
+        done(err);
     });
+});
 
-gulp.task("css:minify",
-    ["clean:assets"],
-    function() {
-        return gulp.src("wwwroot/app/css/theme.css")
-            .pipe(cleanCss())
-            .pipe(gulp.dest("wwwroot/assets/app/css"));
+gulp.task("js:app", function(done) {
+    exec("webpack --config webpack.config.js", function(err, stdout, stderr) {
+        console.log(stdout);
+        console.log(stderr);
+        done(err);
     });
+});
 
-gulp.task("copy:assets",
-    ["clean:assets"],
-    function() {
-        return gulp.src([
-                "node_modules/font-awesome/css/**/*",
-                "node_modules/font-awesome/fonts/**/*",
-                "node_modules/bootstrap/dist/**/*"
-            ], {base:"node_modules"})
-            .pipe(gulp.dest("wwwroot/assets"));
+gulp.task("css:minify", function () {
+    return gulp.src("client/css/theme.css")
+               .pipe(cleancss())
+               .pipe(gulp.dest("wwwroot/assets/"));
+});
+
+gulp.task("vendorcss:copy", function () {
+    return gulp.src([
+            "node_modules/font-awesome/css/**/*",
+            "node_modules/font-awesome/fonts/**/*",
+            "node_modules/bootstrap/dist/**/*"
+           ], { base: "node_modules" })
+        .pipe(gulp.dest("wwwroot/assets"));
+});
+
+
+gulp.task("build", function () {
+    return run("clean",
+                ["css:minify", "vendorcss:copy", "js:vendor"],
+                "js:app");
+});
+
+gulp.task("watch", function() {
+    exec("webpack --config webpack.config.js -w", function (err, stdout, stderr) {
+        console.log(stdout);
+        console.log(stderr);
+        done(err);
     });
+});
 
-gulp.task("default", ["copy:assets", "css:minify"]);
+gulp.task("default", ["build"]);

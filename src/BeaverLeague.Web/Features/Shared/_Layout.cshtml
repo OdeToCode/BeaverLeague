@@ -7,26 +7,27 @@
     <environment names="Development">
         <link href="~/assets/bootstrap/dist/css/bootstrap.css" rel="stylesheet" />
         <link href="~/assets/font-awesome/css/font-awesome.css" rel="stylesheet" />
-        <link href="~/app/css/theme.css" rel="stylesheet" />
+        <link href="~/assets/theme.css" rel="stylesheet" />
     </environment>
     <environment names="Staging, Production">
         <link href="~/assets/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
         <link href="~/assets/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
-        <link href="~/assets/app/css/theme.css" rel="stylesheet" />
+        <link href="~/assets/theme.css" rel="stylesheet" />
     </environment>
 </head>
 <body>
 @await Component.InvokeAsync("MainMenu")
 
 <div class="container">
-        <div class="row">
-            <div class="col-md-10">                
-                @RenderBody()
-            </div>
-            <div class="col-md-2">
-               @RenderSection("sidebar", required:false)
-            </div>
+    <div class="row">
+        <div class="col-md-10">                
+            @RenderBody()
+        </div>
+        <div class="col-md-2">
+            @RenderSection("sidebar", required:false)
         </div>
     </div>
+</div>
+    @RenderSection("scripts", required: false)
 </body>
 </html>
