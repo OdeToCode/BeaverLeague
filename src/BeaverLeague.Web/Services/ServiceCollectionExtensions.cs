@@ -37,7 +37,7 @@ namespace BeaverLeague.Web.Services
             return services;
         }
 
-        public static IServiceCollection AddCustomdMvc(this IServiceCollection services)
+        public static IServiceCollection AddCustomMvc(this IServiceCollection services)
         {
             var expander = new FeatureViewLocationExpander();
 

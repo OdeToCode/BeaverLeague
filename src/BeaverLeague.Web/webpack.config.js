@@ -1,6 +1,5 @@
 var webpack = require("webpack");
 var path = require("path");
-var glob = require("glob");
 
 var assets = path.join(__dirname, "wwwroot", "assets");
 
@@ -9,7 +8,7 @@ module.exports = {
         extensions: ["", ".ts", ".tsx", ".js"]
     },
     entry: {
-        "/home/home": "./features/home/home.tsx"
+        
     },
     output: {
         path: assets,
@@ -17,7 +16,6 @@ module.exports = {
     },
     module: {
     loaders: [
-      // all files with a `.ts` or `.tsx` extension will be handled by `ts-loader`
       { test: /\.tsx?$/, loader: 'ts-loader' }
     ]
     },

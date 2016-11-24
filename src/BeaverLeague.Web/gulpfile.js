@@ -46,12 +46,4 @@ gulp.task("build", function () {
                 "js:app");
 });
 
-gulp.task("watch", function() {
-    exec("webpack --config webpack.config.js -w", function (err, stdout, stderr) {
-        console.log(stdout);
-        console.log(stderr);
-        done(err);
-    });
-});
-
 gulp.task("default", ["build"]);
