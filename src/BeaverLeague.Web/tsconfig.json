@@ -7,8 +7,13 @@
     "module": "commonjs",
     "target": "es5",
     "jsx": "react",
-    "moduleResolution": "node"
-  },
+    "baseUrl": ".",
+    "moduleResolution": "node",
+    "traceResolution": true,
+    "paths": {
+      "*": [ "*", "Client/script/*" ] 
+    }
+  },  
   "compileOnSave": false,
   "exclude": [
     "node_modules",

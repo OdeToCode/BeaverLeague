@@ -8,7 +8,7 @@
         <th>Name</th>
         <th>Handicap</th>
         <th>Admin</th>
-        <th>Active</th>
+        <th>Active*</th>
         <th>Actions</th>
     </tr>
     </thead>
@@ -30,4 +30,12 @@
     </tbody>
 </table>
 
-<a class="btn btn-primary" asp-action="Create">Add a golfer</a>
+<div><a class="btn btn-primary" asp-action="Create">Add a golfer</a></div>
+@section footer {
+    <div>*Inactive golfers are inactive for the entire season</div>    
+}
+
+@section scripts {
+    <script src="~/Assets/Vendor.js"></script>
+    <script src="~/assets/Admin/ManageGolfers/List.js"></script>
+}
