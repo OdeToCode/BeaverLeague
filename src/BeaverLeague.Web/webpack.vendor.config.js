@@ -1,7 +1,6 @@
-var webpack = require("webpack");
-var path = require("path");
-
-var assets = path.join(__dirname, "wwwroot", "assets");
+const webpack = require("webpack");
+const path = require("path");
+const assets = path.join(__dirname, "wwwroot", "assets");
 
 module.exports = {
     resolve: {
@@ -15,13 +14,14 @@ module.exports = {
     },
     output: {
         path: assets,
-        filename: "[name].js",      
+        filename: "[name].js",
+        library: "[name]_dll"      
     },
     plugins: [
         new webpack.DllPlugin({
             path: path.join(assets, "[name]-manifest.json"),
-            name: '[name]'
+            name: '[name]_dll'
         }),
-        new webpack.optimize.UglifyJsPlugin({ compress: { warnings: false } })
+        //new webpack.optimize.UglifyJsPlugin({ compress: { warnings: false } })
     ]
 };

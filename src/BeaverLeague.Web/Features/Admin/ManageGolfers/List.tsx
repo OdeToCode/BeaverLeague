@@ -1,4 +1,11 @@
-﻿import * as React from "React";
-import {name} from "common/components/greeting";
+﻿import * as React from "react";
+import * as ReactDOM from "react-dom";
 
-alert(name);
+class App extends React.Component<any, any> {
+    render() {
+        return <h3>Hello!</h3>;
+    }
+}
+
+ReactDOM.render(<App/>, document.querySelector("App"));
+console.log("done");

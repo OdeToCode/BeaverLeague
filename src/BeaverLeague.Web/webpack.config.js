@@ -1,10 +1,10 @@
-var webpack = require("webpack");
-var path = require("path");
-var assets = path.join(__dirname, "wwwroot", "assets");
-var glob = require("glob");
+const webpack = require("webpack");
+const path = require("path");
+const assets = path.join(__dirname, "wwwroot", "assets");
+const glob = require("glob");
 
-var entries = {};
-var files = glob.sync("./Features/**/*.tsx");
+const entries = {};
+const files = glob.sync("./Features/**/*.tsx");
 files.forEach(file => {
     var name = file.match("./Features(.+/[^/]+)\.tsx$")[1];
     entries[name] = file;
@@ -14,7 +14,8 @@ module.exports = {
     resolve: {
         extensions: ["", ".ts", ".tsx", ".js"],
         modulesDirectories: [
-            "./Client/script/"
+            "./Client/script/",
+            "./node_modules"
         ]
     },
     entry: entries,
@@ -32,8 +33,8 @@ module.exports = {
              context: ".",
              manifest: require("./wwwroot/assets/vendor-manifest.json")
          }),
-        new webpack.optimize.UglifyJsPlugin({
+        /*new webpack.optimize.UglifyJsPlugin({
              compress: { warnings: false }
-        })
+        })*/
     ]
 };
