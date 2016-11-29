@@ -4,9 +4,9 @@ const assets = path.join(__dirname, "wwwroot", "assets");
 const glob = require("glob");
 
 const entries = {};
-const files = glob.sync("./Features/**/*.tsx");
+const files = glob.sync("./Features/**/*.main.tsx");
 files.forEach(file => {
-    var name = file.match("./Features(.+/[^/]+)\.tsx$")[1];
+    var name = file.match("./Features(.+/[^/]+)\.main\.tsx$")[1];
     entries[name] = file;
 });
 
