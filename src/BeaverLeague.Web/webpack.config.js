@@ -21,8 +21,9 @@ module.exports = {
     entry: entries,
     output: {
         path: assets,
-        filename: "[name].js"    
+        filename: "[name].js"           
     },
+    devtool: "source-map",
     module: {
         loaders: [
           { test: /\.tsx?$/, loader: 'ts-loader' }

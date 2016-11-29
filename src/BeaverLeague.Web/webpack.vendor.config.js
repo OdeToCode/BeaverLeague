@@ -9,7 +9,11 @@ module.exports = {
     entry: {
         vendor: [
             "react",
-            "react-dom"
+            "react-dom",
+            "redux",
+            "react-redux",
+            "redux-thunk",
+            "axios"
         ]
     },
     output: {
@@ -22,6 +26,6 @@ module.exports = {
             path: path.join(assets, "[name]-manifest.json"),
             name: '[name]_dll'
         }),
-        new webpack.optimize.UglifyJsPlugin({ compress: { warnings: false } })
+        //new webpack.optimize.UglifyJsPlugin({ compress: { warnings: false } })
     ]
 };

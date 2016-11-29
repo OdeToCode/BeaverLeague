@@ -23,6 +23,14 @@ namespace BeaverLeague.Web.Features.Admin.ManageGolfers
             return View("List", model);
         }
 
+        public IActionResult GetAllGolfers()
+        {
+            var query = new AllGolfersQuery();
+            var model = _mediatr.Send(query);
+
+            return new ObjectResult(model);
+        }
+
         [HttpGet]
         public IActionResult Edit()
         {

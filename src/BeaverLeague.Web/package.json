@@ -2,16 +2,22 @@
   "name": "beaverleagueweb",
   "version": "1.0.0",
   "scripts": {
-    "watch":  "webpack -w" 
+    "watch": "webpack -w"
   },
   "dependencies": {
     "@types/react": "^0.14.50",
     "@types/react-dom": "^0.14.19",
+    "@types/react-redux": "^4.4.34",
+    "@types/redux-thunk": "^2.1.31",
+    "axios": "^0.15.3",
     "bootstrap": "^3.3.7",
     "font-awesome": "^4.6.3",
     "jquery": "^3.1.1",
     "react": "15.4.0",
-    "react-dom": "15.4.0"
+    "react-dom": "15.4.0",
+    "react-redux": "^4.4.6",
+    "redux": "^3.6.0",
+    "redux-thunk": "^2.1.0"
   },
   "devDependencies": {
     "del": "^2.2.2",
