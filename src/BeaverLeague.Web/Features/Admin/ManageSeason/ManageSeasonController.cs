@@ -30,11 +30,10 @@ namespace BeaverLeague.Web.Features.Admin.ManageSeason
         }
 
         [HttpPost, ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(CreateSeasonViewModel model)
+        public async Task<IActionResult> Create(CreateSeasonCommand command)
         {
             if (ModelState.IsValid)
             {
-                var command = new CreateSeasonCommand(model);
                 var result = await _mediator.SendAsync(command);
                 if (result.Success)
                 {
@@ -42,7 +41,7 @@ namespace BeaverLeague.Web.Features.Admin.ManageSeason
                 }
                 ModelState.AddModelErrors(result.Errors);
             }
-            return View(model);
+            return View(command);
         }
     }
 }

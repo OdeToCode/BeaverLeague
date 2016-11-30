@@ -2,15 +2,16 @@
 import * as ReactDOM from "react-dom";
 import { Toggle } from "components";
 import { Table, Button } from "react-bootstrap";
-import axios from 'axios';
+import axios from "axios";
 
 interface GolferShape {
-    membershipId?: string,
-    firstName?: string,
-    lastName?: string,
-    handicap?: number,
-    isAdmin?: boolean,
-    isActive?: boolean
+    id: number;
+    membershipId?: string;
+    firstName?: string;
+    lastName?: string;
+    handicap?: number;
+    isAdmin?: boolean;
+    isActive?: boolean;
 }
 
 interface GolfersProps {
@@ -20,7 +21,7 @@ interface GolfersProps {
 interface GolfersState {
     golfers: Array<GolferShape>
 }
-
+   
 class Golfers extends React.Component<GolfersProps, GolfersState> {
 
     constructor(props: GolfersProps) {
@@ -31,11 +32,15 @@ class Golfers extends React.Component<GolfersProps, GolfersState> {
     }
 
     componentDidMount() {
-        axios.get("GetAllGolfers").then(r => {
-            this.setState({
-                golfers: r.data
-            })
-        }).catch(r => alert("Could not fetch golfers!"));
+        axios.get("GetAllGolfers")
+             .then(r => { this.setState({ golfers: r.data })})
+             .catch(r => alert("Could not fetch golfers!"));
+    }
+
+    setGolferActiveFlag(golfer: GolferShape, value: boolean) {
+        golfer.isActive = value;
+        axios.post("UpdateGolferActiveFlag", {id: golfer.id, value})
+             .catch(r => alert(`Could not update active flag for ${golfer.lastName}`));
     }
 
     render() {
@@ -55,12 +60,13 @@ class Golfers extends React.Component<GolfersProps, GolfersState> {
                 <tbody>
                     {
                         state.golfers.map(g => (
-                            <tr key={g.membershipId}>
+                            <tr key={g.id}>
                                 <td>{g.membershipId}</td>
                                 <td>{g.firstName} {g.lastName}</td>
                                 <td>{g.handicap}</td>
                                 <td>
-                                    <Toggle offstyle="danger" active={g.isActive} />
+                                    <Toggle offstyle="danger" active={g.isActive} 
+                                            onChange={(v) => this.setGolferActiveFlag(g, v) } />
                                 </td>
                                 <td>
                                     <Button>Edit</Button>
@@ -71,8 +77,8 @@ class Golfers extends React.Component<GolfersProps, GolfersState> {
                     }
                 </tbody>
             </Table>
-        )
+        );
     }
 }
 
-ReactDOM.render(<Golfers golfers={[]} />, document.getElementById("react-app"));
+ReactDOM.render(<Golfers golfers={[]} />, document.getElementById("react-golfer-list"));

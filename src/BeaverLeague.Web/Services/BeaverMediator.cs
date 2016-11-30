@@ -1,7 +1,10 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
+using BeaverLeague.Web.Messaging;
 using MediatR;
 using Microsoft.Extensions.Logging;
+using System.Linq;
+using System.Text;
 
 namespace BeaverLeague.Web.Services
 {
@@ -19,19 +22,28 @@ namespace BeaverLeague.Web.Services
         public TResponse Send<TResponse>(IRequest<TResponse> request)
         {
             _logger.LogTrace("Send {@request}", request);
-            return _inner.Send(request);            
+
+            var response = _inner.Send(request);
+            LogResponseIfError(response);
+            return response;
         }
 
-        public Task<TResponse> SendAsync<TResponse>(ICancellableAsyncRequest<TResponse> request, CancellationToken cancellationToken)
+        public async Task<TResponse> SendAsync<TResponse>(ICancellableAsyncRequest<TResponse> request, CancellationToken cancellationToken)
         {
             _logger.LogTrace("SendAsync {@request}", request);
-            return _inner.SendAsync(request, cancellationToken);
+
+            var response =  await _inner.SendAsync(request, cancellationToken);
+            LogResponseIfError(response);
+            return response;
         }
 
-        public Task<TResponse> SendAsync<TResponse>(IAsyncRequest<TResponse> request)
+        public async Task<TResponse> SendAsync<TResponse>(IAsyncRequest<TResponse> request)
         {
             _logger.LogTrace("Send async {@request", request);
-            return _inner.SendAsync(request);
+
+            var response = await _inner.SendAsync(request);
+            LogResponseIfError(response);
+            return response;
         }
 
         public void Publish(INotification notification)
@@ -50,6 +62,16 @@ namespace BeaverLeague.Web.Services
         {
             _logger.LogTrace("PublishAsync {@notification}", notification);
             return _inner.PublishAsync(notification, cancellationToken);
+        }
+
+        private void LogResponseIfError(object response)
+        {
+            var commandResult = response as CommandResult;
+            if (commandResult != null && !commandResult.Success)
+            {
+                _logger.LogWarning(
+                    $"Error in {response.GetType()}: {commandResult.Errors.Aggregate(new StringBuilder(), (sb, e) => sb.AppendLine(e), sb => sb.ToString())}");
+            }
         }
     }
 }

@@ -27,7 +27,7 @@ namespace BeaverLeague.Tests.Web.Features.Admin.ManageSeason
         public async Task CanCreateSeason()
         {
             var controller = new ManageSeasonController(_mediator);
-            var inputModel = new CreateSeasonViewModel() {Name = "2017"};
+            var inputModel = new CreateSeasonCommand() {Name = "2017"};
 
             var result = await controller.Create(inputModel);
 
@@ -40,7 +40,7 @@ namespace BeaverLeague.Tests.Web.Features.Admin.ManageSeason
         public async Task CanFailOnDuplicateSeasonNames()
         {
             var controller = new ManageSeasonController(_mediator);
-            var inputModel = new CreateSeasonViewModel { Name = "2017" };
+            var inputModel = new CreateSeasonCommand { Name = "2017" };
 
             _testContext.Seasons.Add(new Season {Name = "2017"});
             _testContext.SaveChanges();

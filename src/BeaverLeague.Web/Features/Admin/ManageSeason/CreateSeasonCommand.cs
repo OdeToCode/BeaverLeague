@@ -1,19 +1,16 @@
-﻿using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations;
+using System.Threading.Tasks;
 using BeaverLeague.Core.Models;
 using BeaverLeague.Data;
-using BeaverLeague.Web.Features.Admin.ManageSeason;
+using BeaverLeague.Web.Messaging;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
-namespace BeaverLeague.Web.Messaging
+namespace BeaverLeague.Web.Features.Admin.ManageSeason
 {
     public class CreateSeasonCommand : IAsyncRequest<CreateSeasonResult>
     {
-        public CreateSeasonCommand(CreateSeasonViewModel inputModel)
-        {
-            Name = inputModel.Name;        
-        }
-
+        [Required, MaxLength(80)] 
         public string Name { get; set; }                              
     }
 
