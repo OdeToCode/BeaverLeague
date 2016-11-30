@@ -1,89 +1,75 @@
 ﻿import * as React from "react";
 import * as ReactDOM from "react-dom";
-import thunk from "redux-thunk";
+import {Toggle, Table, Column} from "components";
 import axios from 'axios';
-import {Provider, connect} from "react-redux";
-import {createStore, applyMiddleware, 
-        combineReducers, Dispatch} from "redux";
 
-const enum ActionTypes {
-    LoadGolfersSuccess
+interface GolferShape {
+    membershipId?: string,
+    firstName?: string,
+    lastName?: string,
+    handicap?: number,
+    isAdmin?: boolean,
+    isActive?: boolean
 }
 
-const initialState = {
-    golfers: [] as any
+
+class GolfersTable extends Table<GolferShape> {    
+
 }
 
-const loadGolfersSuccess = (response: any) => (
-    {type: ActionTypes.LoadGolfersSuccess, golfers: response.data}
-);
+class GolfersColumn extends Column<GolferShape> {
 
-const loadGolfers = (dispatch : any) => {
-    return axios.get("GetAllGolfers")
-                .then(golfers => dispatch(loadGolfersSuccess(golfers)))
 }
 
-const golfersReducer = (state: any = initialState.golfers, action: any) => {
-    switch(action.type) {
-        case ActionTypes.LoadGolfersSuccess:
-            return action.golfers;
-        default:
-            return state;
+interface ManageGolfersListProps {
+    golfers: Array<GolferShape>
+}
+
+interface ManageGolfersStateProps {
+    golfers: Array<GolferShape>
+}
+
+class ManageGolfersList extends React.Component<ManageGolfersListProps, ManageGolfersStateProps> {
+
+    constructor(props) {
+        super(props);
+        this.state = {
+            golfers: this.props.golfers
+        }
     }
-};
 
-const rootReducer = combineReducers({
-    golfers: golfersReducer    
-});
-
-const store = createStore(rootReducer, applyMiddleware(thunk));
-store.dispatch(loadGolfers);
-
-class GolferPage extends React.Component<any, any> {
-
-    static propTypes = {
-        golfers: React.PropTypes.array.isRequired
+    componentDidMount() {
+        axios.get("GetAllGolfers").then(r => {
+            this.setState({
+                golfers: r.data
+            })
+        }).catch(r => alert("Could not fetch golfers!"));
     }
 
     render() {
-        return <table className="table table-condensed table-hover">
-                <thead>
-                <tr>
-                    <th>Member #</th>
-                    <th>Name</th>
-                    <th>Handicap</th>
-                    <th>Admin</th>
-                    <th>Active*</th>
-                    <th>Actions</th>
-                </tr>
-                </thead>
-                <tbody>
-                { this.props.golfers.map((g:any) => 
-                    <tr>
-                        <td>{g.membershipId}</td>
-                        <td>@golfer.LastName, @golfer.FirstName</td>
-                        <td>@golfer.Handicap</td>
-                        <td>@golfer.IsAdmin</td>
-                        <td>@golfer.IsActive</td>
-                        <td>
-                            <a className="btn btn-default" asp-action="Edit" asp-route-id="@golfer.Id">Edit</a>
-                            <a className="btn btn-default">Delete</a>
-                        </td>
-                    </tr>                  
-                )} 
-                </tbody>
-            </table>
+        return (
+            <GolfersTable data={this.state.golfers}>
+                <GolfersColumn header="Membership #" cell={g => g.membershipId}>
+                </GolfersColumn>
+                <GolfersColumn header="Name" cell={g => `${g.firstName} ${g.lastName}`}>
+                </GolfersColumn>
+                <GolfersColumn header="Handicap" cell={g => g.handicap}>
+                </GolfersColumn>
+                <GolfersColumn header="Admin" cell={g => <Toggle value={g.isAdmin} />}>
+                </GolfersColumn>
+                <GolfersColumn header="Active*" cell={g => <Toggle value={g.isActive} />}>
+                </GolfersColumn>
+                <GolfersColumn header="Actions" cell={
+                    <div>
+                        <a className="btn btn-default">Edit</a>
+                        <a className="btn btn-default">Delete</a>
+                    </div>
+                }>
+                </GolfersColumn>
+            </GolfersTable>
+
+        )
     }
 }
 
-function mapStateToProps(state:any , ownProps:any) {
-    return {
-        golfers: state.golfers
-    }
-} 
-
-const ConnectedGolferPage = connect(mapStateToProps)(GolferPage);  
-
-ReactDOM.render(<Provider store={store}>
-                    <ConnectedGolferPage />
-                </Provider>, document.getElementById("react-app"));
+ReactDOM.render(<ManageGolfersList golfers={[]} />, document.getElementById("react-app"));

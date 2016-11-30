@@ -5,39 +5,9 @@
 
 </div>
 
-
-<table class="table table-condensed table-hover">
-    <thead>
-    <tr>
-        <th>Member #</th>
-        <th>Name</th>
-        <th>Handicap</th>
-        <th>Admin</th>
-        <th>Active*</th>
-        <th>Actions</th>
-    </tr>
-    </thead>
-    <tbody>
-    @foreach (var golfer in @Model)
-    {
-        <tr>
-            <td>@golfer.MembershipId</td>
-            <td>@golfer.LastName, @golfer.FirstName</td>
-            <td>@golfer.Handicap</td>
-            <td>@golfer.IsAdmin</td>
-            <td>@golfer.IsActive</td>
-            <td>
-                <a class="btn btn-default" asp-action="Edit" asp-route-id="@golfer.Id">Edit</a>
-                <a class="btn btn-default">Delete</a>
-            </td>
-        </tr>
-    } 
-    </tbody>
-</table>
-
 <div><a class="btn btn-primary" asp-action="Create">Add a golfer</a></div>
 @section footer {
-    <div>*Inactive golfers are inactive for the entire season</div>    
+    <div class="text-warning">*Inactive golfers are inactive for the entire season</div>    
 }
 
 @section scripts {
