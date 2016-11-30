@@ -10,6 +10,7 @@ module.exports = {
         vendor: [
             "react",
             "react-dom",
+            "react-bootstrap",
             "axios"
         ]
     },

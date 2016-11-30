@@ -6,12 +6,14 @@
   },
   "dependencies": {
     "@types/react": "^0.14.50",
+    "@types/react-bootstrap": "0.0.37",
     "@types/react-dom": "^0.14.19",
     "axios": "^0.15.3",
     "bootstrap": "^3.3.7",
     "font-awesome": "^4.6.3",
     "jquery": "^3.1.1",
     "react": "^15.4.1",
+    "react-bootstrap": "^0.30.7",
     "react-dom": "15.4.0"
   },
   "devDependencies": {

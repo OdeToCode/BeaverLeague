@@ -1,6 +1,7 @@
 ﻿import * as React from "react";
 import * as ReactDOM from "react-dom";
-import {Toggle, Table, Column} from "components";
+import { Toggle } from "components";
+import { Table, Button } from "react-bootstrap";
 import axios from 'axios';
 
 interface GolferShape {
@@ -12,26 +13,17 @@ interface GolferShape {
     isActive?: boolean
 }
 
-
-class GolfersTable extends Table<GolferShape> {    
-
-}
-
-class GolfersColumn extends Column<GolferShape> {
-
-}
-
-interface ManageGolfersListProps {
+interface GolfersProps {
     golfers: Array<GolferShape>
 }
 
-interface ManageGolfersStateProps {
+interface GolfersState {
     golfers: Array<GolferShape>
 }
 
-class ManageGolfersList extends React.Component<ManageGolfersListProps, ManageGolfersStateProps> {
+class Golfers extends React.Component<GolfersProps, GolfersState> {
 
-    constructor(props) {
+    constructor(props: GolfersProps) {
         super(props);
         this.state = {
             golfers: this.props.golfers
@@ -47,29 +39,40 @@ class ManageGolfersList extends React.Component<ManageGolfersListProps, ManageGo
     }
 
     render() {
-        return (
-            <GolfersTable data={this.state.golfers}>
-                <GolfersColumn header="Membership #" cell={g => g.membershipId}>
-                </GolfersColumn>
-                <GolfersColumn header="Name" cell={g => `${g.firstName} ${g.lastName}`}>
-                </GolfersColumn>
-                <GolfersColumn header="Handicap" cell={g => g.handicap}>
-                </GolfersColumn>
-                <GolfersColumn header="Admin" cell={g => <Toggle value={g.isAdmin} />}>
-                </GolfersColumn>
-                <GolfersColumn header="Active*" cell={g => <Toggle value={g.isActive} />}>
-                </GolfersColumn>
-                <GolfersColumn header="Actions" cell={
-                    <div>
-                        <a className="btn btn-default">Edit</a>
-                        <a className="btn btn-default">Delete</a>
-                    </div>
-                }>
-                </GolfersColumn>
-            </GolfersTable>
+        const state = this.state;
 
+        return (
+            <Table hover condensed>
+                <thead>
+                    <tr>
+                        <th>Member #</th>
+                        <th>Name</th>
+                        <th>Handicap</th>
+                        <th>Active*</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {
+                        state.golfers.map(g => (
+                            <tr key={g.membershipId}>
+                                <td>{g.membershipId}</td>
+                                <td>{g.firstName} {g.lastName}</td>
+                                <td>{g.handicap}</td>
+                                <td>
+                                    <Toggle offstyle="danger" active={g.isActive} />
+                                </td>
+                                <td>
+                                    <Button>Edit</Button>
+                                    <Button>Delete</Button>
+                                </td>
+                            </tr>
+                        ))
+                    }
+                </tbody>
+            </Table>
         )
     }
 }
 
-ReactDOM.render(<ManageGolfersList golfers={[]} />, document.getElementById("react-app"));
+ReactDOM.render(<Golfers golfers={[]} />, document.getElementById("react-app"));
