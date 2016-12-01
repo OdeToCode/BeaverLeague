@@ -29,6 +29,7 @@ namespace BeaverLeague.Web.Features.Api.Golfers
 
         [HttpPost]
         [Route("activeflag")]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> PostActiveFlag([FromBody] UpdateActiveFlagCommand command)
         {
             if (ModelState.IsValid)

@@ -2,16 +2,16 @@
 import * as ReactDOM from "react-dom";
 import { Toggle } from "components";
 import { Table, Button } from "react-bootstrap";
-import axios from "axios";
+import {api} from "services";
 
 interface GolferShape {
     id: number;
-    membershipId?: string;
-    firstName?: string;
-    lastName?: string;
-    handicap?: number;
-    isAdmin?: boolean;
-    isActive?: boolean;
+    membershipId: string;
+    firstName: string;
+    lastName: string;
+    handicap: number;
+    isAdmin: boolean;
+    isActive: boolean;
 }
 
 interface GolfersProps {
@@ -32,15 +32,13 @@ class Golfers extends React.Component<GolfersProps, GolfersState> {
     }
 
     componentDidMount() {
-        axios.get("/api/golfers")
-             .then(r => { this.setState({ golfers: r.data })})
-             .catch(r => alert("Could not fetch golfers!"));
+        api.getAllGolfers()
+           .then((data) => { this.setState({ golfers: data })});           
     }
 
     setGolferActiveFlag(golfer: GolferShape, value: boolean) {
         golfer.isActive = value;
-        axios.post("/api/golfers/activeflag", {id: golfer.id, value})
-             .catch(r => alert(`Could not update active flag for ${golfer.lastName}`));
+        api.setGolferActiveFlag({id: golfer.id, value}, golfer.lastName);        
     }
 
     render() {
@@ -66,10 +64,10 @@ class Golfers extends React.Component<GolfersProps, GolfersState> {
                                 <td>{g.handicap}</td>
                                 <td>
                                     <Toggle offstyle="danger" active={g.isActive} 
-                                            onChange={(v) => this.setGolferActiveFlag(g, v) } />
+                                            onChange={(v:boolean) => this.setGolferActiveFlag(g, v) } />
                                 </td>
                                 <td>
-                                    <Button>Edit</Button>
+                                    <Button href="Edit">Edit</Button>
                                     <Button>Delete</Button>
                                 </td>
                             </tr>
