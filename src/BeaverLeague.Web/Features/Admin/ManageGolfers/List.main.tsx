@@ -32,14 +32,14 @@ class Golfers extends React.Component<GolfersProps, GolfersState> {
     }
 
     componentDidMount() {
-        axios.get("GetAllGolfers")
+        axios.get("/api/golfers")
              .then(r => { this.setState({ golfers: r.data })})
              .catch(r => alert("Could not fetch golfers!"));
     }
 
     setGolferActiveFlag(golfer: GolferShape, value: boolean) {
         golfer.isActive = value;
-        axios.post("UpdateGolferActiveFlag", {id: golfer.id, value})
+        axios.post("/api/golfers/activeflag", {id: golfer.id, value})
              .catch(r => alert(`Could not update active flag for ${golfer.lastName}`));
     }
 
