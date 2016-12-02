@@ -4,7 +4,7 @@ import { Toggle } from "components";
 import { Table, Button } from "react-bootstrap";
 import {api} from "services";
 
-interface GolferShape {
+interface IGolferShape {
     id: number;
     membershipId: string;
     firstName: string;
@@ -14,17 +14,17 @@ interface GolferShape {
     isActive: boolean;
 }
 
-interface GolfersProps {
-    golfers: Array<GolferShape>
+interface IGolfersProps {
+    golfers: Array<IGolferShape>
 }
 
-interface GolfersState {
-    golfers: Array<GolferShape>
+interface IGolfersState {
+    golfers: Array<IGolferShape>
 }
    
-class Golfers extends React.Component<GolfersProps, GolfersState> {
+class Golfers extends React.Component<IGolfersProps, IGolfersState> {
 
-    constructor(props: GolfersProps) {
+    constructor(props: IGolfersProps) {
         super(props);
         this.state = {
             golfers: this.props.golfers
@@ -33,10 +33,10 @@ class Golfers extends React.Component<GolfersProps, GolfersState> {
 
     componentDidMount() {
         api.getAllGolfers()
-           .then((data) => { this.setState({ golfers: data })});           
+            .then((data: Array<IGolferShape>) => { this.setState({ golfers: data }) });           
     }
 
-    setGolferActiveFlag(golfer: GolferShape, value: boolean) {
+    setGolferActiveFlag(golfer: IGolferShape, value: boolean) {
         golfer.isActive = value;
         api.setGolferActiveFlag({id: golfer.id, value}, golfer.lastName);        
     }

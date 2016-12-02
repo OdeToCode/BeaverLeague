@@ -22,7 +22,12 @@ namespace BeaverLeague.Web.Messaging
         public async Task<CurrentSeasonViewModel> Handle(CurrentSeasonSummaryQuery message)
         {
             var result = new CurrentSeasonViewModel();
-            result.CurrentSeason = await _db.Seasons.SingleOrDefaultAsync(s => s.IsCurrent);
+            result.CurrentSeason = await _db.Seasons                                            
+                                            .SingleOrDefaultAsync(s => s.IsCurrent);
+            if (result.CurrentSeason != null)
+            {
+
+            }
             return result;
         }
     }

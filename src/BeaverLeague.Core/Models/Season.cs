@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace BeaverLeague.Core.Models
 {
@@ -8,6 +9,9 @@ namespace BeaverLeague.Core.Models
 
         [MaxLength(80)]
         public string Name { get; set; }
-        public bool IsCurrent { get; set; }     
+
+        public bool IsCurrent { get; set; }
+
+        public ICollection<Round> Rounds { get; set; }
     }
 }
