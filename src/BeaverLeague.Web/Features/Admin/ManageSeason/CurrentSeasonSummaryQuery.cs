@@ -26,7 +26,10 @@ namespace BeaverLeague.Web.Messaging
                                             .SingleOrDefaultAsync(s => s.IsCurrent);
             if (result.CurrentSeason != null)
             {
-
+                //_db.Entry(result.CurrentSeason)
+                //    .Collection(s => s.Rounds)
+                //    .Query()
+                //    .Where(r => r.)
             }
             return result;
         }
