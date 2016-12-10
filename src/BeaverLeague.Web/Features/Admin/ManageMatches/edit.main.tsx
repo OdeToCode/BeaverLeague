@@ -4,7 +4,7 @@ import { Grid, Row, Col, Table, ListGroup, ListGroupItem, Panel, Button } from "
 import { api, parameters } from "services";
 import { IGolfer, IMatchSet, IMatch } from "models";
 
-interface InactiveDescription {
+interface IInactiveDescription {
     id: number; 
     firstName: string; 
     lastName: string;
@@ -17,7 +17,7 @@ interface IEditMatchSetProps {
 interface IEditMatchSetState {
     golfers: IGolfer[];
     matchset: IMatchSet;
-    inactives: InactiveDescription[]
+    inactives: IInactiveDescription[]
 }
 
 interface IGolferListProps {
@@ -26,7 +26,7 @@ interface IGolferListProps {
 }
 
 interface IInactiveListProps {
-    inactives: InactiveDescription[];
+    inactives: IInactiveDescription[];
 }
 
 interface IMatchListProps {
@@ -107,7 +107,34 @@ class EditMatchSet extends React.Component<IEditMatchSetProps, IEditMatchSetStat
     }
 
     calculateState(golfers: IGolfer[], matchset: IMatchSet) {
+        let availableGolfers = [];
+        let inactives = [];
+        
+        for(let golfer of golfers) {
+            let playing = matchset.matches.filter(m => 
+                (m.golferA && m.golferA.id == golfer.id) || 
+                (m.golferB && m.golferB.id == golfer.id));
+            let inactive = matchset.inactives.filter(i => i.golferId == golfer.id);
+            if(!playing && !inactive) {
+                availableGolfers.push(golfer);
+            }
+        }
+        for(let inactive of matchset.inactives) {        
+            let find = golfers.filter(g => g.id == inactive.id);
+            if(find.length > 0) {
+                inactives.push({
+                    id: find[0].id,
+                    firstName : find[0].firstName,
+                    lastName : find[0].lastName
+                });
+            }
+        }
 
+        this.setState({
+            golfers: availableGolfers,
+            matchset: matchset,
+            inactives: inactives
+        })
     }
 
     render() {
