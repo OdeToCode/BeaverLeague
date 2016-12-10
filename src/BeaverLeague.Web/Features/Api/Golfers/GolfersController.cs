@@ -20,7 +20,6 @@ namespace BeaverLeague.Web.Features.Api.Golfers
         }
 
         [HttpGet]
-        [AllowAnonymous]
         public IActionResult Get()
         {
             var query = new GolfersQuery();
@@ -29,7 +28,6 @@ namespace BeaverLeague.Web.Features.Api.Golfers
         }
 
         [HttpGet]
-        [AllowAnonymous]
         [Route("active")]
         public IActionResult GetActive()
         {

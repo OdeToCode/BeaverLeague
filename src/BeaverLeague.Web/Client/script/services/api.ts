@@ -1,5 +1,5 @@
 import axios, { AxiosResponse } from "axios";
-import { IGolfer } from "models"
+import { IGolfer, IMatchSet } from "models"
 import { errorHandler } from "./error";
 
 const XSRF_TOKEN_KEY = "xsrfToken";
@@ -60,6 +60,16 @@ class Api {
         }
         catch(err) {
             reportError(`Could not update active flag for ${name}`, err.response);
+        }
+    }
+
+    async getMatchSet(id: number) {
+        try {
+            let result = await axios.get(`/api/matchsets/${id}`);
+            return result.data as IMatchSet;
+        }
+        catch(err) {
+            reportError(`Could not fetch matchset ${id}`, err.response);
         }
     }
 }

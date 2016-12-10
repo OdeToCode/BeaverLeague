@@ -9,6 +9,6 @@ namespace BeaverLeague.Core.Models
         public int SeasonId { get; set; }
         public int MatchSetNumber { get; set; }
         public ICollection<Match> Matches { get; set; }
-        public ICollection<Golfer> Inactives { get; set; }
+        public ICollection<MatchSetInactiveGolfer> Inactives { get; set; }
     }
 }

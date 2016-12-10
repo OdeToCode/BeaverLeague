@@ -8,9 +8,10 @@ using BeaverLeague.Data;
 namespace BeaverLeague.Data.Migrations
 {
     [DbContext(typeof(LeagueDb))]
-    partial class LeagueDbModelSnapshot : ModelSnapshot
+    [Migration("20161210021518_matchsetfix")]
+    partial class matchsetfix
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "1.1.0-rtm-22752")
@@ -103,8 +104,6 @@ namespace BeaverLeague.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("GolferId");
-
                     b.HasIndex("MatchSetId");
 
                     b.ToTable("MatchSetInactiveGolfer");
@@ -153,11 +152,6 @@ namespace BeaverLeague.Data.Migrations
 
             modelBuilder.Entity("BeaverLeague.Core.Models.MatchSetInactiveGolfer", b =>
                 {
-                    b.HasOne("BeaverLeague.Core.Models.Golfer")
-                        .WithMany()
-                        .HasForeignKey("GolferId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
                     b.HasOne("BeaverLeague.Core.Models.MatchSet")
                         .WithMany("Inactives")
                         .HasForeignKey("MatchSetId")
