@@ -1,12 +1,13 @@
 ﻿using System.Threading.Tasks;
-using BeaverLeague.Web.Messaging;
+using BeaverLeague.Web.Security;
 using BeaverLeague.Web.Services;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BeaverLeague.Web.Features.Admin.ManageSeason
 {
-    [Route("[controller]/[action]")]
+    [UserIsAdmin]
+    [Route("admin/[controller]/[action]")]
     public class ManageSeasonController : Controller
     {
         private readonly IMediator _mediator;

@@ -8,9 +8,10 @@ using BeaverLeague.Data;
 namespace BeaverLeague.Data.Migrations
 {
     [DbContext(typeof(LeagueDb))]
-    partial class LeagueDbModelSnapshot : ModelSnapshot
+    [Migration("20161203042845_matchsets")]
+    partial class matchsets
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "1.1.0-rtm-22752")
@@ -38,8 +39,6 @@ namespace BeaverLeague.Data.Migrations
                         .IsRequired()
                         .HasAnnotation("MaxLength", 80);
 
-                    b.Property<int?>("MatchSetId");
-
                     b.Property<int>("MembershipId");
 
                     b.Property<string>("PasswordHash")
@@ -49,8 +48,6 @@ namespace BeaverLeague.Data.Migrations
 
                     b.HasIndex("EmailAddress")
                         .IsUnique();
-
-                    b.HasIndex("MatchSetId");
 
                     b.HasIndex("MembershipId")
                         .IsUnique();
@@ -112,13 +109,6 @@ namespace BeaverLeague.Data.Migrations
                         .IsUnique();
 
                     b.ToTable("Seasons");
-                });
-
-            modelBuilder.Entity("BeaverLeague.Core.Models.Golfer", b =>
-                {
-                    b.HasOne("BeaverLeague.Core.Models.MatchSet")
-                        .WithMany("Inactive")
-                        .HasForeignKey("MatchSetId");
                 });
 
             modelBuilder.Entity("BeaverLeague.Core.Models.Match", b =>

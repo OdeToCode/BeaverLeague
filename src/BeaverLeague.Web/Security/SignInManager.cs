@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
 namespace BeaverLeague.Web.Security
-{
+{   
     public class SignInManager
     {               
         public SignInManager(LeagueDb db, 

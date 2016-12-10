@@ -11,7 +11,8 @@ module.exports = {
             "react",
             "react-dom",
             "react-bootstrap",
-            "axios"
+            "axios",
+            "es6-promise"
         ]
     },
     output: {

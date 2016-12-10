@@ -2,43 +2,34 @@
 import * as ReactDOM from "react-dom";
 import { Toggle } from "components";
 import { Table, Button } from "react-bootstrap";
-import {api} from "services";
+import { api } from "services";
+import { IGolfer } from "models";
 
-interface IGolferShape {
-    id: number;
-    membershipId: string;
-    firstName: string;
-    lastName: string;
-    handicap: number;
-    isAdmin: boolean;
-    isActive: boolean;
+interface IProps {
+    golfers: Array<IGolfer>
 }
 
-interface IGolfersProps {
-    golfers: Array<IGolferShape>
+interface IState {
+    golfers: Array<IGolfer>
 }
 
-interface IGolfersState {
-    golfers: Array<IGolferShape>
-}
-   
-class Golfers extends React.Component<IGolfersProps, IGolfersState> {
+class Golfers extends React.Component<IProps, IState> {
 
-    constructor(props: IGolfersProps) {
+    constructor(props: IProps) {
         super(props);
         this.state = {
             golfers: this.props.golfers
         }
     }
 
-    componentDidMount() {
-        api.getAllGolfers()
-            .then((data: Array<IGolferShape>) => { this.setState({ golfers: data }) });           
+    async componentDidMount() {
+        await api.getAllGolfers()
+                 .then(data => { this.setState({ golfers: data }) });
     }
 
-    setGolferActiveFlag(golfer: IGolferShape, value: boolean) {
+    setGolferActiveFlag(golfer: IGolfer, value: boolean) {
         golfer.isActive = value;
-        api.setGolferActiveFlag({id: golfer.id, value}, golfer.lastName);        
+        api.setGolferActiveFlag({ id: golfer.id, value }, golfer.lastName);
     }
 
     render() {
@@ -63,8 +54,8 @@ class Golfers extends React.Component<IGolfersProps, IGolfersState> {
                                 <td>{g.firstName} {g.lastName}</td>
                                 <td>{g.handicap}</td>
                                 <td>
-                                    <Toggle offstyle="danger" active={g.isActive} 
-                                            onChange={(v:boolean) => this.setGolferActiveFlag(g, v) } />
+                                    <Toggle offstyle="danger" active={g.isActive}
+                                        onChange={(v: boolean) => this.setGolferActiveFlag(g, v)} />
                                 </td>
                                 <td>
                                     <Button href="Edit">Edit</Button>

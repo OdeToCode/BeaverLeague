@@ -1,4 +1,5 @@
 ﻿using System.Threading.Tasks;
+using BeaverLeague.Web.Messaging.Golfers;
 using BeaverLeague.Web.Security;
 using BeaverLeague.Web.Services;
 using MediatR;
@@ -22,15 +23,25 @@ namespace BeaverLeague.Web.Features.Api.Golfers
         [AllowAnonymous]
         public IActionResult Get()
         {
-            var query = new AllGolfersQuery();
+            var query = new GolfersQuery();
+            var model = _mediator.Send(query);
+            return new ObjectResult(model);
+        }
+
+        [HttpGet]
+        [AllowAnonymous]
+        [Route("active")]
+        public IActionResult GetActive()
+        {
+            var query = new GolfersQuery() {IsActive = true};
             var model = _mediator.Send(query);
             return new ObjectResult(model);
         }
 
         [HttpPost]
-        [Route("activeflag")]
+        [Route("{id}/activeflag")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> PostActiveFlag([FromBody] UpdateActiveFlagCommand command)
+        public async Task<IActionResult> PostActiveFlag([FromRoute] int id, [FromBody] UpdateActiveFlagCommand command)
         {
             if (ModelState.IsValid)
             {

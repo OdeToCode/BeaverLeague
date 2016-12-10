@@ -12,6 +12,6 @@ namespace BeaverLeague.Core.Models
 
         public bool IsCurrent { get; set; }
 
-        public ICollection<Round> Rounds { get; set; }
+        public ICollection<MatchSet> MatchSets { get; set; }
     }
 }

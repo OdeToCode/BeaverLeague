@@ -1,6 +1,4 @@
-﻿using System.Threading.Tasks;
-using BeaverLeague.Web.Security;
-using BeaverLeague.Web.Services;
+﻿using BeaverLeague.Web.Security;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 

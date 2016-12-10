@@ -10,6 +10,7 @@
     "baseUrl": ".",
     "moduleResolution": "node",
     "traceResolution": true,
+    "lib": ["es2015.promise", "dom", "es5"],
     "paths": {
       "*": [ "*", "Client/script/*" ] 
     }

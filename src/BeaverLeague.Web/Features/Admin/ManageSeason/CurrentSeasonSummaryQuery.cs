@@ -1,16 +1,24 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using BeaverLeague.Core.Models;
 using BeaverLeague.Data;
-using Microsoft.EntityFrameworkCore;
-using BeaverLeague.Web.Features.Admin.ManageSeason;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 
-namespace BeaverLeague.Web.Messaging
+namespace BeaverLeague.Web.Features.Admin.ManageSeason
 {
-    public class CurrentSeasonSummaryQuery : IAsyncRequest<CurrentSeasonViewModel>
+    public class CurrentSeasonSummaryQuery : IAsyncRequest<CurrentSeasonSummaryResult>
     {
     }
 
-    public class CurrentSeasonSummaryQueryHandler : IAsyncRequestHandler<CurrentSeasonSummaryQuery, CurrentSeasonViewModel>
+    public class CurrentSeasonSummaryResult
+    {
+        public Season CurrentSeason { get; set; }
+        public List<MatchSet> MatchSets { get; set; }
+    }
+
+    public class CurrentSeasonSummaryQueryHandler : IAsyncRequestHandler<CurrentSeasonSummaryQuery, CurrentSeasonSummaryResult>
     {
         private readonly LeagueDb _db;
 
@@ -19,17 +27,20 @@ namespace BeaverLeague.Web.Messaging
             _db = db;
         }
 
-        public async Task<CurrentSeasonViewModel> Handle(CurrentSeasonSummaryQuery message)
+        public async Task<CurrentSeasonSummaryResult> Handle(CurrentSeasonSummaryQuery message)
         {
-            var result = new CurrentSeasonViewModel();
-            result.CurrentSeason = await _db.Seasons                                            
-                                            .SingleOrDefaultAsync(s => s.IsCurrent);
+            var result = new CurrentSeasonSummaryResult();
+            result.CurrentSeason = await _db.Seasons.SingleOrDefaultAsync(s => s.IsCurrent);
+
             if (result.CurrentSeason != null)
             {
-                //_db.Entry(result.CurrentSeason)
-                //    .Collection(s => s.Rounds)
-                //    .Query()
-                //    .Where(r => r.)
+                result.MatchSets =
+                        await _db.Entry<Season>(result.CurrentSeason)
+                           .Collection(s => s.MatchSets)
+                           .Query()
+                           .Where(r => r.SeasonId == result.CurrentSeason.Id)
+                           .OrderByDescending(r => r.MatchSetNumber)
+                           .ToListAsync();
             }
             return result;
         }

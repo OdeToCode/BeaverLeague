@@ -5,25 +5,26 @@
     "watch": "webpack -w"
   },
   "dependencies": {
+  },
+  "devDependencies": {
     "@types/react": "^0.14.50",
     "@types/react-bootstrap": "0.0.37",
     "@types/react-dom": "^0.14.19",
     "axios": "^0.15.3",
     "bootstrap": "^3.3.7",
+    "es6-promise": "^4.0.5",
     "font-awesome": "^4.6.3",
     "jquery": "^3.1.1",
     "react": "^15.4.1",
     "react-bootstrap": "^0.30.7",
-    "react-dom": "15.4.0"
-  },
-  "devDependencies": {
+    "react-dom": "15.4.0",
     "del": "^2.2.2",
     "gulp": "^3.9.1",
     "gulp-clean-css": "^2.0.13",
     "run-sequence": "^1.2.2",
     "source-map-loader": "^0.1.5",
     "ts-loader": "1.2.2",
-    "typescript": "2.0.10",
+    "typescript": "^2.1.4",
     "webpack-stream": "^3.2.0"
   }
 }

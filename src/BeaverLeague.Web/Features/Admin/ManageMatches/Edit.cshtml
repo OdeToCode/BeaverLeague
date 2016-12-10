@@ -1,0 +1,14 @@
+﻿@{
+    ViewBag.Title = "Edit Matches";
+}
+
+<h3>Edit Matches</h3>
+
+<div id="react-creatematchset" data-parameters='@Json.Serialize(Model)'>
+    
+</div>
+
+@section scripts {
+    <script src="~/assets/vendor.js"></script>
+    <script src="~/assets/Admin/ManageMatches/edit.js"></script>
+}
