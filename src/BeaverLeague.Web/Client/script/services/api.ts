@@ -31,6 +31,8 @@ function initializeXsrfToken() {
 
 initializeXsrfToken();
 
+// TODO : executeRequest wrapper
+
 class Api {
 
     async getAllGolfers() {        
@@ -40,6 +42,7 @@ class Api {
         }
         catch(err) {
             reportError("Could not fetch all golfers", err.response);
+            throw err;
         }      
     }
 
@@ -50,6 +53,7 @@ class Api {
         }
         catch(err) {
             reportError("Could not fetch active golfers", err.response);
+            throw err;
         }        
     }
 
@@ -60,6 +64,7 @@ class Api {
         }
         catch(err) {
             reportError(`Could not update active flag for ${name}`, err.response);
+            throw err;            
         }
     }
 
@@ -70,6 +75,7 @@ class Api {
         }
         catch(err) {
             reportError(`Could not fetch matchset ${id}`, err.response);
+            throw err;
         }
     }
 }

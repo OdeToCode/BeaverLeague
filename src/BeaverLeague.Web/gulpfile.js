@@ -2,12 +2,14 @@
 var del = require("del");
 var cleancss = require("gulp-clean-css");
 var run = require("run-sequence");
-var exec = require('child_process').exec;
+var exec = require("child_process").exec;
+var path = require("path");
+var webpackcmd = path.join("node_modules", ".bin", "webpack");
 
 gulp.task("clean", () => del("wwwroot/assets"));
 
 gulp.task("js:vendor", (done) => {
-    exec("webpack --config webpack.vendor.config.js", function(err, stdout, stderr) {
+    exec(webpackcmd + " --config webpack.vendor.config.js", function(err, stdout, stderr) {
         console.log(stdout);
         console.log(stderr);
         done(err);
@@ -15,7 +17,7 @@ gulp.task("js:vendor", (done) => {
 });
 
 gulp.task("js:app", (done) => {
-    exec("webpack --config webpack.config.js", function(err, stdout, stderr) {
+    exec(webpackcmd + " --config webpack.config.js", function(err, stdout, stderr) {
         console.log(stdout);
         console.log(stderr);
         done(err);

@@ -7,6 +7,6 @@ module.exports = function(config) {
       "./wwwroot/assets/tests/**/*.specs.js"
     ],
     reporters: ['progress'],
-    browsers: ['PhantomJS'],
+    browsers: ['Chrome'],
   })
 }

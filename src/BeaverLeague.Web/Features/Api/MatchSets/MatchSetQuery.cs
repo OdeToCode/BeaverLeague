@@ -21,7 +21,7 @@ namespace BeaverLeague.Web.Features.Api.MatchSets
             _db = db;
         }
 
-        public Task<MatchSet> Handle(MatchSetQuery query)
+        public async Task<MatchSet> Handle(MatchSetQuery query)
         {
             return await _db.MatchSets
                     .Include(ms => ms.Matches)
