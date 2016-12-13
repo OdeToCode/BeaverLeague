@@ -29,55 +29,46 @@ function initializeXsrfToken() {
     }
 }
 
-initializeXsrfToken();
-
-// TODO : executeRequest wrapper
+const axiosExec = function<T>(f:() => T, message: string) {
+    try{
+        return f();
+    }
+    catch(err){
+        reportError(`Operation Failed: ${message}`, err.response);
+        throw err;
+    }
+};
 
 class Api {
 
-    async getAllGolfers() {        
-        try {
+    async getAllGolfers() {     
+        return axiosExec(async () => {
             let response = await axios.get("/api/golfers");
-            return response.data as IGolfer[];            
-        }
-        catch(err) {
-            reportError("Could not fetch all golfers", err.response);
-            throw err;
-        }      
+            return response.data as IGolfer[];
+        }, "Fetch all golfers");
     }
 
     async getActiveGolfers() {
-        try {
+        return axiosExec(async () => {
             let response = await axios.get("/api/golfers/active");
             return response.data as IGolfer[];
-        }
-        catch(err) {
-            reportError("Could not fetch active golfers", err.response);
-            throw err;
-        }        
+        }, "Get active golfers");       
     }
 
     async setGolferActiveFlag(data: { id: number, value: boolean }, name: string) {
-        try {
-            let result = await axios.post(`/api/golfers/${data.id}/activeflag`, data);
-            return result;
-        }
-        catch(err) {
-            reportError(`Could not update active flag for ${name}`, err.response);
-            throw err;            
-        }
+        return axiosExec(async () => {
+            let response = await axios.post(`/api/golfers/${data.id}/activeflag`, data);
+            return response.data;
+        }, `Setting update flag for ${name}`);          
     }
 
     async getMatchSet(id: number) {
-        try {
+        return axiosExec(async () => {
             let result = await axios.get(`/api/matchsets/${id}`);
             return result.data as IMatchSet;
-        }
-        catch(err) {
-            reportError(`Could not fetch matchset ${id}`, err.response);
-            throw err;
-        }
+        }, `Fetch matchset ${id}`);                       
     }
 }
 
+initializeXsrfToken();
 export const api = new Api();
