@@ -27,3 +27,15 @@ export interface IMatchSet {
     matches: IMatch[];
     inactives: IMatchSetInactiveGolfer[]
 }
+
+export interface IInactiveDescription {
+    id: number; 
+    firstName: string; 
+    lastName: string;
+}
+
+export interface ISelectableGolfer extends IGolfer {
+    isSelected?: boolean;
+}
+
+export * from "./EditMatchSetStore";

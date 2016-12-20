@@ -70,5 +70,4 @@ class Api {
     }
 }
 
-initializeXsrfToken();
 export const api = new Api();
