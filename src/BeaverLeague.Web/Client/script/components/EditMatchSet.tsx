@@ -9,19 +9,24 @@ interface IInactiveDescription {
     lastName: string;
 }
 
+interface ISelectableGolfer extends IGolfer {
+    isSelected?: boolean;
+}
+
 interface IEditMatchSetProps {
     matchSetId: number;
 }
 
 interface IEditMatchSetState {
-    golfers: IGolfer[];
-    matchset: IMatchSet;
-    inactives: IInactiveDescription[]
+    golfers?: ISelectableGolfer[];
+    matchset?: IMatchSet;
+    inactives?: IInactiveDescription[]
 }
 
 interface IGolferListProps {
     name: string;
-    golfers: Array<IGolfer>;
+    golfers: Array<ISelectableGolfer>;
+    selectGolfer: (g:IGolfer) => void;
 }
 
 interface IInactiveListProps {
@@ -32,13 +37,18 @@ interface IMatchListProps {
     matches: IMatch[]
 }
 
+const isSelected = (golfer: ISelectableGolfer) => 
+    golfer.isSelected ? "success" : ""
+
 const GolferList = (props: IGolferListProps) =>
     <Panel header={<h3>{props.name}</h3>} bsStyle="primary">
         <Table condensed hover>
             <tbody>
                 {
                     props.golfers.map(g => 
-                        <tr key={g.id}><td>{g.firstName} {g.lastName}</td></tr>
+                        <tr key={g.id} onClick={() => props.selectGolfer(g)} className={isSelected(g)}>
+                            <td>{g.firstName} {g.lastName}</td>
+                        </tr>
                     )
                 }
             </tbody>
@@ -113,6 +123,7 @@ export class EditMatchSet extends React.Component<IEditMatchSetProps, IEditMatch
                 availableGolfers.push(golfer);
             }
         }
+
         for(let inactive of matchset.inactives) {        
             let find = golfers.filter(g => g.id == inactive.golferId);
             if(find.length > 0) {
@@ -131,6 +142,30 @@ export class EditMatchSet extends React.Component<IEditMatchSetProps, IEditMatch
         };
     }
 
+    pairSelectedGolfers() {
+        const selected = this.state.golfers.filter(g => g.isSelected);
+        if(selected.length == 2) {
+            this.state.golfers.splice(this.state.golfers.indexOf(selected[0], 1));
+            this.state.golfers.splice(this.state.golfers.indexOf(selected[1], 1));
+            this.state.matchset.matches.push({
+                id: 0,
+                golferA: selected[0],
+                golferB: selected[1]
+            });
+        }
+    }
+
+    selectGolfer(golfer: ISelectableGolfer) {
+        golfer.isSelected = !golfer.isSelected;
+        
+        this.pairSelectedGolfers();
+        
+        this.setState({
+            golfers: this.state.golfers,
+            matchset: this.state.matchset            
+        })
+    }
+
     render() {
         return (
             <Grid fluid={true}>
@@ -142,16 +177,14 @@ export class EditMatchSet extends React.Component<IEditMatchSetProps, IEditMatch
                     </Col>
                 </Row>
                 <Row>
-                    <Col sm={3}>
-                        <GolferList name="Golfer A" golfers={this.state.golfers} />
+                    <Col sm={4}>
+                        <GolferList name="Golfers" golfers={this.state.golfers} 
+                                    selectGolfer={(g) => this.selectGolfer(g)}/>
                     </Col>
-                    <Col sm={3}>
-                        <GolferList name="Golfer B" golfers={this.state.golfers} />
-                    </Col>
-                    <Col sm={3}>
+                    <Col sm={4}>
                         <MatchList matches={this.state.matchset.matches} />
                     </Col>
-                    <Col sm={3}>
+                    <Col sm={4}>
                         <InactiveList inactives={this.state.inactives} />
                     </Col>
                 </Row>

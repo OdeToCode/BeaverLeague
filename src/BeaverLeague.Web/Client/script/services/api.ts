@@ -29,9 +29,9 @@ function initializeXsrfToken() {
     }
 }
 
-const axiosExec = function<T>(f:() => T, message: string) {
+const axiosExec = async function<T>(f:() => T, message: string) {
     try{
-        return f();
+        return await f();
     }
     catch(err){
         reportError(`Operation Failed: ${message}`, err.response);
@@ -64,7 +64,7 @@ class Api {
 
     async getMatchSet(id: number) {
         return axiosExec(async () => {
-            let result = await axios.get(`/api/matchsets/${id}`);
+            let result = await axios.get(`/api/matchset/${id}`);
             return result.data as IMatchSet;
         }, `Fetch matchset ${id}`);                       
     }
