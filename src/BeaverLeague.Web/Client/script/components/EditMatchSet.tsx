@@ -21,7 +21,7 @@ interface IMatchListProps {
 }
 
 const isSelected = (golfer: ISelectableGolfer) => 
-    golfer.isSelected ? "success" : ""
+    golfer.isSelected ? "information" : ""
 
 const GolferList = (props: IGolferListProps) =>
     <Panel header={<h3>{props.name}</h3>} bsStyle="primary">
@@ -59,9 +59,8 @@ const MatchList = (props: IMatchListProps) =>
                     props.matches.map(m => 
                         <tr key={m.id}>
                             <td>
-                                <small><div>{m.golferA.firstName} {m.golferA.lastName} vs</div>
-                                    <div>{m.golferB.firstName} {m.golferB.lastName}</div>
-                                </small>
+                                <div>{m.golferA.firstName} {m.golferA.lastName} vs</div>
+                                <div>{m.golferB.firstName} {m.golferB.lastName}</div>
                             </td>
                         </tr>
                     )

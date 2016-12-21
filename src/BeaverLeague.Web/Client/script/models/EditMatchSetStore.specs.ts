@@ -1,32 +1,38 @@
 import * as React from "React";
 import { IMatchSet, ISelectableGolfer, EditMatchSetStore } from "models";
 
-const golfers: ISelectableGolfer[] = [
-    { id: 1, firstName: "A", lastName: "A", membershipId: "", handicap: 0, isAdmin: false, isActive: true },
-    { id: 2, firstName: "B", lastName: "B", membershipId: "", handicap: 0, isAdmin: false, isActive: true },
-    { id: 3, firstName: "C", lastName: "C", membershipId: "", handicap: 0, isAdmin: false, isActive: true },
-    { id: 4, firstName: "D", lastName: "D", membershipId: "", handicap: 0, isAdmin: false, isActive: true },
-    { id: 5, firstName: "E", lastName: "E", membershipId: "", handicap: 0, isAdmin: false, isActive: true },
-    { id: 6, firstName: "F", lastName: "F", membershipId: "", handicap: 0, isAdmin: false, isActive: true }
-];
-
-const matchSet: IMatchSet = {
-    id: 1,
-    seasonId: 1,
-    matchSetNumber: 1,
-    matches: [
-        { id: 10, golferA: golfers[0], golferB: golfers[1] }
-    ],
-    inactives: [
-        { id: 1, matchSetId: 1, golferId: 3 }
-    ]
-};
-
 class FakeComponent extends React.Component<any, EditMatchSetStore> {
     setState(data: any) {}
 }
 
 describe("The matchset editor", () => {
+
+    let golfers: ISelectableGolfer[];
+    let matchSet: IMatchSet;
+
+    beforeEach(() => {
+        golfers = [
+            { id: 1, firstName: "A", lastName: "A", membershipId: "", handicap: 0, isAdmin: false, isActive: true },
+            { id: 2, firstName: "B", lastName: "B", membershipId: "", handicap: 0, isAdmin: false, isActive: true },
+            { id: 3, firstName: "C", lastName: "C", membershipId: "", handicap: 0, isAdmin: false, isActive: true },
+            { id: 4, firstName: "D", lastName: "D", membershipId: "", handicap: 0, isAdmin: false, isActive: true },
+            { id: 5, firstName: "E", lastName: "E", membershipId: "", handicap: 0, isAdmin: false, isActive: true },
+            { id: 6, firstName: "F", lastName: "F", membershipId: "", handicap: 0, isAdmin: false, isActive: true }
+        ];
+
+        matchSet = {
+            id: 1,
+            seasonId: 1,
+            matchSetNumber: 1,
+            matches: [
+                { id: 10, golferA: golfers[0], golferB: golfers[1] }
+            ],
+            inactives: [
+                { id: 1, matchSetId: 1, golferId: 3 }
+            ]
+        };
+    });
+
 
     it("should organize view model", () => {
         var ems = new EditMatchSetStore(new FakeComponent());
@@ -42,16 +48,15 @@ describe("The matchset editor", () => {
     it("should select a golfer", () => {
         var ems = new EditMatchSetStore(new FakeComponent());
         ems.arrangeData(golfers, matchSet);
-        ems.selectGolfer(golfers[0]);
-
-        expect(golfers[0].isSelected).toBe(true);
+        ems.selectGolfer(ems.golfers[1]);
+        expect(ems.golfers[1].isSelected).toBe(true);
     });
 
     it("should pair golfers when 2 golfers selected", () => {
         var ems = new EditMatchSetStore(new FakeComponent());
         ems.arrangeData(golfers, matchSet);
-        ems.selectGolfer(golfers[5]);
-        ems.selectGolfer(golfers[3]);
+        ems.selectGolfer(ems.golfers[2]);
+        ems.selectGolfer(ems.golfers[0]);
 
         expect(ems.golfers.length).toBe(1);
         expect(ems.golfers[0].firstName).toBe("E");
@@ -61,4 +66,16 @@ describe("The matchset editor", () => {
         expect(ems.matchset.matches[1].id).toBe(-2);
     });
 
+    it("twice selected golfer undoes selection", () => {
+        var ems = new EditMatchSetStore(new FakeComponent());
+        ems.arrangeData(golfers, matchSet);
+        ems.selectGolfer(ems.golfers[1]);
+        ems.selectGolfer(ems.golfers[1]);
+        ems.selectGolfer(ems.golfers[1]);
+        ems.selectGolfer(ems.golfers[1]);
+
+        expect(ems.golfers.length).toBe(3);
+        expect(ems.matchset.matches.length).toBe(1);
+        expect(ems.golfers[1].isSelected).toBe(false);
+    });
 });

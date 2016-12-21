@@ -84,8 +84,14 @@ export class EditMatchSetStore {
     }
 
     selectGolfer(golfer: ISelectableGolfer) {
+        
         golfer.isSelected = !golfer.isSelected;
-        this.selected.push(golfer);
+
+        if(golfer.isSelected) {
+            this.selected.push(golfer);
+        } else {
+            this.selected.splice(this.selected.indexOf(golfer), 1);
+        }
         
         if(this.selected.length == 2) {
             this.pairGolfers();
