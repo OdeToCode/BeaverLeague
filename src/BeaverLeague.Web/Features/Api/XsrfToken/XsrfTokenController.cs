@@ -16,7 +16,8 @@ namespace BeaverLeague.Web.Features.Api.XsrfToken
         [HttpGet]
         public IActionResult Get()
         {
-            var tokens = _antiforgery.GetAndStoreTokens(HttpContext);            
+            var tokens = _antiforgery.GetAndStoreTokens(HttpContext);
+
             return new ObjectResult(new {
                 token = tokens.RequestToken,
                 tokenName = tokens.HeaderName    

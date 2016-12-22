@@ -47,6 +47,16 @@ a {
     background-color: #d8f1d3;
 }
 
+.panel-primary > .panel-heading {
+    color: #fff;
+    background-color: #59794e;
+    border-color: #59794e;
+}
+
+.panel.nogutter > .panel-body {
+	padding: 0px;
+}
+
 /*! ========================================================================
  * Bootstrap Toggle: bootstrap-toggle.css v2.2.0
  * http://www.bootstraptoggle.com
@@ -129,9 +139,3 @@ a {
 .toggle.btn-xs { min-width: 35px; min-height: 22px;}
 .toggle-on.btn-xs { padding-right: 12px; }
 .toggle-off.btn-xs { padding-left: 12px; }
-
-.panel-primary > .panel-heading {
-    color: #fff;
-    background-color: #59794e;
-    border-color: #59794e;
-}

@@ -20,17 +20,22 @@ interface IMatchListProps {
     matches: IMatch[]
 }
 
-const isSelected = (golfer: ISelectableGolfer) => 
-    golfer.isSelected ? "information" : ""
-
 const GolferList = (props: IGolferListProps) =>
-    <Panel header={<h3>{props.name}</h3>} bsStyle="primary">
+    <Panel header={<h3>{props.name}</h3>} bsStyle="primary" className="nogutter">
         <Table condensed hover>
             <tbody>
                 {
                     props.golfers.map(g => 
-                        <tr key={g.id} onClick={() => props.selectGolfer(g)} className={isSelected(g)}>
-                            <td>{g.firstName} {g.lastName}</td>
+                        <tr key={g.id} onClick={() => props.selectGolfer(g)}>
+                            <td>
+                                <span className="pull-right">
+                                    {
+                                        g.isSelected ? <a href="#" title="Selected"><i className="fa fa-check"></i></a> : 
+                                                       <a href="#" title="Inactive"><i className="fa fa-bed"></i></a>
+                                    }
+                                </span>
+                                {g.firstName} {g.lastName}
+                            </td>
                         </tr>
                     )
                 }
@@ -39,8 +44,8 @@ const GolferList = (props: IGolferListProps) =>
     </Panel>
 
 const InactiveList = (props: IInactiveListProps) =>
-    <Panel header={<h3>Inactive This Week</h3>} bsStyle="primary">
-        <Table condensed hover>
+    <Panel header={<h3>Inactive This Week</h3>} bsStyle="primary" className="nogutter">
+        <Table hover>
             <tbody>
                 {
                     props.inactives.map(i => 
@@ -52,15 +57,23 @@ const InactiveList = (props: IInactiveListProps) =>
     </Panel>
 
 const MatchList = (props: IMatchListProps) =>
-    <Panel header={<h3>Matchups</h3>} bsStyle="primary">
-        <Table condensed hover>
+    <Panel header={<h3>Matchups</h3>} bsStyle="primary" className="nogutter">
+        <Table hover>
             <tbody>
                 {
                     props.matches.map(m => 
-                        <tr key={m.id}>
+                        <tr key={m.id}>                                       
                             <td>
-                                <div>{m.golferA.firstName} {m.golferA.lastName} vs</div>
-                                <div>{m.golferB.firstName} {m.golferB.lastName}</div>
+                                <span className="pull-right">
+                                    <a href="#" title="Remove match" onClick={() => alert('bam')}>
+                                        <i className="fa fa-remove">                                            
+                                        </i>
+                                    </a>
+                                </span>
+                                <div>{m.golferA.firstName[0]} {m.golferA.lastName}
+                                    &nbsp;v&nbsp;
+                                    {m.golferB.firstName[0]} {m.golferB.lastName}                                                                        
+                                </div>                                 
                             </td>
                         </tr>
                     )
