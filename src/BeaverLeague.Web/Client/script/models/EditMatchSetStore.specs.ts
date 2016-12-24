@@ -78,4 +78,14 @@ describe("The matchset editor", () => {
         expect(ems.matchset.matches.length).toBe(1);
         expect(ems.golfers[1].isSelected).toBe(false);
     });
+
+    it("can delete a match", () => {
+        var ems = new EditMatchSetStore(new FakeComponent());
+        ems.arrangeData(golfers, matchSet);
+        
+        ems.deleteMatch(10);
+
+        expect(ems.matchset.matches.length).toBe(0);
+        expect(ems.golfers.length).toBe(5);
+    });
 });

@@ -17,7 +17,8 @@ interface IInactiveListProps {
 }
 
 interface IMatchListProps {
-    matches: IMatch[]
+    matches: IMatch[],
+    deleteMatch: (id: number) => void;
 }
 
 const GolferList = (props: IGolferListProps) =>
@@ -65,7 +66,7 @@ const MatchList = (props: IMatchListProps) =>
                         <tr key={m.id}>                                       
                             <td>
                                 <span className="pull-right">
-                                    <a href="#" title="Remove match" onClick={() => alert('bam')}>
+                                    <a href="#" title="Remove match" onClick={() => props.deleteMatch(m.id)}>
                                         <i className="fa fa-remove">                                            
                                         </i>
                                     </a>
@@ -113,7 +114,8 @@ export class EditMatchSet extends React.Component<IEditMatchSetProps, IEditMatch
                                     selectGolfer={(g) => store.selectGolfer(g) }/>
                     </Col>
                     <Col sm={4}>
-                        <MatchList matches={state.matchset.matches} />
+                        <MatchList matches={state.matchset.matches} 
+                                    deleteMatch={(id) => store.deleteMatch(id)} />
                     </Col>
                     <Col sm={4}>
                         <InactiveList inactives={state.inactives} />

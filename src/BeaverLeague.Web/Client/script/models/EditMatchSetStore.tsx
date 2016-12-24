@@ -83,6 +83,10 @@ export class EditMatchSetStore {
         });
     }
 
+    deleteMatch(id: number) {
+        
+    }
+
     selectGolfer(golfer: ISelectableGolfer) {
         
         golfer.isSelected = !golfer.isSelected;
