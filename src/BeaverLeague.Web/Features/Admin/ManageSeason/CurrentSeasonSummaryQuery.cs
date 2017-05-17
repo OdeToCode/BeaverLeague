@@ -18,7 +18,8 @@ namespace BeaverLeague.Web.Features.Admin.ManageSeason
         public List<MatchSet> MatchSets { get; set; }
     }
 
-    public class CurrentSeasonSummaryQueryHandler : IAsyncRequestHandler<CurrentSeasonSummaryQuery, CurrentSeasonSummaryResult>
+    public class CurrentSeasonSummaryQueryHandler 
+        : IAsyncRequestHandler<CurrentSeasonSummaryQuery, CurrentSeasonSummaryResult>
     {
         private readonly LeagueDb _db;
 

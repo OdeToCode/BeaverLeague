@@ -34,8 +34,8 @@ module.exports = {
              context: ".",
              manifest: require("./wwwroot/assets/vendor-manifest.json")
          }),
-        /*new webpack.optimize.UglifyJsPlugin({
+        new webpack.optimize.UglifyJsPlugin({
              compress: { warnings: false }
-        })*/
+        })
     ]
 };

@@ -19,7 +19,8 @@ namespace BeaverLeague.Web.Features.Account
         public bool RememberMe { get; set; }
     }
 
-    public class LoginUserCommandHandler : IAsyncRequestHandler<LoginUserCommand, SignInResult>
+    public class LoginUserCommandHandler : 
+        IAsyncRequestHandler<LoginUserCommand, SignInResult>
     {
         private readonly SignInManager _signInManager;
 

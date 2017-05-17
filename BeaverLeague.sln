@@ -24,6 +24,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "scripts", "scripts", "{9F38A174-5C9D-4F5A-A006-25E9B732955D}"
 	ProjectSection(SolutionItems) = preProject
 		scripts\addmigration.cmd = scripts\addmigration.cmd
+		scripts\js.cmd = scripts\js.cmd
 		scripts\recreatedb.cmd = scripts\recreatedb.cmd
 	EndProjectSection
 EndProject

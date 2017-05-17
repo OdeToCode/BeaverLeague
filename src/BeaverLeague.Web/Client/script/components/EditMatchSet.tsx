@@ -66,7 +66,7 @@ const MatchList = (props: IMatchListProps) =>
                         <tr key={m.id}>                                       
                             <td>
                                 <span className="pull-right">
-                                    <a href="#" title="Remove match" onClick={() => props.deleteMatch(m.id)}>
+                                    <a href="#" title="Remove match" onClick={() => props.deleteMatch(m)}>
                                         <i className="fa fa-remove">                                            
                                         </i>
                                     </a>

@@ -1,5 +1,6 @@
 ﻿using BeaverLeague.Web.Security;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BeaverLeague.Web.Features.Admin.ManageGolfers

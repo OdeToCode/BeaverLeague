@@ -84,7 +84,7 @@ export class EditMatchSetStore {
     }
 
     deleteMatch(id: number) {
-        
+             
     }
 
     selectGolfer(golfer: ISelectableGolfer) {
