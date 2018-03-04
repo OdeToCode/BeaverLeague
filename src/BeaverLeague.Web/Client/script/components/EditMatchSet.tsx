@@ -18,11 +18,11 @@ interface IInactiveListProps {
 
 interface IMatchListProps {
     matches: IMatch[],
-    deleteMatch: (id: number) => void;
+    deleteMatch: (match: IMatch) => void;
 }
 
 const GolferList = (props: IGolferListProps) =>
-    <Panel header={<h3>{props.name}</h3>} bsStyle="primary" className="nogutter">
+    <Panel Header={<h3>{props.name}</h3>} bsStyle="primary" className="nogutter">
         <Table condensed hover>
             <tbody>
                 {
@@ -114,9 +114,8 @@ export class EditMatchSet extends React.Component<IEditMatchSetProps, IEditMatch
                                     selectGolfer={(g) => store.selectGolfer(g) }/>
                     </Col>
                     <Col sm={4}>
-                        <MatchList matches={state.matchset.matches} 
-                                    deleteMatch={(id) => store.deleteMatch(id)} />
-                    </Col>
+                        
+                    </Col> 
                     <Col sm={4}>
                         <InactiveList inactives={state.inactives} />
                     </Col>

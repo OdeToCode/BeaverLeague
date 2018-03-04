@@ -159,8 +159,7 @@ export class Toggle extends React.Component<ToggleProps, ToggleState> {
 
     return (
       <div
-        ref='switcher'
-        disabled={this.props.disabled}
+        ref='switcher'            
         className={this.state.active ? activeClass : inactiveClass}
         onClick={this.onClick.bind(this)}
         style={style}>

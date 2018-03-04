@@ -4,7 +4,7 @@ const assets = path.join(__dirname, "wwwroot", "assets");
 
 module.exports = {
     resolve: {
-        extensions: ["", ".js"]
+        extensions: [".js"]
     },
     entry: {
         vendor: [
@@ -24,7 +24,6 @@ module.exports = {
         new webpack.DllPlugin({
             path: path.join(assets, "[name]-manifest.json"),
             name: '[name]_dll'
-        }),
-        //new webpack.optimize.UglifyJsPlugin({ compress: { warnings: false } })
+        })
     ]
 };

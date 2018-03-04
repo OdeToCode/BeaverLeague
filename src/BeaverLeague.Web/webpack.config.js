@@ -12,8 +12,8 @@ files.forEach(file => {
 
 module.exports = {
     resolve: {
-        extensions: ["", ".ts", ".tsx", ".js"],
-        modulesDirectories: [
+        extensions: [".ts", ".tsx", ".js"],
+        modules: [
             "./Client/script/",
             "./node_modules"
         ]
@@ -25,7 +25,7 @@ module.exports = {
     },
     devtool: "source-map",
     module: {
-        loaders: [
+        rules: [
           { test: /\.tsx?$/, loader: 'ts-loader' }
         ]
     }, 
@@ -33,9 +33,6 @@ module.exports = {
          new webpack.DllReferencePlugin({            
              context: ".",
              manifest: require("./wwwroot/assets/vendor-manifest.json")
-         }),
-        new webpack.optimize.UglifyJsPlugin({
-             compress: { warnings: false }
-        })
+         })
     ]
 };
