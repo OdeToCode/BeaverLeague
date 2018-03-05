@@ -44,7 +44,7 @@ namespace BeaverLeague.Web
         {                       
             app.UseDeveloperExceptionPage();
             app.UseFileServer();
-            app.UseCookieAuthentication(AppCookieAuthentication.Options);
+            app.UseAuthentication();
             app.UseMvc();
         }
     }

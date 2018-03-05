@@ -1,11 +1,12 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.Threading;
 using System.Threading.Tasks;
 using BeaverLeague.Web.Security;
 using MediatR;
 
 namespace BeaverLeague.Web.Features.Account
 {
-    public class LoginUserCommand : IAsyncRequest<SignInResult>
+    public class LoginUserCommand : IRequest<SignInResult>
     {
         [Required]
         [Display(Name = "Email Address")]
@@ -20,7 +21,7 @@ namespace BeaverLeague.Web.Features.Account
     }
 
     public class LoginUserCommandHandler : 
-        IAsyncRequestHandler<LoginUserCommand, SignInResult>
+        IRequestHandler<LoginUserCommand, SignInResult>
     {
         private readonly SignInManager _signInManager;
 
@@ -29,13 +30,13 @@ namespace BeaverLeague.Web.Features.Account
             _signInManager = signInManager;
         }
 
-        public async Task<SignInResult> Handle(LoginUserCommand command)
+        public async Task<SignInResult> Handle(LoginUserCommand command, CancellationToken cancel = default(CancellationToken))
         {
             var result = await _signInManager.SignInGolferAsync(
                 command.EmailAddress,
                 command.Password,
                 command.RememberMe);
             return result;
-        }
+        }      
     }
 }

@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 using BeaverLeague.Core.Models;
 using BeaverLeague.Data;
 using MediatR;
@@ -36,9 +38,10 @@ namespace BeaverLeague.Web.Messaging.Golfers
             _db = db;
         }
 
-        public List<GolferSummary> Handle(GolfersQuery query)
+        public Task<List<GolferSummary>> Handle(GolfersQuery query, CancellationToken cancel)
         {
-            return _db.Golfers
+            var golfers = 
+                _db.Golfers
                       .Where(g => !query.IsActive || query.IsActive && g.IsActive)
                       .OrderBy(g => g.LastName)
                       .Select(g => new GolferSummary
@@ -46,6 +49,7 @@ namespace BeaverLeague.Web.Messaging.Golfers
                             Id = g.Id, FirstName = g.FirstName, Handicap = g.Handicap, IsActive = g.IsActive, IsAdmin = g.IsAdmin, LastName = g.LastName, MembershipId = g.MembershipId
                         })
                       .ToList();
+            return Task.FromResult(golfers);
         }
     }
 }

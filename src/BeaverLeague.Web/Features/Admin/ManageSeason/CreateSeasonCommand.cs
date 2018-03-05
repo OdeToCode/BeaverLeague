@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.Threading;
 using System.Threading.Tasks;
 using BeaverLeague.Core.Models;
 using BeaverLeague.Data;
@@ -8,7 +9,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace BeaverLeague.Web.Features.Admin.ManageSeason
 {
-    public class CreateSeasonCommand : IAsyncRequest<CreateSeasonResult>
+    public class CreateSeasonCommand : IRequest<CreateSeasonResult>
     {
         [Required, MaxLength(80)] 
         public string Name { get; set; }                              
@@ -19,7 +20,7 @@ namespace BeaverLeague.Web.Features.Admin.ManageSeason
         public Season NewSeason { get; set; }
     }
 
-    public class CreateSeasonCommandHandler : IAsyncRequestHandler<CreateSeasonCommand, CreateSeasonResult>
+    public class CreateSeasonCommandHandler : IRequestHandler<CreateSeasonCommand, CreateSeasonResult>
     {
         private readonly LeagueDb _db;
 
@@ -28,7 +29,7 @@ namespace BeaverLeague.Web.Features.Admin.ManageSeason
             _db = db;
         }
 
-        public async Task<CreateSeasonResult> Handle(CreateSeasonCommand message)
+        public async Task<CreateSeasonResult> Handle(CreateSeasonCommand message, CancellationToken cancel)
         {
             var result = new CreateSeasonResult();
             await ValidateSeason(message, result);

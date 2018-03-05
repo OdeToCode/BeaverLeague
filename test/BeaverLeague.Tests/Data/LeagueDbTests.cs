@@ -23,7 +23,7 @@ namespace BeaverLeague.Tests.Data
             }
         }
 
-        readonly DbInstance<LeagueDb> _db = new DbInstance<LeagueDb>(
+        readonly DbInstance<LeagueDb> _db = new DbInstance<LeagueDb>(nameof(LeagueDbTests),
             options => new LeagueDb(options));
     }
 }

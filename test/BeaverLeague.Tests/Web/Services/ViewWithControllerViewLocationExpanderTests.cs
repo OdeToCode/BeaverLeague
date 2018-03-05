@@ -26,7 +26,7 @@ namespace BeaverLeague.Tests.Web.Services
                     Properties = { { "feature", expectedFeature} }
                 }
             };           
-            var expanderContext = new ViewLocationExpanderContext(controllerContext, "", "", "", false);
+            var expanderContext = new ViewLocationExpanderContext(controllerContext, "", "", "", "", false);
             var viewLocations = new List<string> {@"{3}\{0}.cshtml"};
 
             var result = service.ExpandViewLocations(expanderContext, viewLocations).ToList();

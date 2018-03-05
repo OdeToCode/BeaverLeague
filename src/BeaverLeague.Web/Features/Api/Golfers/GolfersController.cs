@@ -43,7 +43,7 @@ namespace BeaverLeague.Web.Features.Api.Golfers
         {
             if (ModelState.IsValid)
             {
-                var result = await _mediator.SendAsync(command);
+                var result = await _mediator.Send(command);
                 if (result.Success)
                 {
                     return Ok(result.Golfer);

@@ -29,7 +29,7 @@ namespace BeaverLeague.Web.Features.Account
         {
             if (ModelState.IsValid)
             {
-                var result = await _mediatr.SendAsync(command);
+                var result = await _mediatr.Send(command);
                 if (result.Success)
                 {
                     return Redirect("/");
@@ -44,7 +44,7 @@ namespace BeaverLeague.Web.Features.Account
         public async Task<IActionResult> Logout()
         {
             var command = new LogoutUserCommand();
-            await _mediatr.SendAsync(command);
+            await _mediatr.Send(command);
             return Redirect("~/");
         }
 

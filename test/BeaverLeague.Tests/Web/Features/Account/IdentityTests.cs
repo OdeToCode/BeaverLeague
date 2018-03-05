@@ -12,7 +12,7 @@ namespace BeaverLeague.Tests.Web.Features.Account
     {
         public IdentityTests()
         {
-            _db = new LeagueDbInstance();
+            _db = new LeagueDbInstance(nameof(IdentityTests));
             _passwordManager = new PasswordManager();
             _context = new HttpContextWithAuthentication();
             _logger = new LoggerFactory().CreateLogger<SignInManager>();
@@ -33,7 +33,7 @@ namespace BeaverLeague.Tests.Web.Features.Account
             var handler = new LoginUserCommandHandler(_signInManager);
             var result = await handler.Handle(command);
 
-            Assert.Equal(true, result.Success);
+            Assert.True(result.Success);
         }
 
         [Fact]
@@ -48,7 +48,7 @@ namespace BeaverLeague.Tests.Web.Features.Account
             var handler = new LoginUserCommandHandler(_signInManager);
             var result = await handler.Handle(command);
 
-            Assert.Equal(false, result.Success);
+            Assert.False(result.Success);
             Assert.True(result.Errors.Count > 0, "No errors present in the login result");
         }
 

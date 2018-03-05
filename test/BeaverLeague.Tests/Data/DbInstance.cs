@@ -1,32 +1,27 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
 
 namespace BeaverLeague.Tests.Data
 {
-    public class DbInstance<T> where T : DbContext
+    public class DbInstance<T> where T: DbContext
     {
-        public DbInstance(Func<DbContextOptions<T>, T> factory)
+        private readonly Func<DbContextOptions<T>, T> factory;
+
+        public DbInstance(string name, Func<DbContextOptions<T>, T> factory)
         {
-            _provider = new ServiceCollection()
-             .AddEntityFrameworkInMemoryDatabase()
-             .BuildServiceProvider();
-
-            var builder = new DbContextOptionsBuilder<T>();
-            builder.UseInMemoryDatabase()
-                   .UseInternalServiceProvider(_provider);
-
-            _options = builder.Options;
-            _factory = factory;
+            Name = name;
+            this.factory = factory;
         }
+
+        public string Name { get; }
 
         public T NewContext()
         {
-            return _factory(_options);
+            var options = new DbContextOptionsBuilder<T>()
+                .UseInMemoryDatabase(Name)
+                .Options;
+
+            return factory(options);
         }
-     
-        private readonly IServiceProvider _provider;
-        private readonly DbContextOptions<T> _options;
-        private readonly Func<DbContextOptions<T>, T> _factory;
     }
 }

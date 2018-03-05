@@ -19,49 +19,25 @@ namespace BeaverLeague.Web.Services
             _inner = new Mediator(single, multi);
         }
 
-        public TResponse Send<TResponse>(IRequest<TResponse> request)
-        {
-            _logger.LogTrace("Send {@request}", request);
-
-            var response = _inner.Send(request);
-            LogResponseIfError(response);
-            return response;
-        }
-
-        public async Task<TResponse> SendAsync<TResponse>(ICancellableAsyncRequest<TResponse> request, CancellationToken cancellationToken)
+        public async Task<T> Send<T>(IRequest<T> request, CancellationToken cancellationToken = default(CancellationToken))
         {
             _logger.LogTrace("SendAsync {@request}", request);
 
-            var response =  await _inner.SendAsync(request, cancellationToken);
+            var response = await _inner.Send(request, cancellationToken);
             LogResponseIfError(response);
             return response;
         }
 
-        public async Task<TResponse> SendAsync<TResponse>(IAsyncRequest<TResponse> request)
-        {
-            _logger.LogTrace("Send async {@request", request);
-
-            var response = await _inner.SendAsync(request);
-            LogResponseIfError(response);
-            return response;
-        }
-
-        public void Publish(INotification notification)
-        {
-            _logger.LogTrace("Publish {@notification}", notification);
-            _inner.Publish(notification);
-        }
-
-        public Task PublishAsync(IAsyncNotification notification)
+        public Task Publish<TNotification>(TNotification notification, CancellationToken cancellationToken = default(CancellationToken)) where TNotification : INotification
         {
             _logger.LogTrace("PublishAsync {@notification}", notification);
-            return _inner.PublishAsync(notification);
+            return _inner.Publish(notification, cancellationToken);
         }
 
-        public Task PublishAsync(ICancellableAsyncNotification notification, CancellationToken cancellationToken)
+        public Task Send(IRequest request, CancellationToken cancellationToken = default(CancellationToken))
         {
-            _logger.LogTrace("PublishAsync {@notification}", notification);
-            return _inner.PublishAsync(notification, cancellationToken);
+            _logger.LogTrace("SendAsync {@request}", request);
+            return _inner.Send(request, cancellationToken);
         }
 
         private void LogResponseIfError(object response)

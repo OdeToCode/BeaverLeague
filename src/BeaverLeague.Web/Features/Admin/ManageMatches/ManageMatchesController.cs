@@ -19,7 +19,7 @@ namespace BeaverLeague.Web.Features.Admin.ManageMatches
         public async Task<IActionResult> Create(int seasonId)
         {
             var command = new CreateMatchSetCommand {SeasonId = seasonId};
-            var result = await _mediator.SendAsync(command);
+            var result = await _mediator.Send(command);
             return RedirectToAction("Edit", new {matchSetId = result.MatchSet.Id });
         }
 

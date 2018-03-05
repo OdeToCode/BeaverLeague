@@ -15,7 +15,7 @@ namespace BeaverLeague.Tests.Web.Features.Admin.ManageSeason
     {
         public ManageSeasonControllerTests()
         {
-            LeagueDbInstance db = new LeagueDbInstance();
+            LeagueDbInstance db = new LeagueDbInstance(nameof(ManageSeasonControllerTests));
             _testContext = db.NewContext();
             _verifyContext = db.NewContext();
 
@@ -33,7 +33,7 @@ namespace BeaverLeague.Tests.Web.Features.Admin.ManageSeason
 
             var verifySeason = await _verifyContext.Seasons.SingleOrDefaultAsync(s => s.Name == "2017");
             Assert.IsType<RedirectToActionResult>(result);
-            Assert.Equal(verifySeason.Name, "2017");
+            Assert.Equal("2017", verifySeason.Name);
         }
 
         [Fact]

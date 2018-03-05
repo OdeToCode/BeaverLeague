@@ -15,7 +15,7 @@ namespace BeaverLeague.Tests.Web.Services
 
             hasher.SetPassword(golfer, "123abc!@#");
             Assert.True(!string.IsNullOrEmpty(golfer.PasswordHash));
-            Assert.Equal(true, hasher.VerifyPassword(golfer, "123abc!@#"));
+            Assert.True(hasher.VerifyPassword(golfer, "123abc!@#"));
         }
 
         [Fact]
@@ -25,7 +25,7 @@ namespace BeaverLeague.Tests.Web.Services
             var golfer = new Golfer();
 
             hasher.SetPassword(golfer, "123abc!@#");
-            Assert.Equal(false, hasher.VerifyPassword(golfer, "1"));
+            Assert.False(hasher.VerifyPassword(golfer, "1"));
         }
     }
 }

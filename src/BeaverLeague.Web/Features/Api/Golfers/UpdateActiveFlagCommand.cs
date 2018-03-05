@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Threading;
+using System.Threading.Tasks;
 using BeaverLeague.Core.Models;
 using BeaverLeague.Data;
 using BeaverLeague.Web.Messaging;
@@ -7,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace BeaverLeague.Web.Features.Api.Golfers
 {
-    public class UpdateActiveFlagCommand : IAsyncRequest<UpdateActiveFlagResult>
+    public class UpdateActiveFlagCommand : IRequest<UpdateActiveFlagResult>
     {
         public int Id { get; set; }
         public bool Value { get; set; }
@@ -18,7 +19,7 @@ namespace BeaverLeague.Web.Features.Api.Golfers
         public Golfer Golfer { get; set; }
     }
 
-    public class UpdateActiveFlagHandler : IAsyncRequestHandler<UpdateActiveFlagCommand, UpdateActiveFlagResult>
+    public class UpdateActiveFlagHandler : IRequestHandler<UpdateActiveFlagCommand, UpdateActiveFlagResult>
     {
         private readonly LeagueDb _db;
 
@@ -27,7 +28,7 @@ namespace BeaverLeague.Web.Features.Api.Golfers
             _db = db;
         }
 
-        public async Task<UpdateActiveFlagResult> Handle(UpdateActiveFlagCommand command)
+        public async Task<UpdateActiveFlagResult> Handle(UpdateActiveFlagCommand command, CancellationToken cancel)
         {
             var result = new UpdateActiveFlagResult();
             var golfer = await _db.Golfers.FirstOrDefaultAsync(g => g.Id == command.Id);

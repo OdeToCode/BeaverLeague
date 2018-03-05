@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿
+using Microsoft.AspNetCore.Authentication.Cookies;
 
 namespace BeaverLeague.Web.Security
 {
@@ -10,8 +11,6 @@ namespace BeaverLeague.Web.Security
             {
                 var options = new CookieAuthenticationOptions
                 {
-                    AutomaticAuthenticate = true,
-                    AutomaticChallenge = true
                 };
 
                 return options;

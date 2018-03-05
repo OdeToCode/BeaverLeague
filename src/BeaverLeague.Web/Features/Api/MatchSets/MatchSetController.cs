@@ -20,7 +20,7 @@ namespace BeaverLeague.Web.Features.Api.MatchSets
         public async Task<IActionResult> Get(int id)
         {
             var query = new MatchSetQuery {MatchSetId = id};
-            var result = await _mediator.SendAsync(query);
+            var result = await _mediator.Send(query);
             return new ObjectResult(result);
         }
     }

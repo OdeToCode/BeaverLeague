@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using BeaverLeague.Core.Models;
 using BeaverLeague.Data;
@@ -7,7 +8,7 @@ using MediatR;
 
 namespace BeaverLeague.Web.Features.Admin.ManageMatches
 {
-    public class CreateMatchSetCommand : IAsyncRequest<CreateMatchSetResult>
+    public class CreateMatchSetCommand : IRequest<CreateMatchSetResult>
     {
         public int SeasonId { get; set; }
     }
@@ -17,7 +18,7 @@ namespace BeaverLeague.Web.Features.Admin.ManageMatches
         public MatchSet MatchSet { get; set; }
     }
 
-    public class CreateMatchSetCommandHandler : IAsyncRequestHandler<CreateMatchSetCommand, CreateMatchSetResult>
+    public class CreateMatchSetCommandHandler : IRequestHandler<CreateMatchSetCommand, CreateMatchSetResult>
     {
         private readonly LeagueDb _db;
 
@@ -26,7 +27,7 @@ namespace BeaverLeague.Web.Features.Admin.ManageMatches
             _db = db;
         }
 
-        public async Task<CreateMatchSetResult> Handle(CreateMatchSetCommand command)
+        public async Task<CreateMatchSetResult> Handle(CreateMatchSetCommand command, CancellationToken cancel)
         {
             var set = new MatchSet
             {

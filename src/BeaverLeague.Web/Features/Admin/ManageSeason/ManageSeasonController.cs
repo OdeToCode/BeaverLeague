@@ -20,7 +20,7 @@ namespace BeaverLeague.Web.Features.Admin.ManageSeason
         public async Task<IActionResult> CurrentSeason()
         {
             var query = new CurrentSeasonSummaryQuery();
-            var model = await _mediator.SendAsync(query);
+            var model = await _mediator.Send(query);
             return View(model);
         }
 
@@ -35,7 +35,7 @@ namespace BeaverLeague.Web.Features.Admin.ManageSeason
         {
             if (ModelState.IsValid)
             {
-                var result = await _mediator.SendAsync(command);
+                var result = await _mediator.Send(command);
                 if (result.Success)
                 {
                     return RedirectToAction(nameof(CurrentSeason));

@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using BeaverLeague.Core.Models;
 using BeaverLeague.Data;
@@ -8,7 +9,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace BeaverLeague.Web.Features.Admin.ManageSeason
 {
-    public class CurrentSeasonSummaryQuery : IAsyncRequest<CurrentSeasonSummaryResult>
+    public class CurrentSeasonSummaryQuery : IRequest<CurrentSeasonSummaryResult>
     {
     }
 
@@ -19,7 +20,7 @@ namespace BeaverLeague.Web.Features.Admin.ManageSeason
     }
 
     public class CurrentSeasonSummaryQueryHandler 
-        : IAsyncRequestHandler<CurrentSeasonSummaryQuery, CurrentSeasonSummaryResult>
+        : IRequestHandler<CurrentSeasonSummaryQuery, CurrentSeasonSummaryResult>
     {
         private readonly LeagueDb _db;
 
@@ -28,7 +29,7 @@ namespace BeaverLeague.Web.Features.Admin.ManageSeason
             _db = db;
         }
 
-        public async Task<CurrentSeasonSummaryResult> Handle(CurrentSeasonSummaryQuery message)
+        public async Task<CurrentSeasonSummaryResult> Handle(CurrentSeasonSummaryQuery message, CancellationToken cancel)
         {
             var result = new CurrentSeasonSummaryResult();
             result.CurrentSeason = await _db.Seasons.SingleOrDefaultAsync(s => s.IsCurrent);
