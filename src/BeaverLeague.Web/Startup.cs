@@ -34,10 +34,9 @@ namespace BeaverLeague.Web
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddCustomMvc();
+            services.AddMvc();
             services.AddSecurity();
-            services.AddCustomMediator();
-            services.AddDataStores(Configuration.GetConnectionString(nameof(LeagueDb)));            
+            services.AddDataStores(Configuration);            
         }
 
         public void Configure(IApplicationBuilder app)
