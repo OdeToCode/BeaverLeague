@@ -5,7 +5,9 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace BeaverLeague.Web.Features.Admin.ManageGolfers
 {
-    [UserIsAdmin]
+    
+
+    [UserIsAdmin]   
     [Route("admin/[controller]/[action]")]
     public class ManageGolfersController : Controller
     {
@@ -13,6 +15,8 @@ namespace BeaverLeague.Web.Features.Admin.ManageGolfers
 
         public ManageGolfersController(IMediator mediatr)
         {
+
+
             _mediatr = mediatr;
         }
 

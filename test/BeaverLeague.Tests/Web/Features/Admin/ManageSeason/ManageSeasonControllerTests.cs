@@ -19,8 +19,7 @@ namespace BeaverLeague.Tests.Web.Features.Admin.ManageSeason
             _testContext = db.NewContext();
             _verifyContext = db.NewContext();
 
-            SingleInstanceFactory factory = request => new CreateSeasonCommandHandler(_testContext);
-            _mediator = new Mediator(factory, null);
+            _mediator = new Mediator(null);
         }
 
         [Fact]

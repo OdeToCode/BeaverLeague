@@ -2,7 +2,7 @@
 
 namespace BeaverLeague.Web.Features.Home
 {
-    [Route("")]
+    //[Route("")]
     public class HomeController : Controller
     {
         public ViewResult Home()

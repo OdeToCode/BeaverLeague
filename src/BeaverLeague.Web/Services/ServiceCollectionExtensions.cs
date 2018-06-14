@@ -10,9 +10,7 @@ namespace BeaverLeague.Web.Services
     public static class ServiceCollectionExtensions
     {
         public static IServiceCollection AddCustomMediator(this IServiceCollection services)
-        {
-            services.AddMediatR(typeof(Startup));
-            services.AddScoped<IMediator, BeaverMediator>();
+        {          
             return services;
         }
 

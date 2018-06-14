@@ -29,7 +29,8 @@ namespace BeaverLeague.Web.Messaging.Golfers
         public bool IsActive { get; set; }
     }
 
-    public class GolfersQueryHandler : IRequestHandler<GolfersQuery, List<GolferSummary>>
+    public class GolfersQueryHandler : 
+           IRequestHandler<GolfersQuery, List<GolferSummary>>
     {
         private readonly LeagueDb _db;
 

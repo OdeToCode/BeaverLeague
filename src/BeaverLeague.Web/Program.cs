@@ -16,7 +16,6 @@ namespace BeaverLeague.Web
             var host = new WebHostBuilder()
                 .UseKestrel()
                 .UseContentRoot(Directory.GetCurrentDirectory())
-                .UseIISIntegration()
                 .UseStartup<Startup>()
                 .Build();
 
@@ -27,7 +26,8 @@ namespace BeaverLeague.Web
 
         private static void ProcessDbCommands(string[] args, IWebHost host)
         {
-            var services = (IServiceScopeFactory)host.Services.GetService(typeof(IServiceScopeFactory));
+            var services = (IServiceScopeFactory)
+                host.Services.GetService(typeof(IServiceScopeFactory));
 
             using (var scope = services.CreateScope())
             {

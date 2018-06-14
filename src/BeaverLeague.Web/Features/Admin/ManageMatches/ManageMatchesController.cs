@@ -1,9 +1,15 @@
 ﻿using System.Threading.Tasks;
 using MediatR;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BeaverLeague.Web.Features.Admin.ManageMatches
 {
+
+    // /get
+
+    
+
     [Route("admin/[controller]/[action]")]
     public class ManageMatchesController : Controller
     {
@@ -18,6 +24,9 @@ namespace BeaverLeague.Web.Features.Admin.ManageMatches
         [HttpPost, ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(int seasonId)
         {
+            
+
+
             var command = new CreateMatchSetCommand {SeasonId = seasonId};
             var result = await _mediator.Send(command);
             return RedirectToAction("Edit", new {matchSetId = result.MatchSet.Id });

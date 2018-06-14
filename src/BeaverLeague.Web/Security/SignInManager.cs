@@ -3,6 +3,7 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using BeaverLeague.Core.Models;
 using BeaverLeague.Data;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
@@ -36,7 +37,7 @@ namespace BeaverLeague.Web.Security
 
         public async Task<bool> SignOutGolferAsync()
         {
-            await _contextAccessor.HttpContext.Authentication.SignOutAsync(SchemeName);
+            await _contextAccessor.HttpContext.SignOutAsync(SchemeName);
             return true;
         }
 
@@ -57,8 +58,8 @@ namespace BeaverLeague.Web.Security
             {
                 if (_passwordManager.VerifyPassword(golfer, password))
                 {
-                    var identity = CreateIdentity(golfer);
-                    await _contextAccessor.HttpContext.Authentication.SignInAsync(SchemeName, identity);
+                    var identity = CreateIdentity(golfer);   
+                    await _contextAccessor.HttpContext.SignInAsync(SchemeName, identity);
                     result.Success = true;
                     _logger.LogInformation("User {@golfer} logged in", golfer);
                 }

@@ -15,7 +15,6 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "scripts", "scripts", "{9F38A174-5C9D-4F5A-A006-25E9B732955D}"
 	ProjectSection(SolutionItems) = preProject
 		scripts\addmigration.cmd = scripts\addmigration.cmd
-		scripts\js.cmd = scripts\js.cmd
 		scripts\recreatedb.cmd = scripts\recreatedb.cmd
 	EndProjectSection
 EndProject
@@ -26,6 +25,8 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BeaverLeague.Data", "src\BeaverLeague.Data\BeaverLeague.Data.csproj", "{B5CE25C9-BDA3-4786-8173-9842EAF1B7A7}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BeaverLeague.Tests", "test\BeaverLeague.Tests\BeaverLeague.Tests.csproj", "{CE701577-E42F-41F0-BE79-DC67360DCC85}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BeaverLeague.Client", "src\BeaverLeague.Client\BeaverLeague.Client.csproj", "{8AE45FED-1F8C-43C7-9FF2-0A8BD4254B8B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -49,6 +50,10 @@ Global
 		{CE701577-E42F-41F0-BE79-DC67360DCC85}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CE701577-E42F-41F0-BE79-DC67360DCC85}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CE701577-E42F-41F0-BE79-DC67360DCC85}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8AE45FED-1F8C-43C7-9FF2-0A8BD4254B8B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8AE45FED-1F8C-43C7-9FF2-0A8BD4254B8B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8AE45FED-1F8C-43C7-9FF2-0A8BD4254B8B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8AE45FED-1F8C-43C7-9FF2-0A8BD4254B8B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -58,6 +63,7 @@ Global
 		{E3D08D1A-3274-4B76-A449-5726B45663F5} = {40430952-21DC-4558-BD6B-3BF918F34146}
 		{B5CE25C9-BDA3-4786-8173-9842EAF1B7A7} = {40430952-21DC-4558-BD6B-3BF918F34146}
 		{CE701577-E42F-41F0-BE79-DC67360DCC85} = {9B69FBDE-0DC3-4076-ABF5-DF53B80397C1}
+		{8AE45FED-1F8C-43C7-9FF2-0A8BD4254B8B} = {40430952-21DC-4558-BD6B-3BF918F34146}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {61999EDB-7A8C-4A37-9093-776CC60DF488}

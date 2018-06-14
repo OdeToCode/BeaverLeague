@@ -19,8 +19,12 @@ namespace BeaverLeague.Web.Security
        
         AuthorizationPolicy IsAdmin()
         {
-            return NewPolicyBuilder()
-                    .RequireClaim("isAdmin", "true")
+            var scheme = SignInManager.SchemeName;
+            var builder = new AuthorizationPolicyBuilder(scheme);
+            return 
+                 builder.RequireClaim("isAdmin", "true")
+                        .RequireClaim("department", "Sales")
+                        .RequireClaim("canEdit", "true")
                     .Build();
         }
 

@@ -46,6 +46,7 @@ namespace BeaverLeague.Web
             app.UseFileServer();
             app.UseAuthentication();
             app.UseMvc();
+            app.UseBlazor<Client.Program>();
         }
     }
 }
