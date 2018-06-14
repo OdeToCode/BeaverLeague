@@ -1,11 +1,6 @@
-﻿using System;
-using System.IO;
+﻿using System.IO;
 using Microsoft.AspNetCore.Hosting;
-using BeaverLeague.Data;
-using Microsoft.EntityFrameworkCore;
-using System.Linq;
 using BeaverLeague.Web.Data;
-using Microsoft.Extensions.DependencyInjection;
 
 namespace BeaverLeague.Web
 {
@@ -17,51 +12,20 @@ namespace BeaverLeague.Web
                 .UseKestrel()
                 .UseContentRoot(Directory.GetCurrentDirectory())
                 .UseStartup<Startup>()
+                .ConfigureAppConfiguration(builder =>
+                {
+                    // todo move config here
+                })
+                .ConfigureLogging(builder =>
+                {
+                    // todo move logging here
+                })
                 .Build();
 
-            ProcessDbCommands(args, host);
+            var dbCommands = new DbCommands(args, host);
+            dbCommands.Process();
 
             host.Run();
-        }
-
-        private static void ProcessDbCommands(string[] args, IWebHost host)
-        {
-            var services = (IServiceScopeFactory)
-                host.Services.GetService(typeof(IServiceScopeFactory));
-
-            using (var scope = services.CreateScope())
-            {
-                if (args.Contains("dropdb"))
-                {
-                    Console.WriteLine("Dropping database");
-                    var db = GetLeagueDb(scope);
-                    db.Database.EnsureDeleted();
-                }
-                if (args.Contains("migratedb"))
-                {
-                    Console.WriteLine("Migrating database");
-                    var db = GetLeagueDb(scope);
-                    db.Database.Migrate();
-                }
-                if (args.Contains("seeddb"))
-                {
-                    Console.WriteLine("Seeding database");
-                    var db = GetLeagueDb(scope);
-                    db.Seed();
-                }
-            }
-
-            if (args.Contains("stop"))
-            {
-                Console.WriteLine("Exiting on stop command");
-                Environment.Exit(0);
-            }                 
-        }
-
-        private static LeagueDb GetLeagueDb(IServiceScope services)
-        {
-            var db = services.ServiceProvider.GetRequiredService<LeagueDb>();           
-            return db;
         }
     }
 }
