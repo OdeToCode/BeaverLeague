@@ -8,14 +8,16 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.Blazor.Browser" Version="0.5.1" PrivateAssets="all" />
-    <PackageReference Include="Microsoft.AspNetCore.Blazor.Build" Version="0.5.1" />
-    <DotNetCliToolReference Include="Microsoft.AspNetCore.Blazor.Cli" Version="0.4.0" />
+    <Compile Remove="Services\**" />
+    <Content Remove="Services\**" />
+    <EmbeddedResource Remove="Services\**" />
+    <None Remove="Services\**" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Services\" />
-    <Folder Include="Shared\" />
+    <PackageReference Include="Microsoft.AspNetCore.Blazor.Browser" Version="0.5.1" PrivateAssets="all" />
+    <PackageReference Include="Microsoft.AspNetCore.Blazor.Build" Version="0.5.1" />
+    <DotNetCliToolReference Include="Microsoft.AspNetCore.Blazor.Cli" Version="0.4.0" />
   </ItemGroup>
 
 </Project>

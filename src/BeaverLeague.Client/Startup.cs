@@ -1,4 +1,4 @@
-﻿using BeaverLeague.Client;
+﻿using BeaverLeague.Client.Components;
 using Microsoft.AspNetCore.Blazor.Builder;
 using Microsoft.Extensions.DependencyInjection;
 

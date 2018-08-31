@@ -1,16 +1,11 @@
-﻿using BeaverLeague.Data;
-using BeaverLeague.Web.Security;
-using BeaverLeague.Web.Services;
-using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using Serilog;
-using Serilog.Formatting.Json;
 
 namespace BeaverLeague.Web
-{    
+{
     public class Startup
     {
         public Startup(IHostingEnvironment environment, ILoggerFactory loggerFactory)
@@ -21,29 +16,20 @@ namespace BeaverLeague.Web
                     .AddJsonFile("appsettings.json")
                     .AddJsonFile($"appsettings.{environment.EnvironmentName}.json", optional: true)
                     .AddEnvironmentVariables()
-                    .Build();
-
-            Log.Logger = new LoggerConfiguration()
-               .MinimumLevel.Verbose()
-               //.WriteTo.RollingFile(new JsonFormatter(), "log-{Date}.json")
-               .CreateLogger();
-            loggerFactory.AddSerilog();
+                    .Build();                  
         }
 
         public IConfiguration Configuration { get; protected set; }
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc();
-            services.AddSecurity();
-            services.AddDataStores(Configuration);            
+            services.AddMvc();           
         }
 
         public void Configure(IApplicationBuilder app)
         {                       
             app.UseDeveloperExceptionPage();
             app.UseFileServer();
-            app.UseAuthentication();
             app.UseMvc();
             app.UseBlazor<Client.Program>();
         }

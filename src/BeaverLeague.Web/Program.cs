@@ -1,6 +1,5 @@
 ﻿using System.IO;
 using Microsoft.AspNetCore.Hosting;
-using BeaverLeague.Web.Data;
 
 namespace BeaverLeague.Web
 {
@@ -22,10 +21,7 @@ namespace BeaverLeague.Web
                 })
                 .CaptureStartupErrors(true)
                 .Build();
-
-            //var dbCommands = new DbCommands(args, host);
-            //dbCommands.Process();
-
+            
             host.Run();
         }
     }
