@@ -23,8 +23,8 @@ namespace BeaverLeague.Web
                 .CaptureStartupErrors(true)
                 .Build();
 
-            var dbCommands = new DbCommands(args, host);
-            dbCommands.Process();
+            //var dbCommands = new DbCommands(args, host);
+            //dbCommands.Process();
 
             host.Run();
         }
