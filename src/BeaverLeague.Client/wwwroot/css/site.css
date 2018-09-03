@@ -1,4 +1,8 @@
-﻿.page-center {
+﻿body {
+    background-color: #ddd;
+}
+
+.page-center {
     position: absolute;
     top: 0;
     bottom: 0;
@@ -8,8 +12,8 @@
 }
 
 .loader {
-    border: 16px solid #f3f3f3;
-    border-top: 16px solid #3498db; 
+    border: 16px solid #CCCCCC;
+    border-top: 16px solid #770000; 
     border-radius: 50%;
     width: 360px;
     height: 360px;

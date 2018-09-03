@@ -1,0 +1,24 @@
+﻿@page "/roster"
+@inject ApiClient apiClient
+
+roster
+<table class="table">
+    @foreach (var golfer in Golfers)
+    {
+        <tr>
+            <td>golfer.LastName</td>
+            <td>golfer.FirstName</td>
+        </tr>
+    }
+</table>
+
+@functions { 
+
+    Golfer[] Golfers = new Golfer[0];
+
+    override protected async Task OnInitAsync()
+    {
+        Golfers = await apiClient.GetAllGolfers();
+        StateHasChanged();
+    }
+}

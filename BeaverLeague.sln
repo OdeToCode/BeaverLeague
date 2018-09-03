@@ -26,7 +26,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BeaverLeague.Data", "src\Be
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BeaverLeague.Tests", "test\BeaverLeague.Tests\BeaverLeague.Tests.csproj", "{CE701577-E42F-41F0-BE79-DC67360DCC85}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BeaverLeague.Client", "src\BeaverLeague.Client\BeaverLeague.Client.csproj", "{8AE45FED-1F8C-43C7-9FF2-0A8BD4254B8B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BeaverLeague.Client", "src\BeaverLeague.Client\BeaverLeague.Client.csproj", "{8AE45FED-1F8C-43C7-9FF2-0A8BD4254B8B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
