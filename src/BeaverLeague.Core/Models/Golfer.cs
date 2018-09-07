@@ -8,7 +8,7 @@ namespace BeaverLeague.Core.Models
 
         public int MembershipId { get; set; }
 
-        public float Handicap { get; set; }
+        public float ClubHandicap { get; set; }
 
         [MaxLength(80), Required]
         public string FirstName { get; set; }
