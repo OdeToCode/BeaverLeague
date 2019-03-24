@@ -19,11 +19,6 @@ namespace BeaverLeague.Core.Models
         [MaxLength(80)]
         public string EmailAddress { get; set; }
 
-        [MaxLength(255)]
-        public string PasswordHash { get; set; }
-
-        public bool IsAdmin { get; set; }
-
         public bool IsActive { get; set; }
     }
 }
