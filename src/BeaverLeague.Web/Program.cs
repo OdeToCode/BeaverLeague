@@ -1,4 +1,5 @@
 ﻿using System.IO;
+using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 
@@ -8,18 +9,9 @@ namespace BeaverLeague.Web
     {
         public static void Main(string[] args)
         {
-            var host = new WebHostBuilder()
-                .UseKestrel()
-                .UseContentRoot(Directory.GetCurrentDirectory())
-                .UseStartup<Startup>()
-                .ConfigureAppConfiguration(builder =>
-                {
-                    builder.AddJsonFile("appsettings.json")
-                           .AddEnvironmentVariables();
-                })
-                .CaptureStartupErrors(true)
-                .Build();
-            
+            var host = WebHost.CreateDefaultBuilder(args)
+                              .UseStartup<Startup>()
+                              .Build();
             host.Run();
         }
     }

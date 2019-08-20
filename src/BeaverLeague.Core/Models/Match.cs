@@ -12,16 +12,16 @@ namespace BeaverLeague.Core.Models
         public bool IsActive { get; set; }
 
         [MaxLength(80), Required]
-        public string FirstName { get; set; }
+        public string FirstName { get; set; } = "";
 
         [MaxLength(80), Required]
-        public string LastName { get; set; }
+        public string LastName { get; set; } = "";
 
         [MaxLength(80)]
-        public string EmailAddress { get; set; }
+        public string EmailAddress { get; set; } = "";
 
         [MaxLength(80), Required]
-        public string PhoneNumber { get; set; }
+        public string PhoneNumber { get; set; } = "";
 
     }
 

@@ -1,23 +1,15 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp2.1</TargetFramework>
+    <TargetFramework>netcoreapp3.0</TargetFramework>
   </PropertyGroup>
-
-  <ItemGroup>
-    <None Update="wwwroot\**\*">
-      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
-    </None>
-  </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\BeaverLeague.Core\BeaverLeague.Core.csproj" />
     <ProjectReference Include="..\BeaverLeague.Data\BeaverLeague.Data.csproj" />
   </ItemGroup>
-
-  <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.All" />
-    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.1.9" />
-  </ItemGroup>
+  <PropertyGroup>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
 
 </Project>

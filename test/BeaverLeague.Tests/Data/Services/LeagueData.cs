@@ -9,8 +9,6 @@ namespace BeaverLeague.Tests.Data.Services
 {
     public class LeagueDataTests
     {
-        private LeagueDbContext leagueDbContext;
-
         [Fact]
         public void CanSaveAndRetrieveSeason()
         {

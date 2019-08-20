@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 
 namespace BeaverLeague.Web
 {
@@ -8,17 +9,23 @@ namespace BeaverLeague.Web
     {      
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc();           
+            services.AddControllers();
+            services.AddRazorPages();
         }
 
-        public void Configure(IApplicationBuilder app, IHostingEnvironment environment)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment environment)
         {
             if (!environment.IsProduction())
             {
                 app.UseDeveloperExceptionPage();
             }
             app.UseFileServer();
-            app.UseMvc();
+            app.UseRouting();
+            app.UseEndpoints(c =>
+            {
+                c.MapControllers();
+                c.MapRazorPages();
+            });
         }
     }
 }
