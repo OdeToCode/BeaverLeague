@@ -1,5 +1,7 @@
 ﻿using BeaverLeague.Core.Models;
+using Microsoft.EntityFrameworkCore;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -17,13 +19,24 @@ namespace BeaverLeague.Data.Services
 
         public Season GetCurrentSeason()
         {
-            var season = db.Seasons.OrderByDescending(s => s.Id).First();
+            var season = db.Seasons
+                           .Include(s => s.Weeks)
+                           .ThenInclude(m => m.Matches)
+                           .First();
             return season;
         }
 
-        public void Add<T>(T entity)
+        public void Add(object entity)
         {
             db.Add(entity);
+        }
+
+        public void Add(params object[] entities)
+        {
+            foreach(var entity in entities)
+            {
+                Add(entity);
+            }
         }
 
         public int Commit()

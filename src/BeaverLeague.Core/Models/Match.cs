@@ -20,6 +20,9 @@ namespace BeaverLeague.Core.Models
         [MaxLength(80)]
         public string EmailAddress { get; set; }
 
+        [MaxLength(80), Required]
+        public string PhoneNumber { get; set; }
+
     }
 
     public class MatchResult
@@ -36,6 +39,8 @@ namespace BeaverLeague.Core.Models
         public int Score { get; set; }
         public int Strokes { get; set; }
         public bool PlayNextWeek { get; set; }
+        public decimal Points { get; set; }
+
     }
 
     public class MatchSet
@@ -50,24 +55,26 @@ namespace BeaverLeague.Core.Models
         public DateTime Date { get; protected set; }
         public ICollection<MatchResult> Matches { get; protected set; }
 
-        public MatchResult NewMatchResult(Golfer playerA, int playerAScore, bool playerANextWeek, 
-                                    Golfer playerB, int PlayerBScore, bool playerBNextWeek)
+        public MatchResult NewMatchResult(Golfer playerA, int playerAScore, decimal playerAPoints, bool playerANextWeek, 
+                                          Golfer playerB, int PlayerBScore, decimal playerBPoints, bool playerBNextWeek)
         {
             var match = new MatchResult();
-            match.PlayerA = NewMatchPlayer(playerA, playerAScore, playerANextWeek);
-            match.PlayerB = NewMatchPlayer(playerB, PlayerBScore, playerBNextWeek);
+            match.PlayerA = NewMatchPlayer(playerA, playerAScore, playerAPoints, playerANextWeek);
+            match.PlayerB = NewMatchPlayer(playerB, PlayerBScore, playerBPoints, playerBNextWeek);
+            Matches.Add(match);
             return match;
 
         }
 
-        protected MatchPlayer NewMatchPlayer(Golfer golfer, int score, bool playNextWeek)
+        protected MatchPlayer NewMatchPlayer(Golfer golfer, int score, decimal points, bool playNextWeek)
         {
             var matchPlayer = new MatchPlayer
             {
                 GolferId = golfer.Id,
                 PlayNextWeek = playNextWeek,
                 Score = score,
-                Strokes = golfer.LeagueHandicap
+                Strokes = golfer.LeagueHandicap,
+                Points = points
             };
 
             return matchPlayer;
@@ -79,18 +86,18 @@ namespace BeaverLeague.Core.Models
         public Season(string name)
         {
             Name = name;
-            Schedule = new HashSet<MatchSet>();
+            Weeks = new HashSet<MatchSet>();
         }
 
         [Required, MaxLength(80)]
         public string Name { get; set; }
         public int Id { get; set; }
-        public ICollection<MatchSet> Schedule { get; set; }
+        public ICollection<MatchSet> Weeks   { get; set; }
 
-        public MatchSet NewMatchSet(DateTime date)
+        public MatchSet NewWeek(DateTime date)
         {
             var set = new MatchSet(date);
-            Schedule.Add(set);
+            Weeks.Add(set);
             return set;
         }
     }

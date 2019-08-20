@@ -14,17 +14,17 @@ namespace BeaverLeague.Tests.Core
         [Fact]
         public void CanCeateSetOfMatches()
         {
-            var season = new Season("2019");
-            var matchSet = season.NewMatchSet(matchSetDate);
+            var season = new Season(seasonName);
+            var matchSet = season.NewWeek(matchSetDate);
 
             Assert.Equal(matchSetDate, matchSet.Date);
         }
 
         [Fact]
-        public void Foo()
+        public void CanCreateMatchSetResult()
         {
-            var season = new Season("2019");
-            var matchSet = season.NewMatchSet(matchSetDate);
+            var season = new Season(seasonName);
+            var matchSet = season.NewWeek(matchSetDate);
 
             var golfer1 = new Golfer()
             {
@@ -39,13 +39,40 @@ namespace BeaverLeague.Tests.Core
             };
 
 
-            var match = matchSet.NewMatchResult(golfer1, 3, true, golfer2, 2, false);
+            var match = matchSet.NewMatchResult(golfer1, 3, 3.5m, true, golfer2, 2, 7.5m, false);
 
-            
-
-
+            Assert.Equal(1, matchSet.Matches.Count);
+            Assert.Equal(11, match.PlayerA.Points + match.PlayerB.Points);
         }
 
+        [Theory]
+        [InlineData(0, 11)] 
+        [InlineData(0.5, 10.5)]
+        [InlineData(1, 10)]
+        [InlineData(1.5, 9.5)]
+        [InlineData(2, 9)]
+        [InlineData(2.5, 8.5)]
+        [InlineData(3, 8)]
+        [InlineData(3.5, 7.5)]
+        [InlineData(4, 7)]
+        [InlineData(4.5, 6.5)]
+        [InlineData(5, 6)]
+        [InlineData(5.5, 5.5)]
+        [InlineData(6, 5)]
+        public void MatchPointsAlwaysTotalEleven(decimal scoreA, decimal scoreB)
+        {
+            var season = new Season(seasonName);
+            var matchSet = season.NewWeek(matchSetDate);
+
+            var golfer1 = new Golfer { Id = 1, LeagueHandicap = 10 };
+            var golfer2 = new Golfer { Id = 2, LeagueHandicap = 7  };
+
+
+            var match = matchSet.NewMatchResult(golfer1, 3, scoreA, true, golfer2, 2, scoreB, false);
+            Assert.Equal(11, match.PlayerA.Points + match.PlayerB.Points);
+        }
+
+        readonly string seasonName = "2019";
         readonly DateTime matchSetDate = new DateTime(2019, 10, 3);
     }
 }

@@ -4,7 +4,7 @@ using BeaverLeague.Data;
 using Xunit;
 using static Xunit.Assert;
 
-namespace BeaverLeague.Tests.Data
+namespace BeaverLeague.Tests.Data.Services
 {
     public class LeagueDbTests
     {

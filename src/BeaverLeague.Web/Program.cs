@@ -1,5 +1,6 @@
 ﻿using System.IO;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Configuration;
 
 namespace BeaverLeague.Web
 {
@@ -12,12 +13,9 @@ namespace BeaverLeague.Web
                 .UseContentRoot(Directory.GetCurrentDirectory())
                 .UseStartup<Startup>()
                 .ConfigureAppConfiguration(builder =>
-                {                   
-                    // todo move config here
-                })
-                .ConfigureLogging(builder =>
                 {
-                    // todo move logging here
+                    builder.AddJsonFile("appsettings.json")
+                           .AddEnvironmentVariables();
                 })
                 .CaptureStartupErrors(true)
                 .Build();
