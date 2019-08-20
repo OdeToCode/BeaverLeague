@@ -1,0 +1,97 @@
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+
+namespace BeaverLeague.Core.Models
+{
+    public class Golfer
+    {
+        public int Id { get; set; }
+        public int MembershipId { get; set; }
+        public int LeagueHandicap { get; set; }
+        public bool IsActive { get; set; }
+
+        [MaxLength(80), Required]
+        public string FirstName { get; set; }
+
+        [MaxLength(80), Required]
+        public string LastName { get; set; }
+
+        [MaxLength(80)]
+        public string EmailAddress { get; set; }
+
+    }
+
+    public class MatchResult
+    {
+        public int Id { get; set; }
+        public MatchPlayer PlayerA { get; set; }
+        public MatchPlayer PlayerB { get; set; }
+    }
+
+    public class MatchPlayer
+    {
+        public int Id { get; set; }
+        public int GolferId { get; set; }
+        public int Score { get; set; }
+        public int Strokes { get; set; }
+        public bool PlayNextWeek { get; set; }
+    }
+
+    public class MatchSet
+    {
+        public MatchSet(DateTime date)
+        {
+            Date = date;
+            Matches = new HashSet<MatchResult>();
+        }
+
+        public int Id { get; protected set; }
+        public DateTime Date { get; protected set; }
+        public ICollection<MatchResult> Matches { get; protected set; }
+
+        public MatchResult NewMatchResult(Golfer playerA, int playerAScore, bool playerANextWeek, 
+                                    Golfer playerB, int PlayerBScore, bool playerBNextWeek)
+        {
+            var match = new MatchResult();
+            match.PlayerA = NewMatchPlayer(playerA, playerAScore, playerANextWeek);
+            match.PlayerB = NewMatchPlayer(playerB, PlayerBScore, playerBNextWeek);
+            return match;
+
+        }
+
+        protected MatchPlayer NewMatchPlayer(Golfer golfer, int score, bool playNextWeek)
+        {
+            var matchPlayer = new MatchPlayer
+            {
+                GolferId = golfer.Id,
+                PlayNextWeek = playNextWeek,
+                Score = score,
+                Strokes = golfer.LeagueHandicap
+            };
+
+            return matchPlayer;
+        }
+    }
+
+    public class Season
+    {
+        public Season(string name)
+        {
+            Name = name;
+            Schedule = new HashSet<MatchSet>();
+        }
+
+        [Required, MaxLength(80)]
+        public string Name { get; set; }
+        public int Id { get; set; }
+        public ICollection<MatchSet> Schedule { get; set; }
+
+        public MatchSet NewMatchSet(DateTime date)
+        {
+            var set = new MatchSet(date);
+            Schedule.Add(set);
+            return set;
+        }
+    }
+}

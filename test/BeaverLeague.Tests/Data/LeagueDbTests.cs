@@ -11,19 +11,17 @@ namespace BeaverLeague.Tests.Data
         [Fact]
         public void CanAddGolfer()
         {
-            using (var leagueData = _db.NewContext())
+            var dbInstance = new LeagueDbInstance(nameof(CanAddGolfer));
+            using (var leagueData = dbInstance.NewContext())
             {
                 leagueData.Golfers.Add(new Golfer());
                 leagueData.SaveChanges();
             }
 
-            using (var leagueData = _db.NewContext())
+            using (var leagueData = dbInstance.NewContext())
             {
                 Equal(1, leagueData.Golfers.Count());
             }
         }
-
-        readonly DbInstance<LeagueDb> _db = new DbInstance<LeagueDb>(nameof(LeagueDbTests),
-            options => new LeagueDb(options));
     }
 }

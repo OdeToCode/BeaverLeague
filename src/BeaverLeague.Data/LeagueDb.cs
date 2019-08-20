@@ -3,9 +3,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace BeaverLeague.Data
 {
-    public class LeagueDb : DbContext
+    public class LeagueDbContext : DbContext
     {        
-        public LeagueDb(DbContextOptions options) : base(options)
+        public LeagueDbContext(DbContextOptions options) : base(options)
         {
             
         }
@@ -17,6 +17,7 @@ namespace BeaverLeague.Data
             modelBuilder.Entity<Golfer>().HasIndex(g => g.EmailAddress).IsUnique();
         }
 
-        public DbSet<Golfer> Golfers { get; set; }      
+        public DbSet<Golfer> Golfers { get; set; }
+        public DbSet<Season> Seasons { get; set; }
     }
 }

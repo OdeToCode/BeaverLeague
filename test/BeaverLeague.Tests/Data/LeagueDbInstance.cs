@@ -2,9 +2,9 @@
 
 namespace BeaverLeague.Tests.Data
 {
-    public class LeagueDbInstance : DbInstance<LeagueDb>
+    public class LeagueDbInstance : DbInstance<LeagueDbContext>
     {
-        public LeagueDbInstance(string name) : base(name, options => new LeagueDb(options))
+        public LeagueDbInstance(string name) : base(name, options => new LeagueDbContext(options))
         {
         }
     }

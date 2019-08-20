@@ -31,7 +31,6 @@ namespace BeaverLeague.Web
             app.UseDeveloperExceptionPage();
             app.UseFileServer();
             app.UseMvc();
-            app.UseBlazor<Client.Program>();
         }
     }
 }

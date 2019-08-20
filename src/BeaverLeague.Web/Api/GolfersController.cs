@@ -10,9 +10,9 @@ namespace BeaverLeague.Web.Api
     [ApiController]
     public class GolfersController : ControllerBase
     {
-        private readonly LeagueDb db;
+        private readonly LeagueDbContext db;
 
-        public GolfersController(LeagueDb db)
+        public GolfersController(LeagueDbContext db)
         {
             this.db = db;
         }
