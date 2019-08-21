@@ -1,0 +1,59 @@
+﻿@page
+@model BeaverLeague.Web.Pages.Admin.Golfers.EditModel
+@{
+    ViewBag.Title = "Edit Golfer";
+}
+
+<div class="row">
+    <div class="col">
+        <h2>@Model.Header</h2>
+        <form>
+
+            <div class="form-group">
+                <label asp-for="Golfer.FirstName"></label>
+                <input asp-for="Golfer.FirstName" class="form-control">
+                <span asp-validation-for="Golfer.FirstName"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Golfer.LastName"></label>
+                <input asp-for="Golfer.LastName" class="form-control">
+                <span asp-validation-for="Golfer.LastName"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Golfer.EmailAddress"></label>
+                <input asp-for="Golfer.EmailAddress" class="form-control">
+                <span asp-validation-for="Golfer.EmailAddress"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Golfer.PhoneNumber"></label>
+                <input asp-for="Golfer.PhoneNumber" class="form-control">
+                <span asp-validation-for="Golfer.PhoneNumber"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Golfer.LeagueHandicap"></label>
+                <input asp-for="Golfer.LeagueHandicap" class="form-control">
+                <span asp-validation-for="Golfer.LeagueHandicap"></span>
+                <small class="form-text text-muted">18 hole course handicap</small>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Golfer.Tee"></label>
+                <select asp-for="Golfer.Tee" class="form-control"></select>
+                <span asp-validation-for="Golfer.Tee"></span>
+            </div>
+                
+            <div class="form-group">
+                <label asp-for="Golfer.IsActive"></label>
+                <select asp-for="Golfer.IsActive" class="form-control"></select>
+                <span asp-validation-for="Golfer.IsActive"></span>
+            </div>
+
+
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+    </div>
+</div>

@@ -6,7 +6,7 @@ using Microsoft.Extensions.Hosting;
 namespace BeaverLeague.Web
 {
     public class Startup
-    {      
+    {
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
@@ -15,11 +15,11 @@ namespace BeaverLeague.Web
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment environment)
         {
-            if (!environment.IsProduction())
-            {
-                app.UseDeveloperExceptionPage();
-            }
+            app.UseDeveloperExceptionPage();
+            app.UseExceptionHandler("/Error");
+            app.UseHsts();
             app.UseFileServer();
+            app.UseStatusCodePages();
             app.UseRouting();
             app.UseEndpoints(c =>
             {

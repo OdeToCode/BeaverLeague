@@ -7,22 +7,38 @@ namespace BeaverLeague.Core.Models
     public class Golfer
     {
         public int Id { get; set; }
-        public int MembershipId { get; set; }
-        public int LeagueHandicap { get; set; }
+
+        [Display(Name = "MSGA Handicap"), Range(36, -4)]
+        public int LeagueHandicap { get; set; } = 18;
+
+        [Display(Name ="Active")]
         public bool IsActive { get; set; }
 
-        [MaxLength(80), Required]
+        [MaxLength(80), Required, Display(Name ="First Name")]
         public string FirstName { get; set; } = "";
 
-        [MaxLength(80), Required]
+        [MaxLength(80), Required, Display(Name = "Last Name")]
         public string LastName { get; set; } = "";
 
-        [MaxLength(80)]
+        [MaxLength(80), Display(Name ="Email"), DataType(DataType.EmailAddress)]
         public string EmailAddress { get; set; } = "";
 
-        [MaxLength(80), Required]
+        [MaxLength(80), Required, Display(Name ="Phone"), DataType(DataType.PhoneNumber)]
         public string PhoneNumber { get; set; } = "";
 
+        public TeeType Tee { get; set; } = TeeType.White;
+
+    }
+
+    public enum TeeType
+    {
+        Blue, 
+        White,
+        Green,
+        Gold,
+        Black,
+        Red,
+        SeniorRed
     }
 
     public class MatchResult
