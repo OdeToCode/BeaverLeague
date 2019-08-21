@@ -8,7 +8,7 @@ namespace BeaverLeague.Core.Models
     {
         public int Id { get; set; }
 
-        [Display(Name = "MSGA Handicap"), Range(36, -4)]
+        [Display(Name = "MSGA Handicap"), Range(-36, 36)]
         public int LeagueHandicap { get; set; } = 18;
 
         [Display(Name ="Active")]
