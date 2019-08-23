@@ -42,7 +42,8 @@ namespace BeaverLeague.Tests.Core
             var match = matchSet.NewMatchResult(golfer1, 3, 3.5m, true, golfer2, 2, 7.5m, false);
 
             Assert.Equal(1, matchSet.Matches.Count);
-            Assert.Equal(11, match.PlayerA.Points + match.PlayerB.Points);
+            // Assert.Equal(11, match.PlayerA.Points + match.PlayerB.Points);
+            Assert.True(false);
         }
 
         [Theory]
@@ -69,7 +70,8 @@ namespace BeaverLeague.Tests.Core
 
 
             var match = matchSet.NewMatchResult(golfer1, 3, scoreA, true, golfer2, 2, scoreB, false);
-            Assert.Equal(11, match.PlayerA.Points + match.PlayerB.Points);
+            // Assert.Equal(11, match.PlayerA.Points + match.PlayerB.Points);
+            Assert.True(false);
         }
 
         readonly string seasonName = "2019";

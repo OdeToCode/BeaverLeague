@@ -8,7 +8,7 @@ namespace BeaverLeague.Core.Models
     {
         public int Id { get; set; }
 
-        [Display(Name = "MSGA Handicap"), Range(-36, 36)]
+        [Display(Name = "18 hole Course Handicap"), Range(-36, 36)]
         public int LeagueHandicap { get; set; } = 18;
 
         [Display(Name ="Active")]
@@ -44,14 +44,16 @@ namespace BeaverLeague.Core.Models
     public class MatchResult
     {
         public int Id { get; set; }
-        public MatchPlayer PlayerA { get; set; }
-        public MatchPlayer PlayerB { get; set; }
+        // public MatchPlayer PlayerA { get; set; }
+        // public MatchPlayer PlayerB { get; set; }
+        public int ScoreA { get; set; }
+        public int ScoreB { get; set; }
     }
 
     public class MatchPlayer
     {
         public int Id { get; set; }
-        public int GolferId { get; set; }
+        public Golfer Golfer { get; set; }
         public int Score { get; set; }
         public int Strokes { get; set; }
         public bool PlayNextWeek { get; set; }
@@ -75,8 +77,8 @@ namespace BeaverLeague.Core.Models
                                           Golfer playerB, int PlayerBScore, decimal playerBPoints, bool playerBNextWeek)
         {
             var match = new MatchResult();
-            match.PlayerA = NewMatchPlayer(playerA, playerAScore, playerAPoints, playerANextWeek);
-            match.PlayerB = NewMatchPlayer(playerB, PlayerBScore, playerBPoints, playerBNextWeek);
+            //match.PlayerA = NewMatchPlayer(playerA, playerAScore, playerAPoints, playerANextWeek);
+            //match.PlayerB = NewMatchPlayer(playerB, PlayerBScore, playerBPoints, playerBNextWeek);
             Matches.Add(match);
             return match;
 
@@ -86,7 +88,7 @@ namespace BeaverLeague.Core.Models
         {
             var matchPlayer = new MatchPlayer
             {
-                GolferId = golfer.Id,
+                Golfer = golfer,
                 PlayNextWeek = playNextWeek,
                 Score = score,
                 Strokes = golfer.LeagueHandicap,
