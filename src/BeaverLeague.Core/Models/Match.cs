@@ -43,22 +43,40 @@ namespace BeaverLeague.Core.Models
 
     public class MatchResult
     {
+        public MatchResult()
+        {
+            Players = new HashSet<PlayerResult>();
+        }
+
         public int Id { get; set; }
-        // public MatchPlayer PlayerA { get; set; }
-        // public MatchPlayer PlayerB { get; set; }
-        public int ScoreA { get; set; }
-        public int ScoreB { get; set; }
+        public int MatchSetId { get; set; }
+        public ICollection<PlayerResult> Players { get; set; }
+
+        public PlayerResult AddPlayer(Golfer golfer, int score, decimal points, bool playNextWeek)
+        {
+            var player = new PlayerResult
+            {
+                Golfer = golfer,
+                PlayNextWeek = playNextWeek,
+                Score = score,
+                Strokes = golfer.LeagueHandicap,
+                Points = points
+            };
+
+            Players.Add(player);
+            return player;
+        }
     }
 
-    public class MatchPlayer
+    public class PlayerResult
     {
         public int Id { get; set; }
-        public Golfer Golfer { get; set; }
         public int Score { get; set; }
         public int Strokes { get; set; }
         public bool PlayNextWeek { get; set; }
         public decimal Points { get; set; }
-
+        public int MatchResultId { get; set; }
+        public Golfer Golfer { get; set; }
     }
 
     public class MatchSet
@@ -70,32 +88,19 @@ namespace BeaverLeague.Core.Models
         }
 
         public int Id { get; protected set; }
+        public int SeasonId { get; set; }
         public DateTime Date { get; protected set; }
         public ICollection<MatchResult> Matches { get; protected set; }
 
-        public MatchResult NewMatchResult(Golfer playerA, int playerAScore, decimal playerAPoints, bool playerANextWeek, 
-                                          Golfer playerB, int PlayerBScore, decimal playerBPoints, bool playerBNextWeek)
+        public MatchResult AddResult(Golfer playerA, int playerAScore, decimal playerAPoints, bool playerANextWeek, 
+                                          Golfer playerB, int playerBScore, decimal playerBPoints, bool playerBNextWeek)
         {
             var match = new MatchResult();
-            //match.PlayerA = NewMatchPlayer(playerA, playerAScore, playerAPoints, playerANextWeek);
-            //match.PlayerB = NewMatchPlayer(playerB, PlayerBScore, playerBPoints, playerBNextWeek);
+            match.AddPlayer(playerA, playerAScore, playerAPoints, playerANextWeek);
+            match.AddPlayer(playerB, playerBScore, playerBPoints, playerBNextWeek);
             Matches.Add(match);
             return match;
 
-        }
-
-        protected MatchPlayer NewMatchPlayer(Golfer golfer, int score, decimal points, bool playNextWeek)
-        {
-            var matchPlayer = new MatchPlayer
-            {
-                Golfer = golfer,
-                PlayNextWeek = playNextWeek,
-                Score = score,
-                Strokes = golfer.LeagueHandicap,
-                Points = points
-            };
-
-            return matchPlayer;
         }
     }
 
@@ -112,7 +117,7 @@ namespace BeaverLeague.Core.Models
         public int Id { get; set; }
         public ICollection<MatchSet> Weeks   { get; set; }
 
-        public MatchSet NewWeek(DateTime date)
+        public MatchSet AddWeek(DateTime date)
         {
             var set = new MatchSet(date);
             Weeks.Add(set);

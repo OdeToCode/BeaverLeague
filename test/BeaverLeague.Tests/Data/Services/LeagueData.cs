@@ -39,13 +39,13 @@ namespace BeaverLeague.Tests.Data.Services
             var golferC = new Golfer { Id = 5, LeagueHandicap = 2 };
             var golferD = new Golfer { Id = 7, LeagueHandicap = 2 };
 
-            var week1 = season.NewWeek(DateTime.Now);
-            week1.NewMatchResult(golferA, 44, 7, true, golferB, 36, 4, false);
-            week1.NewMatchResult(golferC, 44, 7, true, golferD, 36, 4, false);
+            var week1 = season.AddWeek(DateTime.Now);
+            week1.AddResult(golferA, 44, 7, true, golferB, 36, 4, false);
+            week1.AddResult(golferC, 44, 7, true, golferD, 36, 4, false);
 
-            var week2 = season.NewWeek(DateTime.Now);
-            week2.NewMatchResult(golferA, 44, 7, true, golferD, 36, 4, false);
-            week2.NewMatchResult(golferB, 44, 7, true, golferC, 36, 4, false);
+            var week2 = season.AddWeek(DateTime.Now);
+            week2.AddResult(golferA, 44, 7, true, golferD, 36, 4, false);
+            week2.AddResult(golferB, 44, 7, true, golferC, 36, 4, false);
 
             data.Add(season, golferA, golferB, golferC, golferD);
             data.Commit();

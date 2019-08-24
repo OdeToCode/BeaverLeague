@@ -4,6 +4,7 @@ using BeaverLeague.Data.Services;
 using BeaverLeague.Tests.Data;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using Xunit;
 
@@ -15,7 +16,7 @@ namespace BeaverLeague.Tests.Core
         public void CanCeateSetOfMatches()
         {
             var season = new Season(seasonName);
-            var matchSet = season.NewWeek(matchSetDate);
+            var matchSet = season.AddWeek(matchSetDate);
 
             Assert.Equal(matchSetDate, matchSet.Date);
         }
@@ -24,7 +25,7 @@ namespace BeaverLeague.Tests.Core
         public void CanCreateMatchSetResult()
         {
             var season = new Season(seasonName);
-            var matchSet = season.NewWeek(matchSetDate);
+            var matchSet = season.AddWeek(matchSetDate);
 
             var golfer1 = new Golfer()
             {
@@ -38,12 +39,10 @@ namespace BeaverLeague.Tests.Core
                 LeagueHandicap = 7
             };
 
-
-            var match = matchSet.NewMatchResult(golfer1, 3, 3.5m, true, golfer2, 2, 7.5m, false);
+            var match = matchSet.AddResult(golfer1, 3, 3.5m, true, golfer2, 2, 7.5m, false);
 
             Assert.Equal(1, matchSet.Matches.Count);
-            // Assert.Equal(11, match.PlayerA.Points + match.PlayerB.Points);
-            Assert.True(false);
+            Assert.Equal(11, matchSet.Matches.First().Players.Sum(p => p.Points));
         }
 
         [Theory]
@@ -63,15 +62,14 @@ namespace BeaverLeague.Tests.Core
         public void MatchPointsAlwaysTotalEleven(decimal scoreA, decimal scoreB)
         {
             var season = new Season(seasonName);
-            var matchSet = season.NewWeek(matchSetDate);
+            var matchSet = season.AddWeek(matchSetDate);
 
             var golfer1 = new Golfer { Id = 1, LeagueHandicap = 10 };
             var golfer2 = new Golfer { Id = 2, LeagueHandicap = 7  };
 
 
-            var match = matchSet.NewMatchResult(golfer1, 3, scoreA, true, golfer2, 2, scoreB, false);
-            // Assert.Equal(11, match.PlayerA.Points + match.PlayerB.Points);
-            Assert.True(false);
+            var match = matchSet.AddResult(golfer1, 3, scoreA, true, golfer2, 2, scoreB, false);
+            Assert.Equal(11, match.Players.Sum(p => p.Points));
         }
 
         readonly string seasonName = "2019";
