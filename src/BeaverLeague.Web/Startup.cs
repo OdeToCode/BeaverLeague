@@ -16,15 +16,13 @@ namespace BeaverLeague.Web
         public void Configure(IApplicationBuilder app, IWebHostEnvironment environment)
         {
             app.UseDeveloperExceptionPage();
-            app.UseExceptionHandler("/Error");
-            app.UseHsts();
             app.UseFileServer();
             app.UseStatusCodePages();
             app.UseRouting();
-            app.UseEndpoints(c =>
+            app.UseEndpoints(e =>
             {
-                c.MapControllers();
-                c.MapRazorPages();
+                e.MapControllers();
+                e.MapRazorPages();
             });
         }
     }
