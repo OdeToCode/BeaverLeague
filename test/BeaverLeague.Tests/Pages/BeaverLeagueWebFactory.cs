@@ -9,7 +9,17 @@ namespace BeaverLeague.Tests.Pages
 {
     public class BeaverLeagueWebFactory : WebApplicationFactory<Startup>
     {
-        protected virtual string Name => nameof(BeaverLeagueWebFactory);
+        public  virtual string Name => GetType().FullName;
+
+        public IServiceScope GetScope()
+        {
+            return Services.CreateScope();
+        }
+
+        public LeagueDbContext GetLeagueDbContext(IServiceScope scope)
+        {
+            return scope.ServiceProvider.GetService<LeagueDbContext>();
+        }
 
         protected override void ConfigureWebHost(IWebHostBuilder builder)
         {
@@ -20,16 +30,6 @@ namespace BeaverLeague.Tests.Pages
                     options.UseInMemoryDatabase(Name);
                 });
             });
-        }
-
-        public IServiceScope GetScope()
-        {
-            return Services.CreateScope();
-        }
-
-        public LeagueDbContext GetLeagueDbContext(IServiceScope scope)
-        {
-            return scope.ServiceProvider.GetService<LeagueDbContext>();
         }
     }
 }
