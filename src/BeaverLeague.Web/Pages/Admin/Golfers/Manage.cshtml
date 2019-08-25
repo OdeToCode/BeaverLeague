@@ -5,3 +5,36 @@
 }
 
 <a class="btn btn-primary" asp-page="./Edit">Create Golfer</a>
+
+<table class="table table-" id="golfers">
+    
+    <thead>
+        <tr>
+            <td>Name</td>
+            <td>Email</td>
+            <td>Phone</td>
+            <td>Tee</td>
+            <td>Active</td>
+            <td></td>
+        </tr>
+    </thead>
+
+    <tbody>
+        @foreach (var golfer in Model.Golfers)
+        {
+            <tr>
+                <td>@golfer.LastName, @golfer.FirstName</td>
+                <td>@golfer.EmailAddress</td>
+                <td>@golfer.PhoneNumber</td>
+                <td>@golfer.Tee</td>
+                <td>@golfer.IsActive</td>
+                <td>
+                    <a asp-page="/Manage/Golfers/Edit" asp-route-id="@golfer.Id">
+                        <span class="fa fa-edit"></span>
+                    </a>
+                </td>
+            </tr>
+        }
+    </tbody>
+
+</table>

@@ -18,7 +18,7 @@ namespace BeaverLeague.Tests.Pages.Admin.Golfers
         }
 
         [Fact]
-        public async Task CanLoadEditFormToCreateGolfer()
+        public async Task CanLoadEditForm()
         {
             var client = factory.CreateClient();
 
@@ -30,7 +30,7 @@ namespace BeaverLeague.Tests.Pages.Admin.Golfers
         }
 
         [Fact]
-        public async Task CanFailWhenGolferFailsValidation()
+        public async Task InvalidGolferFailsValidation()
         {
             var client = factory.CreateClient();
             var emptyForm = await client.GetAsync("/Admin/Golfers/Edit");

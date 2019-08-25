@@ -26,6 +26,15 @@ namespace BeaverLeague.Data.Services
             return season;
         }
 
+        public IQueryable<Golfer> GetAllGolfers()
+        {
+            var result = db.Golfers
+                           .OrderByDescending(g => g.IsActive)
+                           .ThenBy(g => g.LastName)
+                           .ThenBy(g => g.FirstName);
+            return result;
+        }
+
         public void Add(object entity)
         {
             db.Add(entity);
