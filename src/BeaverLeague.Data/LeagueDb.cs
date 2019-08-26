@@ -7,7 +7,7 @@ namespace BeaverLeague.Data
     {        
         public LeagueDbContext(DbContextOptions options) : base(options)
         {
-            
+         
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -19,7 +19,7 @@ namespace BeaverLeague.Data
                         .IsUnique();
         }
 
-        public DbSet<Golfer> Golfers { get; set; }
-        public DbSet<Season> Seasons { get; set; }
+        public DbSet<Golfer> Golfers { get; set; } = null!;
+        public DbSet<Season> Seasons { get; set; } = null!;
     }
 }

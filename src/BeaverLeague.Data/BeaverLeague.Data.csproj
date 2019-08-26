@@ -2,6 +2,8 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <WarningsAsErrors />
   </PropertyGroup>
 
   <ItemGroup>
@@ -12,11 +14,6 @@
     <Folder Include="Migrations\" />
     <Folder Include="Properties\" />
   </ItemGroup>
-
-  <PropertyGroup>
-    <Nullable>enable</Nullable>
-  </PropertyGroup>
-
 
   <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="3.0.0-preview8.19405.11">

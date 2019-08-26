@@ -22,7 +22,7 @@ namespace BeaverLeague.Tests.Helpers
 
             var formValues = formData.GetType()
                                      .GetProperties()
-                                     .ToDictionary(p => $"{formDataPrefix}.{p.Name}", p => p.GetValue(formData).ToString());
+                                     .ToDictionary(p => $"{formDataPrefix}.{p.Name}", p => p.GetValue(formData)?.ToString() ?? "");
 
             return client.SendFormAsync(form, submitButton, formValues);
         }

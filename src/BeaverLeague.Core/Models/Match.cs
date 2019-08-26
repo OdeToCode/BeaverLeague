@@ -70,6 +70,11 @@ namespace BeaverLeague.Core.Models
 
     public class PlayerResult
     {
+        public PlayerResult()
+        {
+            Golfer = new Golfer();
+        }
+
         public int Id { get; set; }
         public int Score { get; set; }
         public int Strokes { get; set; }

@@ -9,7 +9,7 @@ namespace BeaverLeague.Tests.Pages
 {
     public class BeaverLeagueWebFactory : WebApplicationFactory<Startup>
     {
-        public  virtual string Name => GetType().FullName;
+        public  virtual string Name => GetType().FullName ?? nameof(BeaverLeagueWebFactory);
 
         public IServiceScope GetScope()
         {

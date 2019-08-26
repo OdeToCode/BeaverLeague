@@ -13,7 +13,7 @@ namespace BeaverLeague.Web.Pages.Admin.Golfers
     {
         private readonly LeagueData leagueData;
 
-        public IEnumerable<Golfer> Golfers { get; set; }
+        public IEnumerable<Golfer> Golfers { get; set; } = Enumerable.Empty<Golfer>();
 
         public ManageModel(LeagueData leagueData)
         {

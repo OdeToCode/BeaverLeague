@@ -2,6 +2,8 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <WarningsAsErrors />
   </PropertyGroup>
 
   <ItemGroup>
@@ -11,10 +13,5 @@
   <ItemGroup>
     <Folder Include="Properties\" />
   </ItemGroup>
-
-  <PropertyGroup>
-    <Nullable>enable</Nullable>
-  </PropertyGroup>
-
 
 </Project>

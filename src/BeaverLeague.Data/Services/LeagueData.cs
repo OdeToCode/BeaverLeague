@@ -52,7 +52,7 @@ namespace BeaverLeague.Data.Services
             entityState.State = EntityState.Modified;
         }
 
-        public void Add(params object[] entities)
+        public void Add(params object[] entities)   
         {
             foreach(var entity in entities)
             {

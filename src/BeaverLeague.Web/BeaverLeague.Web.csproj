@@ -2,6 +2,8 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <WarningsAsErrors />
   </PropertyGroup>
 
   <ItemGroup>
@@ -17,8 +19,4 @@
     <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="3.0.0-preview8.19405.4" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.0.0-preview8-19413-06" />
   </ItemGroup>
-  <PropertyGroup>
-    <Nullable>enable</Nullable>
-  </PropertyGroup>
-
 </Project>
