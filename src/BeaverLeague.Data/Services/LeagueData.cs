@@ -26,6 +26,12 @@ namespace BeaverLeague.Data.Services
             return season;
         }
 
+        public Golfer GetGolfer(int id)
+        {
+            var golfer = db.Golfers.Find(id);
+            return golfer;
+        }
+
         public IQueryable<Golfer> GetAllGolfers()
         {
             var result = db.Golfers
@@ -38,6 +44,12 @@ namespace BeaverLeague.Data.Services
         public void Add(object entity)
         {
             db.Add(entity);
+        }
+
+        public void Update(object entity)
+        {
+            var entityState = db.Entry(entity);
+            entityState.State = EntityState.Modified;
         }
 
         public void Add(params object[] entities)

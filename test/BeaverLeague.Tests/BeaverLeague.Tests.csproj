@@ -23,6 +23,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Pages\Admin\Season\" />
     <Folder Include="Properties\" />
   </ItemGroup>
 

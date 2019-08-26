@@ -6,16 +6,16 @@
 
 <a class="btn btn-primary" asp-page="./Edit">Create Golfer</a>
 
-<table class="table table-" id="golfers">
+<table class="table table-striped table-hover" id="golfers">
     
-    <thead>
+    <thead class="thead-dark">
         <tr>
-            <td>Name</td>
-            <td>Email</td>
-            <td>Phone</td>
-            <td>Tee</td>
-            <td>Active</td>
-            <td></td>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Phone</th>
+            <th>Tee</th>
+            <th>Active</th>
+            <th></th>
         </tr>
     </thead>
 
@@ -27,9 +27,14 @@
                 <td>@golfer.EmailAddress</td>
                 <td>@golfer.PhoneNumber</td>
                 <td>@golfer.Tee</td>
-                <td>@golfer.IsActive</td>
                 <td>
-                    <a asp-page="/Manage/Golfers/Edit" asp-route-id="@golfer.Id">
+                    @if (golfer.IsActive)
+                    {
+                        <i class="fas fa-check"></i>
+                    }
+                </td>
+                <td>
+                    <a asp-page="/Admin/Golfers/Edit" asp-route-id="@golfer.Id">
                         <span class="fa fa-edit"></span>
                     </a>
                 </td>

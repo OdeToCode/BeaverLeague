@@ -19,16 +19,32 @@ namespace BeaverLeague.Web.Pages.Admin.Golfers
             this.leagueData = leagueData;
         }
 
-        public void OnGet()
+        public IActionResult OnGet(int id)
         {
-
+            if(id != 0)
+            {
+                Golfer = leagueData.GetGolfer(id);
+                if (Golfer == null)
+                {
+                    return NotFound();
+                }
+                Header = $"Edit {Golfer.FirstName} {Golfer.LastName}";
+            }
+            return Page();
         }
 
-        public IActionResult OnPost()
+        public IActionResult OnPost(int id)
         {
             if(ModelState.IsValid)
             {
-                leagueData.Add(Golfer);
+                if (id == 0)
+                {
+                    leagueData.Add(Golfer);
+                }
+                else
+                {
+                    leagueData.Update(Golfer);
+                }
                 leagueData.Commit();
                 return RedirectToPage("/Admin/Golfers/Manage");
             }

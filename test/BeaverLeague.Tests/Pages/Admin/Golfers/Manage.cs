@@ -31,7 +31,7 @@ namespace BeaverLeague.Tests.Pages.Admin.Golfers
             var client = factory.CreateClient();
             var response = await client.GetAsync("/Admin/Golfers/Manage");
             var document = await response.GetDocumentAsync();
-            var rows = document.QuerySelectorAll("#golfers tr");
+            var rows = document.QuerySelectorAll("#golfers tbody tr");
 
             Assert.Equal(3, rows.Length);
         }

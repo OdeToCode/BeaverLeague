@@ -1,14 +1,16 @@
-﻿@page
+﻿@page "{id:int?}"
 @using BeaverLeague.Core.Models
 @model BeaverLeague.Web.Pages.Admin.Golfers.EditModel
 @{
-    ViewBag.Title = "Edit Golfer";
+    ViewBag.Title = Model.Header;
 }
 
 <div class="row">
     <div class="col">
         <h2>@Model.Header</h2>
         <form id="form" method="post">
+
+            <input type="hidden" asp-for="Golfer.Id"/>
 
             <div class="form-group">
                 <label asp-for="Golfer.FirstName"></label>

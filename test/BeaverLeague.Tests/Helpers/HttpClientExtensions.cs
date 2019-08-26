@@ -88,6 +88,9 @@ namespace BeaverLeague.Tests.Helpers
                     case IHtmlSelectElement select:
                         select.Value = kvp.Value;
                         break;
+
+                    default:
+                        throw new InvalidOperationException($"Could process form element for {kvp.Key} {element?.GetType()}");
                 }
             }
 
