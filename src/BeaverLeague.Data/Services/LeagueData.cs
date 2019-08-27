@@ -1,10 +1,5 @@
-﻿using BeaverLeague.Core.Models;
+﻿using BeaverLeague.Data.Queries;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace BeaverLeague.Data.Services
 {
@@ -17,28 +12,10 @@ namespace BeaverLeague.Data.Services
             this.db = db;
         }
 
-        public Season GetCurrentSeason()
+        public TResult Execute<TSet, TResult>(IQuery<TSet, TResult> query) where TSet: class
         {
-            var season = db.Seasons
-                           .Include(s => s.Weeks)
-                           .ThenInclude(m => m.Matches)
-                           .First();
-            return season;
-        }
-
-        public Golfer GetGolfer(int id)
-        {
-            var golfer = db.Golfers.Find(id);
-            return golfer;
-        }
-
-        public IQueryable<Golfer> GetAllGolfers()
-        {
-            var result = db.Golfers
-                           .OrderByDescending(g => g.IsActive)
-                           .ThenBy(g => g.LastName)
-                           .ThenBy(g => g.FirstName);
-            return result;
+            var set = db.Set<TSet>();
+            return query.Execute(set);
         }
 
         public void Add(object entity)

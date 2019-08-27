@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using BeaverLeague.Core.Models;
+using BeaverLeague.Data.Queries;
 using BeaverLeague.Data.Services;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace BeaverLeague.Web.Pages.Admin.Golfers
@@ -22,7 +20,8 @@ namespace BeaverLeague.Web.Pages.Admin.Golfers
 
         public void OnGet()
         {
-            Golfers = leagueData.GetAllGolfers();
+            var query = new AllGolfersQuery();
+            Golfers = leagueData.Execute(query);
         }
     }
 }

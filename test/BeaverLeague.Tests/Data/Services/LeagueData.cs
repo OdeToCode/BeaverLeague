@@ -1,5 +1,6 @@
 ﻿using BeaverLeague.Core.Models;
 using BeaverLeague.Data;
+using BeaverLeague.Data.Queries;
 using BeaverLeague.Data.Services;
 using System;
 using System.Linq;
@@ -21,7 +22,8 @@ namespace BeaverLeague.Tests.Data.Services
             data.Commit();
 
             var secondData = new LeagueData(dbInstance.NewContext());
-            var secondSeason = secondData.GetCurrentSeason();
+            var query = new CurrentSeasonQuery();
+            var secondSeason = secondData.Execute(query);
 
             Assert.Equal(season.Id, secondSeason.Id);
             Assert.Equal(season.Name, secondSeason.Name);
@@ -51,7 +53,8 @@ namespace BeaverLeague.Tests.Data.Services
             data.Commit();
 
             var checkData = new LeagueData(dbInstance.NewContext());
-            var checkSeason = checkData.GetCurrentSeason();
+            var query = new CurrentSeasonQuery();
+            var checkSeason = checkData.Execute(query);
 
             Assert.Equal(2, checkSeason.Weeks.Count);
             Assert.Equal(2, checkSeason.Weeks.First().Matches.Count);

@@ -1,4 +1,5 @@
 ﻿using BeaverLeague.Core.Models;
+using BeaverLeague.Data.Queries;
 using BeaverLeague.Data.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -23,7 +24,8 @@ namespace BeaverLeague.Web.Pages.Admin.Golfers
         {
             if(id != 0)
             {
-                Golfer = leagueData.GetGolfer(id);
+                var query = new GolferQuery(id);
+                Golfer = leagueData.Execute(query);
                 if (Golfer == null)
                 {
                     return NotFound();
