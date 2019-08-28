@@ -5,15 +5,15 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 using Xunit;
-using static BeaverLeague.Tests.Pages.Admin.Golfers.Manage;
+using static BeaverLeague.Tests.Pages.Admin.Golfers.ManageTests;
 
 namespace BeaverLeague.Tests.Pages.Admin.Golfers
 {
-    public class Manage : IClassFixture<ManageWebFactory>
+    public class ManageTests : IClassFixture<ManageWebFactory>
     {
         private readonly ManageWebFactory factory;
 
-        public Manage(ManageWebFactory factory)
+        public ManageTests(ManageWebFactory factory)
         {
             this.factory = factory;
         }

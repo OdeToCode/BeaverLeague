@@ -4,15 +4,15 @@ using BeaverLeague.Tests.Helpers;
 using System.Linq;
 using BeaverLeague.Core.Models;
 using System;
-using static BeaverLeague.Tests.Pages.Admin.Golfers.Edit;
+using static BeaverLeague.Tests.Pages.Admin.Golfers.EditTests;
 
 namespace BeaverLeague.Tests.Pages.Admin.Golfers
 {
-    public class Edit : IClassFixture<EditWebFactory>
+    public class EditTests : IClassFixture<EditWebFactory>
     {
         private readonly EditWebFactory factory;
 
-        public Edit(EditWebFactory factory)
+        public EditTests(EditWebFactory factory)
         {
             this.factory = factory;
         }

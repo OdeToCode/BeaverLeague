@@ -6,9 +6,9 @@ using System;
 using System.Linq;
 using Xunit;
 
-namespace BeaverLeague.Tests.Data.Services
+namespace BeaverLeague.Tests.Data.Queries
 {
-    public class LeagueDataTests
+    public class CurrentSeasonQueryTests
     {
         [Fact]
         public void CanSaveAndRetrieveSeason()
@@ -29,7 +29,7 @@ namespace BeaverLeague.Tests.Data.Services
             Assert.Equal(season.Name, secondSeason.Name);
         }
 
-       [Fact]
+        [Fact]
         public void CanSaveSeasonGraph()
         {
             var dbInstance = new LeagueDbInstance(nameof(CanSaveSeasonGraph));
