@@ -5,6 +5,7 @@ using System.Linq;
 using BeaverLeague.Core.Models;
 using System;
 using static BeaverLeague.Tests.Pages.Admin.Golfers.EditTests;
+using BeaverLeague.Data;
 
 namespace BeaverLeague.Tests.Pages.Admin.Golfers
 {
@@ -65,9 +66,8 @@ namespace BeaverLeague.Tests.Pages.Admin.Golfers
             var formPost = await client.SendFormAsync(formDocument, "Golfer", golfer);
             var postDocument = await formPost.GetDocumentAsync();
 
-            using var scope = factory.GetScope();
-            var db = factory.GetLeagueDbContext(scope);
-            Assert.Single(db.Golfers);
+            using var scope = factory.Services.GetScopedDbContext<LeagueDbContext>();
+            Assert.Single(scope.Db.Golfers);
         }
 
         public class EditWebFactory : BeaverLeagueWebFactory { }
