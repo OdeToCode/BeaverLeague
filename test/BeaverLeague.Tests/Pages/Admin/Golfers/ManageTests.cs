@@ -1,4 +1,5 @@
 ﻿using BeaverLeague.Core.Models;
+using BeaverLeague.Data;
 using BeaverLeague.Tests.Helpers;
 using System;
 using System.Collections.Generic;
@@ -21,8 +22,8 @@ namespace BeaverLeague.Tests.Pages.Admin.Golfers
         [Fact]
         public async Task ListGolfers()
         {
-            using var scope = factory.GetScope();
-            var db = factory.GetLeagueDbContext(scope);
+            using var scope = factory.Services.GetScopedDbContext<LeagueDbContext>();
+            var db = scope.Db;
             db.Golfers.Add(new Golfer { FirstName = "Test", LastName = "One", EmailAddress = "testone@example.com", PhoneNumber = "3015551212" });
             db.Golfers.Add(new Golfer { FirstName = "Test", LastName = "Two", EmailAddress = "testtwo@example.com", PhoneNumber = "3015551212" });
             db.Golfers.Add(new Golfer { FirstName = "Test", LastName = "Three", EmailAddress = "testthree@example.com", PhoneNumber = "3015551212" });
