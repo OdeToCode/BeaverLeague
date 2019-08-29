@@ -1,20 +1,16 @@
 ﻿using BeaverLeague.Core.Models;
 using BeaverLeague.Data;
 using BeaverLeague.Tests.Helpers;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 using Xunit;
-using static BeaverLeague.Tests.Pages.Admin.Golfers.ManageTests;
 
 namespace BeaverLeague.Tests.Pages.Admin.Golfers
 {
-    public class ManageTests : IClassFixture<ManageWebFactory>
+    public class ManageTests : IClassFixture<BeaverLeagueWebFactory>
     {
-        private readonly ManageWebFactory factory;
+        private readonly BeaverLeagueWebFactory factory;
 
-        public ManageTests(ManageWebFactory factory)
+        public ManageTests(BeaverLeagueWebFactory factory)
         {
             this.factory = factory;
         }
@@ -36,7 +32,5 @@ namespace BeaverLeague.Tests.Pages.Admin.Golfers
 
             Assert.Equal(3, rows.Length);
         }
-
-        public class ManageWebFactory : BeaverLeagueWebFactory { }
     }
 }

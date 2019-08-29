@@ -3,17 +3,15 @@ using System.Threading.Tasks;
 using BeaverLeague.Tests.Helpers;
 using System.Linq;
 using BeaverLeague.Core.Models;
-using System;
-using static BeaverLeague.Tests.Pages.Admin.Golfers.EditTests;
 using BeaverLeague.Data;
 
 namespace BeaverLeague.Tests.Pages.Admin.Golfers
 {
-    public class EditTests : IClassFixture<EditWebFactory>
+    public class EditTests : IClassFixture<BeaverLeagueWebFactory>
     {
-        private readonly EditWebFactory factory;
+        private readonly BeaverLeagueWebFactory factory;
 
-        public EditTests(EditWebFactory factory)
+        public EditTests(BeaverLeagueWebFactory factory)
         {
             this.factory = factory;
         }
@@ -69,7 +67,5 @@ namespace BeaverLeague.Tests.Pages.Admin.Golfers
             using var scope = factory.Services.GetScopedDbContext<LeagueDbContext>();
             Assert.Single(scope.Db.Golfers);
         }
-
-        public class EditWebFactory : BeaverLeagueWebFactory { }
     }
 }

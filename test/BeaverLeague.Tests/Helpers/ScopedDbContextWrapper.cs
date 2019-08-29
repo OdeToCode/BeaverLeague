@@ -15,15 +15,9 @@ namespace BeaverLeague.Tests.Helpers
             this.db = scope.ServiceProvider.GetRequiredService<T>();
         }
 
-        public T Db
-        {
-            get
-            {
-                return db;
-            }
-        }
+        public T Db => db;
 
-        public void Dispose()
+        public virtual void Dispose()
         {
             this.scope.Dispose();
             this.db.Dispose();

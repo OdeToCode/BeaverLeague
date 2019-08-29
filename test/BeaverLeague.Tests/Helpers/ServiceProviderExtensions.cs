@@ -1,7 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace BeaverLeague.Tests.Helpers
 {
@@ -11,6 +9,12 @@ namespace BeaverLeague.Tests.Helpers
             where T: DbContext
         {
             return new ScopedDbContextWrapper<T>(provider);
-        }   
+        }
+
+        public static ScopedDbContextWrapper<T> GetShortLivedDbContext<T>(this IServiceProvider provider)
+           where T : DbContext
+        {
+            return new DeletingDbContextWrapper<T>(provider);
+        }
     }
 }
