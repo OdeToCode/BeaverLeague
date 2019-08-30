@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace BeaverLeague.Tests.Data
 {
-    public class DbInstance<T> where T: DbContext
+    public class DbInstance<T> where T : DbContext
     {
         private readonly Func<DbContextOptions<T>, T> factory;
 

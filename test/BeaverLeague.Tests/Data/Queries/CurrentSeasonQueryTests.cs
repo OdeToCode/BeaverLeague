@@ -1,5 +1,4 @@
 ﻿using BeaverLeague.Core.Models;
-using BeaverLeague.Data;
 using BeaverLeague.Data.Queries;
 using BeaverLeague.Data.Services;
 using System;

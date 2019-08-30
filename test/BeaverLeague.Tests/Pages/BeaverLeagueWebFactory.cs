@@ -11,7 +11,7 @@ namespace BeaverLeague.Tests.Pages
 {
     public class BeaverLeagueWebFactory : WebApplicationFactory<Startup>
     {
-        public  virtual string Name => GetType().FullName ?? nameof(BeaverLeagueWebFactory);
+        public string Name = Guid.NewGuid().ToString();
 
         protected override void ConfigureWebHost(IWebHostBuilder builder)
         {

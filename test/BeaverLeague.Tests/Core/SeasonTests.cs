@@ -1,11 +1,6 @@
 ﻿using BeaverLeague.Core.Models;
-using BeaverLeague.Data;
-using BeaverLeague.Data.Services;
-using BeaverLeague.Tests.Data;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using Xunit;
 
 namespace BeaverLeague.Tests.Core
@@ -46,7 +41,7 @@ namespace BeaverLeague.Tests.Core
         }
 
         [Theory]
-        [InlineData(0, 11)] 
+        [InlineData(0, 11)]
         [InlineData(0.5, 10.5)]
         [InlineData(1, 10)]
         [InlineData(1.5, 9.5)]
@@ -65,7 +60,7 @@ namespace BeaverLeague.Tests.Core
             var matchSet = season.AddWeek(matchSetDate);
 
             var golfer1 = new Golfer { Id = 1, LeagueHandicap = 10 };
-            var golfer2 = new Golfer { Id = 2, LeagueHandicap = 7  };
+            var golfer2 = new Golfer { Id = 2, LeagueHandicap = 7 };
 
 
             var match = matchSet.AddResult(golfer1, 3, scoreA, true, golfer2, 2, scoreB, false);

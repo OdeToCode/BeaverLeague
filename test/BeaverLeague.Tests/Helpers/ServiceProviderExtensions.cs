@@ -10,11 +10,5 @@ namespace BeaverLeague.Tests.Helpers
         {
             return new ScopedDbContextWrapper<T>(provider);
         }
-
-        public static ScopedDbContextWrapper<T> GetShortLivedDbContext<T>(this IServiceProvider provider)
-           where T : DbContext
-        {
-            return new DeletingDbContextWrapper<T>(provider);
-        }
     }
 }

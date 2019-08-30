@@ -60,7 +60,7 @@ namespace BeaverLeague.Tests.Pages.Admin.Golfers
                 Tee = TeeType.Red,
                 IsActive = true
             };
-            
+
             var formPost = await client.SendFormAsync(formDocument, "Golfer", golfer);
             var postDocument = await formPost.GetDocumentAsync();
 
