@@ -10,7 +10,7 @@ namespace BeaverLeague.Tests.Core
         [Fact]
         public void CanCeateSetOfMatches()
         {
-            var season = new Season(seasonName);
+            var season = new Season() { Name = seasonName };
             var matchSet = season.AddWeek(matchSetDate);
 
             Assert.Equal(matchSetDate, matchSet.Date);
@@ -19,7 +19,7 @@ namespace BeaverLeague.Tests.Core
         [Fact]
         public void CanCreateMatchSetResult()
         {
-            var season = new Season(seasonName);
+            var season = new Season() { Name = seasonName };
             var matchSet = season.AddWeek(matchSetDate);
 
             var golfer1 = new Golfer()
@@ -56,7 +56,7 @@ namespace BeaverLeague.Tests.Core
         [InlineData(6, 5)]
         public void MatchPointsAlwaysTotalEleven(decimal scoreA, decimal scoreB)
         {
-            var season = new Season(seasonName);
+            var season = new Season() { Name = seasonName };
             var matchSet = season.AddWeek(matchSetDate);
 
             var golfer1 = new Golfer { Id = 1, LeagueHandicap = 10 };

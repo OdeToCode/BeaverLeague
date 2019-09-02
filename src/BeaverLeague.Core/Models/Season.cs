@@ -6,9 +6,8 @@ namespace BeaverLeague.Core.Models
 {
     public class Season
     {
-        public Season(string name)
+        public Season()
         {
-            Name = name;
             Weeks = new HashSet<MatchSet>();
         }
 

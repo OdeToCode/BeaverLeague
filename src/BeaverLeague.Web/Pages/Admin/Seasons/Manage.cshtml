@@ -6,5 +6,35 @@
 
 <h2>Season Management</h2>
 
-Current Season: <div id="current-season">@Model.CurrentSeason.Name</div>
+<div class="row pt-4">
+    <div class="col-12">
+        <h4>Current Season: <span id="current-season" class="text-info">@Model.CurrentSeason.Name</span></h4>
+    </div>
+</div>
+<div class="row pt-4">
+    <div class="col-2">
+        <div class="list-group">
+            <a asp-page="/Admin/Seasons/Edit" asp-route-id="@Model.CurrentSeason.Id" 
+               class="list-group-item list-group-item-action">
+                
+            </a>
+            <a href="#" class="list-group-item list-group-item-action">Dapibus ac facilisis in</a>
+            <a href="#" class="list-group-item list-group-item-action">Morbi leo risus</a>
+            <a href="#" class="list-group-item list-group-item-action">Porta ac consectetur ac</a>
+            <a href="#" class="list-group-item list-group-item-action disabled" tabindex="-1" aria-disabled="true">Vestibulum at eros</a>
+        </div>
+    </div>
+    <div class="col-10">
+        <table class="table" id="weeks">
+            <tbody>
+                @foreach (var week in Model.CurrentSeason.Weeks)
+                {
+                    <tr>
+                        <td>@week.Date</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
 

@@ -22,7 +22,7 @@ namespace BeaverLeague.Tests.Pages.Admin.Seasons
             using var scope = factory.Services.GetScopedDbContext<LeagueDbContext>();
             var db = scope.Db;
 
-            var season = new Season("2020");
+            var season = new Season() { Name = "2020" };
             var set1 = season.AddWeek(new DateTime(2020, 6, 1));
             var golfer1 = new Golfer { FirstName = "Scott" };
             var golfer2 = new Golfer { FirstName = "Roberto" };

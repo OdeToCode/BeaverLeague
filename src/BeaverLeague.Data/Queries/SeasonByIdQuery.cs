@@ -3,19 +3,18 @@ using Microsoft.EntityFrameworkCore;
 
 namespace BeaverLeague.Data.Queries
 {
-    public class GolferQuery : IQuery<Golfer, Golfer>
+    public class SeasonByIdQuery : IQuery<Season, Season>
     {
         private readonly int id;
 
-        public GolferQuery(int id)
+        public SeasonByIdQuery(int id)
         {
             this.id = id;
         }
 
-        public Golfer Execute(DbSet<Golfer> db)
+        public Season Execute(DbSet<Season> db)
         {
-            var golfer = db.Find(id);
-            return golfer;
+            return db.Find(id);
         }
     }
 }

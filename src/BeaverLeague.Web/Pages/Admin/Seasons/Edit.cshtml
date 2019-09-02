@@ -1,0 +1,29 @@
+﻿@page "{id:int?}"
+@model BeaverLeague.Web.Pages.Admin.Seasons.EditModel
+@{
+    ViewData["Title"] = Model.Header;
+}
+
+<div class="row">
+    <div class="col">
+        <h2>@Model.Header</h2>
+
+        <form id="form" method="post">
+
+            <input type="hidden" asp-for="Season.Id" />
+
+            <div class="form-group">
+                <label asp-for="Season.Name"></label>
+                <input asp-for="Season.Name" class="form-control">
+                <span asp-validation-for="Season.Name" class="text-danger"></span>
+            </div>
+
+            <button type="submit" id="submit" class="btn btn-primary">
+                <i class="fas fa-save"></i>
+                Save
+            </button>
+
+        </form>
+
+    </div>
+</div>

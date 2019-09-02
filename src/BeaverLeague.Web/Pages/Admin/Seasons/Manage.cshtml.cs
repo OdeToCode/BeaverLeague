@@ -9,7 +9,7 @@ namespace BeaverLeague.Web.Pages.Admin.Seasons
     {
         private readonly LeagueData leagueData;
 
-        public Season CurrentSeason { get; set; } = new Season("");
+        public Season CurrentSeason { get; set; } = new Season() { Name = "" };
 
         public ManageModel(LeagueData leagueData)
         {

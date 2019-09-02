@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using System;
 
 namespace BeaverLeague.Tests.Pages
@@ -21,6 +22,10 @@ namespace BeaverLeague.Tests.Pages
                 {
                     options.UseInMemoryDatabase(Name);
                 });
+            });
+            builder.ConfigureLogging(logging => 
+            {
+                logging.AddDebug();
             });
         }
 

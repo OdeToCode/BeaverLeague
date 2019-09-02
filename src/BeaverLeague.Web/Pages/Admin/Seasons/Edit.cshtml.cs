@@ -3,17 +3,18 @@ using BeaverLeague.Data.Queries;
 using BeaverLeague.Data.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using System;
 
-namespace BeaverLeague.Web.Pages.Admin.Golfers
+namespace BeaverLeague.Web.Pages.Admin.Seasons
 {
     public class EditModel : PageModel
     {
         private readonly LeagueData leagueData;
 
-        public string Header { get; set; } = "Create a Golfer";
+        public string Header { get; set; } = "Create a new season";
 
         [BindProperty]
-        public Golfer Golfer { get; set; } = new Golfer();
+        public Season Season { get; set; } = new Season { Name = DateTime.Now.Year.ToString() };
 
         public EditModel(LeagueData leagueData)
         {
@@ -22,33 +23,34 @@ namespace BeaverLeague.Web.Pages.Admin.Golfers
 
         public IActionResult OnGet(int id)
         {
-            if(id != 0)
+            if (id != 0)
             {
-                var query = new GolferByIdQuery(id);
-                Golfer = leagueData.Execute(query);
-                if (Golfer == null)
+                var query = new SeasonByIdQuery(id);
+                Season = leagueData.Execute(query);
+                if (Season == null)
                 {
+                    // todo: better not found page?
                     return NotFound();
                 }
-                Header = $"Edit {Golfer.FirstName} {Golfer.LastName}";
+                Header = $"Edit {Season.Name}";
             }
             return Page();
         }
 
         public IActionResult OnPost(int id)
         {
-            if(ModelState.IsValid)
+            if (ModelState.IsValid)
             {
                 if (id == 0)
                 {
-                    leagueData.Add(Golfer);
+                    leagueData.Add(Season);
                 }
                 else
                 {
-                    leagueData.Update(Golfer);
+                    leagueData.Update(Season);
                 }
                 leagueData.Commit();
-                return RedirectToPage("/Admin/Golfers/Manage");
+                return RedirectToPage("/Admin/Seasons/Manage");
             }
             else
             {

@@ -15,7 +15,7 @@ namespace BeaverLeague.Tests.Data.Queries
             var seasonName = nameof(CanSaveAndRetrieveSeason);
             var dbInstance = new LeagueDbInstance(nameof(CanSaveAndRetrieveSeason));
             var data = new LeagueData(dbInstance.NewContext());
-            var season = new Season(seasonName);
+            var season = new Season() { Name = seasonName };
 
             data.Add(season);
             data.Commit();
@@ -34,7 +34,7 @@ namespace BeaverLeague.Tests.Data.Queries
             var dbInstance = new LeagueDbInstance(nameof(CanSaveSeasonGraph));
             var data = new LeagueData(dbInstance.NewContext());
 
-            var season = new Season(nameof(CanSaveSeasonGraph));
+            var season = new Season() { Name = nameof(CanSaveSeasonGraph) };
             var golferA = new Golfer { Id = 1, LeagueHandicap = 8 };
             var golferB = new Golfer { Id = 3, LeagueHandicap = 2 };
             var golferC = new Golfer { Id = 5, LeagueHandicap = 2 };
