@@ -12,15 +12,15 @@
 <div class="row pt-4">
     <div class="col-2">
         <div class="list-group">
-            <a asp-page="/Admin/Seasons/Edit" 
-               class="list-group-item list-group-item-action list-group-item-dark text-primary ">
+            <a asp-page="/Admin/Seasons/Edit" title="Create a season"
+               class="list-group-item list-group-item-action list-group-item-dark text-primary">
                 <i class="fas fa-plus-circle pr-1"></i><span>New Season</span>
             </a>
         </div>
     </div>
     <div class="col-10">
         <h3>Current Season: <span id="current-season">@Model.CurrentSeason.Name</span></h3>
-        <table class="table" id="seasons">
+        <table class="table table-striped table-hover" id="seasons">
             <thead>
                 <tr>
                     <th>Name</th>
@@ -32,7 +32,14 @@
                 {
                     <tr>
                         <td>@season.Name</td>
-                        <td></td>
+                        <td>
+                            <a asp-page="/Admin/Seasons/Edit" asp-route-id="@season.Id">
+                                <span class="fa fa-edit fa-2x" title="Edit"></span>
+                            </a>
+                            <a asp-page="/Admin/Seasons/Details" asp-route-id="@season.Id">
+                                <span class="fa fa-search fa-2x pl-2" title="Edit"></span>
+                            </a>
+                        </td>
                     </tr>
                 }
             </tbody>
