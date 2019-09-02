@@ -4,37 +4,39 @@
     ViewBag.Title = "Manage Season";
 }
 
-<h2>Season Management</h2>
+<h1>Season Management</h1>
 
 <div class="row pt-4">
     <div class="col-12">
-        <h4>Current Season: <span id="current-season" class="text-info">@Model.CurrentSeason.Name</span></h4>
     </div>
 </div>
 <div class="row pt-4">
     <div class="col-2">
         <div class="list-group">
-            <a asp-page="/Admin/Seasons/Edit" asp-route-id="@Model.CurrentSeason.Id" 
-               class="list-group-item list-group-item-action">
-                
+            <a asp-page="/Admin/Seasons/Edit" 
+               class="list-group-item list-group-item-action list-group-item-dark text-primary ">
+                <i class="fas fa-plus-circle pr-1"></i><span>New Season</span>
             </a>
-            <a href="#" class="list-group-item list-group-item-action">Dapibus ac facilisis in</a>
-            <a href="#" class="list-group-item list-group-item-action">Morbi leo risus</a>
-            <a href="#" class="list-group-item list-group-item-action">Porta ac consectetur ac</a>
-            <a href="#" class="list-group-item list-group-item-action disabled" tabindex="-1" aria-disabled="true">Vestibulum at eros</a>
         </div>
     </div>
     <div class="col-10">
-        <table class="table" id="weeks">
+        <h3>Current Season: <span id="current-season">@Model.CurrentSeason.Name</span></h3>
+        <table class="table" id="seasons">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th></th>
+                </tr>
+            </thead>
             <tbody>
-                @foreach (var week in Model.CurrentSeason.Weeks)
+                @foreach(var season in Model.Seasons)
                 {
                     <tr>
-                        <td>@week.Date</td>
+                        <td>@season.Name</td>
+                        <td></td>
                     </tr>
                 }
             </tbody>
         </table>
     </div>
 </div>
-
