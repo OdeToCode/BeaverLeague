@@ -33,11 +33,11 @@
                     <tr>
                         <td>@season.Name</td>
                         <td>
-                            <a asp-page="/Admin/Seasons/Edit" asp-route-id="@season.Id">
-                                <span class="fa fa-edit fa-2x" title="Edit"></span>
+                            <a asp-page="/Admin/Seasons/Edit" asp-route-id="@season.Id" class="btn btn btn-secondary">
+                                <span class="fa fa-edit pr-2" title="Edit"></span>Edit
                             </a>
-                            <a asp-page="/Admin/Seasons/Details" asp-route-id="@season.Id">
-                                <span class="fa fa-search fa-2x pl-2" title="Edit"></span>
+                            <a asp-page="/Admin/Seasons/Detail" asp-route-id="@season.Id" class="btn btn btn-secondary">
+                                <span class="fa fa-search pr-2" title="Details"></span>Details
                             </a>
                         </td>
                     </tr>
