@@ -11,7 +11,7 @@ namespace BeaverLeague.Tests.Data.Services
         [Fact]
         public void CanAddGolfer()
         {
-            var dbInstance = new LeagueDbInstance(nameof(CanAddGolfer));
+            using var dbInstance = new LeagueDbInstance(nameof(CanAddGolfer));
             using (var leagueData = dbInstance.NewContext())
             {
                 leagueData.Golfers.Add(new Golfer());

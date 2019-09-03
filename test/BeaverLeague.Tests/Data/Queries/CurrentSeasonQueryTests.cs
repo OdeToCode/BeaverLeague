@@ -12,8 +12,8 @@ namespace BeaverLeague.Tests.Data.Queries
         [Fact]
         public void CanSaveAndRetrieveSeason()
         {
+            using var dbInstance = new LeagueDbInstance(nameof(CanSaveAndRetrieveSeason));
             var seasonName = nameof(CanSaveAndRetrieveSeason);
-            var dbInstance = new LeagueDbInstance(nameof(CanSaveAndRetrieveSeason));
             var data = new LeagueData(dbInstance.NewContext());
             var season = new Season() { Name = seasonName };
 
@@ -21,7 +21,7 @@ namespace BeaverLeague.Tests.Data.Queries
             data.Commit();
 
             var secondData = new LeagueData(dbInstance.NewContext());
-            var query = new CurrentSeasonQuery();
+            var query = new SeasonDetailQuery(season.Id);
             var secondSeason = secondData.Execute(query);
 
             Assert.Equal(season.Id, secondSeason.Id);
@@ -31,7 +31,7 @@ namespace BeaverLeague.Tests.Data.Queries
         [Fact]
         public void CanSaveSeasonGraph()
         {
-            var dbInstance = new LeagueDbInstance(nameof(CanSaveSeasonGraph));
+            using var dbInstance = new LeagueDbInstance(nameof(CanSaveSeasonGraph));
             var data = new LeagueData(dbInstance.NewContext());
 
             var season = new Season() { Name = nameof(CanSaveSeasonGraph) };
@@ -52,7 +52,7 @@ namespace BeaverLeague.Tests.Data.Queries
             data.Commit();
 
             var checkData = new LeagueData(dbInstance.NewContext());
-            var query = new CurrentSeasonQuery();
+            var query = new SeasonDetailQuery(season.Id);
             var checkSeason = checkData.Execute(query);
 
             Assert.Equal(2, checkSeason.Weeks.Count);
