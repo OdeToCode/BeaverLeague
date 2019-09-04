@@ -4,5 +4,40 @@
     ViewData["Title"] = "Detail";
 }
 
-<h1>Detail</h1>
+
+<div class="row pt-4">
+    <div class="col-12">
+        <h1>Season: @Model.Season.Name</h1>
+    </div>
+</div>
+<div class="row pt-4">
+    <div class="col-2">
+        <div class="list-group">
+            <a asp-page="/Admin/Weeks/Create" title="Create a new week"
+               class="list-group-item list-group-item-action list-group-item-dark text-primary">
+                <i class="fas fa-plus-circle pr-1"></i><span>New Week</span>
+            </a>
+        </div>
+    </div>
+    <div class="col-10">
+        <h4>Weeks in this season:</h4>
+        <table class="table table-hover table-striped">
+            <thead>
+                <tr>
+                    <th>Date</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var week in Model.Season.Weeks.OrderBy(w => w.Date))
+                {
+                <tr>
+                    <td>@week.Date</td>
+                </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
 

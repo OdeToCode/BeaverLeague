@@ -5,6 +5,16 @@ namespace BeaverLeague.Core.Models
 {
     public class MatchSet
     {
+        public MatchSet()
+        {
+            Date = DateTime.Now;
+            while(Date.DayOfWeek != DayOfWeek.Wednesday)
+            {
+                Date = Date.AddDays(1);
+            }
+            Matches = new HashSet<MatchResult>();
+        }
+
         public MatchSet(DateTime date)
         {
             Date = date;
