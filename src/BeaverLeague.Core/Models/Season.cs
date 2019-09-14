@@ -17,11 +17,11 @@ namespace BeaverLeague.Core.Models
         public int Id { get; set; }
         public ICollection<MatchSet> Weeks   { get; set; }
 
-        public MatchSet AddWeek(DateTime date)
+        public MatchSet AddWeek(MatchSet matchSet)
         {
-            var set = new MatchSet(date);
-            Weeks.Add(set);
-            return set;
+            matchSet.SeasonId = Id;
+            Weeks.Add(matchSet);
+            return matchSet;
         }
     }
 }

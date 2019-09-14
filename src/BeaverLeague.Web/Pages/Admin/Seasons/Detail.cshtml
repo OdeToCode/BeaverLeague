@@ -13,7 +13,7 @@
 <div class="row pt-4">
     <div class="col-2">
         <div class="list-group">
-            <a asp-page="/Admin/Weeks/Create" title="Create a new week"
+            <a asp-page="/Admin/Seasons/Weeks/Create" asp-route-seasonId="@Model.Season.Id" title="Create a new week"
                class="list-group-item list-group-item-action list-group-item-dark text-primary">
                 <i class="fas fa-plus-circle pr-1"></i><span>New Week</span>
             </a>

@@ -7,11 +7,6 @@ namespace BeaverLeague.Core.Models
     {
         public MatchSet()
         {
-            Date = DateTime.Now;
-            while(Date.DayOfWeek != DayOfWeek.Wednesday)
-            {
-                Date = Date.AddDays(1);
-            }
             Matches = new HashSet<MatchResult>();
         }
 
@@ -21,10 +16,10 @@ namespace BeaverLeague.Core.Models
             Matches = new HashSet<MatchResult>();
         }
 
-        public int Id { get; protected set; }
+        public int Id { get; set; }
         public int SeasonId { get; set; }
-        public DateTime Date { get; protected set; }
-        public ICollection<MatchResult> Matches { get; protected set; }
+        public DateTime Date { get; set; }
+        public ICollection<MatchResult> Matches { get; set; }
 
         public MatchResult AddResult(Golfer playerA, int playerAScore, decimal playerAPoints, bool playerANextWeek, 
                                           Golfer playerB, int playerBScore, decimal playerBPoints, bool playerBNextWeek)

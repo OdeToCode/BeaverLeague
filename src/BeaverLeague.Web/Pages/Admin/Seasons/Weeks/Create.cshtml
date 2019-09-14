@@ -1,0 +1,31 @@
+﻿@page "/Admin/Seasons/{seasonId}/Weeks/Create"
+@model BeaverLeague.Web.Pages.Admin.Seasons.Weeks.CreateModel
+@{
+    ViewData["Title"] = "Create";
+}
+
+<div class="row">
+    <div class="col">
+
+        <h2>Start a New Week</h2>
+        <div>for season @Model.Season.Name</div>
+
+        <form id="form" method="post">
+
+            <input type="hidden" asp-for="MatchSet.SeasonId" />
+
+            <div class="form-group">
+                <label asp-for="MatchSet.Date"></label>
+                <input asp-for="MatchSet.Date" class="form-control">
+                <span asp-validation-for="MatchSet.Date" class="text-danger"></span>
+            </div>
+
+            <button type="submit" id="submit" class="btn btn-primary" title="Save Season">
+                <i class="fas fa-save"></i>
+                Create
+            </button>
+
+        </form>
+
+    </div>
+</div>

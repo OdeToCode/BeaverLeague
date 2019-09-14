@@ -3,24 +3,27 @@ using System;
 using System.Linq;
 using Xunit;
 
-namespace BeaverLeague.Tests.Core
+namespace BeaverLeague.Tests.Core.Models
 {
     public class SeasonTests
     {
         [Fact]
         public void CanCeateSetOfMatches()
         {
-            var season = new Season() { Name = seasonName };
-            var matchSet = season.AddWeek(matchSetDate);
+            var season = new Season() { Name = seasonName, Id = 103 };
+            var week = new MatchSet(matchSetDate);
+            var matchSet = season.AddWeek(week);
 
+            Assert.Equal(103, matchSet.SeasonId);
             Assert.Equal(matchSetDate, matchSet.Date);
         }
 
         [Fact]
         public void CanCreateMatchSetResult()
         {
-            var season = new Season() { Name = seasonName };
-            var matchSet = season.AddWeek(matchSetDate);
+            var season = new Season() { Name = seasonName, Id = 310 };
+            var week = new MatchSet() { Date = matchSetDate };
+            var matchSet = season.AddWeek(week);
 
             var golfer1 = new Golfer()
             {
@@ -57,7 +60,8 @@ namespace BeaverLeague.Tests.Core
         public void MatchPointsAlwaysTotalEleven(decimal scoreA, decimal scoreB)
         {
             var season = new Season() { Name = seasonName };
-            var matchSet = season.AddWeek(matchSetDate);
+            var matchSet = new MatchSet(matchSetDate);
+            season.AddWeek(matchSet);
 
             var golfer1 = new Golfer { Id = 1, LeagueHandicap = 10 };
             var golfer2 = new Golfer { Id = 2, LeagueHandicap = 7 };

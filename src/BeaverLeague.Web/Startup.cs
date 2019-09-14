@@ -20,7 +20,6 @@ namespace BeaverLeague.Web
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers();
             services.AddRazorPages();
             services.AddScoped<LeagueData>();
             services.AddDbContext<LeagueDbContext>(c => c.UseSqlServer(configuration.GetConnectionString("LeagueDb")));
@@ -34,7 +33,6 @@ namespace BeaverLeague.Web
             app.UseRouting();
             app.UseEndpoints(e =>
             {
-                e.MapControllers();
                 e.MapRazorPages();
             });
         }
