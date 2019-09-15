@@ -32,6 +32,10 @@ namespace BeaverLeague.Web.Pages.Admin.Golfers
                 }
                 Header = $"Edit {Golfer.FirstName} {Golfer.LastName}";
             }
+            else
+            {
+                Golfer.IsActive = true;
+            }
             return Page();
         }
 
