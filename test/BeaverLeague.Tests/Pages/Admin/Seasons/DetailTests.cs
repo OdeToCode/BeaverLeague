@@ -1,16 +1,41 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using BeaverLeague.Core.Models;
+using BeaverLeague.Data;
+using BeaverLeague.Tests.Helpers;
+using System;
+using System.Threading.Tasks;
 using Xunit;
 
 namespace BeaverLeague.Tests.Pages.Admin.Seasons
 {
-    public class DetailTests
+    public class DetailTests : IClassFixture<BeaverLeagueWebFactory>
     {
-        [Fact]
-        public void CanShowSeasonDetails()
+        private readonly BeaverLeagueWebFactory factory;
+
+        public DetailTests(BeaverLeagueWebFactory factory)
         {
-            Assert.True(false);
+            this.factory = factory;
+        }
+
+        [Fact]
+        public async Task CanShowSeasonDetails()
+        {
+            using var scope = factory.Services.GetScopedDbContext<LeagueDbContext>();
+            var season = new Season()
+            {
+                Name = Guid.NewGuid().ToString(),
+            };
+            season.Weeks.Add(new MatchSet(new DateTime(2019, 9, 11)));
+            season.Weeks.Add(new MatchSet(new DateTime(2019, 9, 18)));
+            season.Weeks.Add(new MatchSet(new DateTime(2019, 9, 25)));
+            scope.Db.Add(season);
+            scope.Db.SaveChanges();
+
+            var client = factory.CreateClient();
+            var response = await client.GetAsync($"/Admin/Seasons/Detail/{season.Id}");
+            var document = await response.GetDocumentAsync();
+            var header = document.QuerySelector("h2").TextContent;
+
+            Assert.EndsWith(season.Name, header);
         }
     }
 }
