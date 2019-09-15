@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BeaverLeague.Data.Migrations
 {
     [DbContext(typeof(LeagueDbContext))]
-    [Migration("20190824014218_initial-model")]
-    partial class initialmodel
+    [Migration("20190915153444_Start")]
+    partial class Start
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -99,7 +99,7 @@ namespace BeaverLeague.Data.Migrations
 
                     b.HasIndex("SeasonId");
 
-                    b.ToTable("MatchSet");
+                    b.ToTable("MatchSets");
                 });
 
             modelBuilder.Entity("BeaverLeague.Core.Models.PlayerResult", b =>

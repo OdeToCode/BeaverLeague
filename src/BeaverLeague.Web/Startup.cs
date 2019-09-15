@@ -1,4 +1,5 @@
-﻿using BeaverLeague.Data;
+﻿using BeaverLeague.Core.Services;
+using BeaverLeague.Data;
 using BeaverLeague.Data.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -22,6 +23,8 @@ namespace BeaverLeague.Web
         {
             services.AddRazorPages();
             services.AddScoped<LeagueData>();
+            services.AddTransient<ISystemClock, SystemClock>();
+            services.AddTransient<IMatchDayFinder, WednesdayMatchDayFinder>();
             services.AddDbContext<LeagueDbContext>(c => c.UseSqlServer(configuration.GetConnectionString("LeagueDb")));
         }
 

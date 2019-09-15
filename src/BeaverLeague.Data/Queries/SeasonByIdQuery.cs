@@ -1,5 +1,6 @@
 ﻿using BeaverLeague.Core.Models;
 using Microsoft.EntityFrameworkCore;
+using System.Linq;
 
 namespace BeaverLeague.Data.Queries
 {
@@ -14,7 +15,7 @@ namespace BeaverLeague.Data.Queries
 
         public Season Execute(DbSet<Season> db)
         {
-            return db.Find(id);
+            return db.Single(s => s.Id == id);
         }
     }
 }

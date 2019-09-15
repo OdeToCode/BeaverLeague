@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace BeaverLeague.Data.Migrations
 {
-    public partial class initialmodel : Migration
+    public partial class Start : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -41,7 +41,7 @@ namespace BeaverLeague.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "MatchSet",
+                name: "MatchSets",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
@@ -51,9 +51,9 @@ namespace BeaverLeague.Data.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_MatchSet", x => x.Id);
+                    table.PrimaryKey("PK_MatchSets", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_MatchSet_Seasons_SeasonId",
+                        name: "FK_MatchSets_Seasons_SeasonId",
                         column: x => x.SeasonId,
                         principalTable: "Seasons",
                         principalColumn: "Id",
@@ -72,9 +72,9 @@ namespace BeaverLeague.Data.Migrations
                 {
                     table.PrimaryKey("PK_MatchResult", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_MatchResult_MatchSet_MatchSetId",
+                        name: "FK_MatchResult_MatchSets_MatchSetId",
                         column: x => x.MatchSetId,
-                        principalTable: "MatchSet",
+                        principalTable: "MatchSets",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -121,8 +121,8 @@ namespace BeaverLeague.Data.Migrations
                 column: "MatchSetId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_MatchSet_SeasonId",
-                table: "MatchSet",
+                name: "IX_MatchSets_SeasonId",
+                table: "MatchSets",
                 column: "SeasonId");
 
             migrationBuilder.CreateIndex(
@@ -148,7 +148,7 @@ namespace BeaverLeague.Data.Migrations
                 name: "MatchResult");
 
             migrationBuilder.DropTable(
-                name: "MatchSet");
+                name: "MatchSets");
 
             migrationBuilder.DropTable(
                 name: "Seasons");

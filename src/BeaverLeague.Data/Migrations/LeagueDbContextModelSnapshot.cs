@@ -97,7 +97,7 @@ namespace BeaverLeague.Data.Migrations
 
                     b.HasIndex("SeasonId");
 
-                    b.ToTable("MatchSet");
+                    b.ToTable("MatchSets");
                 });
 
             modelBuilder.Entity("BeaverLeague.Core.Models.PlayerResult", b =>

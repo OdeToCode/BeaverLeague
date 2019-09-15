@@ -12,10 +12,10 @@ namespace BeaverLeague.Web.Pages.Admin.Seasons.Weeks
         private readonly LeagueData leagueData;
 
         public Season Season { get; set; } = new Season();
+        public IMatchDayFinder MatchDayFinder { get; }
 
         [BindProperty]
         public MatchSet MatchSet { get; set; } = new MatchSet();
-        public IMatchDayFinder MatchDayFinder { get; }
 
         public CreateModel(LeagueData leagueData, IMatchDayFinder matchDayFinder)
         {
@@ -28,13 +28,16 @@ namespace BeaverLeague.Web.Pages.Admin.Seasons.Weeks
             var seasonQuery = new SeasonByIdQuery(seasonId);
             Season = leagueData.Execute(seasonQuery);
             MatchSet.SeasonId = seasonId;
+            MatchSet.Date = MatchDayFinder.FindNextMatchDay();
         }
 
-        public IActionResult OnPost()
+        public IActionResult OnPost(int seasonId)
         {
             if (ModelState.IsValid)
             {
-
+                leagueData.Add(MatchSet);
+                leagueData.Commit();
+                return RedirectToPage("/Admin/Seasons/Detail", new { Id = seasonId });
             }
             return Page();
         }

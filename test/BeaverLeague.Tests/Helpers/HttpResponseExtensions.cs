@@ -5,6 +5,7 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading;
 using System.Threading.Tasks;
+using Xunit.Sdk;
 
 namespace BeaverLeague.Tests.Helpers
 {
@@ -12,6 +13,12 @@ namespace BeaverLeague.Tests.Helpers
     {
         public static async Task<IHtmlDocument> GetDocumentAsync(this HttpResponseMessage response)
         {
+            if(!response.IsSuccessStatusCode)
+            {
+                var error = await response.Content.ReadAsStringAsync();
+                throw new XunitException(error);
+            }
+            
             var content = await response.Content.ReadAsStringAsync();
             var document = await BrowsingContext.New().OpenAsync(ResponseFactory, CancellationToken.None);
             

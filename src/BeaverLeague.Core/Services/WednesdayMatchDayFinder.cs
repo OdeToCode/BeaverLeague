@@ -4,14 +4,21 @@ namespace BeaverLeague.Core.Services
 {
     public class WednesdayMatchDayFinder : IMatchDayFinder
     {
-        public DateTime FindNextMatchDay(DateTime currentDate)
+        private readonly ISystemClock clock;
+
+        public WednesdayMatchDayFinder(ISystemClock clock)
         {
-            currentDate = currentDate.AddDays(1);
-            while (currentDate.DayOfWeek != DayOfWeek.Wednesday)
+            this.clock = clock;
+        }
+
+        public DateTime FindNextMatchDay()
+        {
+            var date = clock.CurrentTime.AddDays(1);
+            while (date.DayOfWeek != DayOfWeek.Wednesday)
             {
-                currentDate = currentDate.AddDays(1);
+                date = date.AddDays(1);
             }
-            return currentDate;
+            return date;
         }
     }
 }

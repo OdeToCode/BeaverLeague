@@ -1,8 +1,9 @@
 ﻿using BeaverLeague.Core.Models;
+using BeaverLeague.Data;
 using BeaverLeague.Tests.Helpers;
 using System;
 using System.Collections.Generic;
-using System.Text;
+using System.Linq;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -21,23 +22,28 @@ namespace BeaverLeague.Tests.Pages.Admin.Weeks
         public async Task CanCreateNewMatchSet()
         {
             var client = factory.CreateClient();
-            var emptyForm = await client.GetAsync("/Admin/Seasons/1/Weeks/Create");
-            var formDocument = await emptyForm.GetDocumentAsync();
+            using var scope = factory.Services.GetScopedDbContext<LeagueDbContext>();
 
             var season = new Season();
-            //var matchSet = season.AddWeek();
-            //var matchSet = new MatchSet()
-            //{
-            //    Id = 1,
-            //    Date = new DateTime(2019, 9, 4),
-            //     SeasonId = 1
-            //}
+            season.Name = Guid.NewGuid().ToString();
+            scope.Db.Add(season);
+            scope.Db.SaveChanges();
 
-            //var formPost = await client.SendFormAsync(formDocument, "Golfer", golfer);
-            //var postDocument = await formPost.GetDocumentAsync();
+            var emptyForm = await client.GetAsync($"/Admin/Seasons/{season.Id}/Weeks/Create");
+            var formDocument = await emptyForm.GetDocumentAsync();
 
-            //using var scope = factory.Services.GetScopedDbContext<LeagueDbContext>();
-            //Assert.Single(scope.Db.Golfers);
+            var formData = new Dictionary<string, string>()
+            {
+                { "MatchSet.SeasonId", season.Id.ToString() }
+            };
+
+            var formPost = await client.SendFormAsync(formDocument, formData);
+            var postDocument = await formPost.GetDocumentAsync();
+
+            using var verifyScope = factory.Services.GetScopedDbContext<LeagueDbContext>();
+            var set = verifyScope.Db.MatchSets.Where(w => w.SeasonId == season.Id);
+            Assert.Single(set);
+            Assert.Equal(set.First().Date, new DateTime(2019, 09, 18));
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace BeaverLeague.Core.Models
 {
@@ -18,6 +19,8 @@ namespace BeaverLeague.Core.Models
 
         public int Id { get; set; }
         public int SeasonId { get; set; }
+
+        [DataType(DataType.Date)]
         public DateTime Date { get; set; }
         public ICollection<MatchResult> Matches { get; set; }
 

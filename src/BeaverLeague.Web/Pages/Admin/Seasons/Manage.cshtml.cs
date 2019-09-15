@@ -1,6 +1,7 @@
 ﻿using BeaverLeague.Core.Models;
 using BeaverLeague.Data.Queries;
 using BeaverLeague.Data.Services;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,11 +20,19 @@ namespace BeaverLeague.Web.Pages.Admin.Seasons
             this.leagueData = leagueData;
         }
 
-        public void OnGet()
+        public IActionResult OnGet()
         {
             var query = new AllSeasonsQuery();
             Seasons = leagueData.Execute(query);
-            CurrentSeason = Seasons.First();
+            if (Seasons.Any())
+            {
+                CurrentSeason = Seasons.First();
+            }
+            else
+            {
+                return RedirectToPage("/Admin/Seasons/Edit");
+            }
+            return Page();
         }
     }
 }

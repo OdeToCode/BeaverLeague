@@ -91,7 +91,9 @@ namespace BeaverLeague.Tests.Helpers
                 }
             }
 
+            Assert.True(form.CheckValidity(), "Form contains invalid data");
             var submit = form.GetSubmission(submitButton);
+
             var target = (Uri)submit.Target;
             if (submitButton.HasAttribute("formaction"))
             {
