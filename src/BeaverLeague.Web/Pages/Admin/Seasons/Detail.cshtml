@@ -39,7 +39,8 @@
                         <a asp-page="/Admin/Seasons/Edit" asp-route-id="3" class="btn btn btn-secondary">
                             <span class="fa fa-clipboard-list pr-2" title="Edit"></span>Schedule
                         </a>
-                        <a asp-page="/Admin/Seasons/Weeks/Scores" asp-route-weekid="@entry.week.Id" class="btn btn btn-secondary">
+                        <a asp-page="/Admin/Seasons/Weeks/Scores" asp-route-weekid="@entry.week.Id" 
+                           asp-route-seasonid="@Model.Season.Id" class="btn btn btn-secondary">
                             <span class="fa fa-poll pr-2" title="Details"></span>Scores
                         </a>
                     </td>

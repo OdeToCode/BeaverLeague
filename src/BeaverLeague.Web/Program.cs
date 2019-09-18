@@ -7,18 +7,18 @@ namespace BeaverLeague.Web
     {
         public static void Main(string[] args)
         {
-            var builder = CreateWebHostBuilder(args);
+            var builder = CreateHostBuilder(args);
             var host = builder.Build();
             host.Run();
         }
 
-        public static IHostBuilder CreateWebHostBuilder(string[] args)
+        public static IHostBuilder CreateHostBuilder(string[] args)
         {
             return Host.CreateDefaultBuilder(args)
-                        .ConfigureWebHost(c =>
-                        {
-                            c.UseStartup<Startup>();
-                        });
+                       .ConfigureWebHostDefaults(c =>
+                       {
+                           c.UseStartup<Startup>();
+                       });
         }
     }
 }
