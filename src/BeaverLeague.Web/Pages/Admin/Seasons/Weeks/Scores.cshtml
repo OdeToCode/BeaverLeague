@@ -1,8 +1,15 @@
 ﻿@page "/Admin/Seasons/{seasonId}/Weeks/{weekId}/Scores"
+@using BeaverLeague.Web.Components
 @model BeaverLeague.Web.Pages.Admin.Seasons.Weeks.ScoresModel
 @{
     ViewData["Title"] = "Scores";
 }
 
-<h1>Scores</h1>
+<h1>Scores for </h1>
+
+@(await Html.RenderComponentAsync<WeeklyScoring>(RenderMode.ServerPrerendered))
+
+@section scripts {
+    <script src="~/_framework/blazor.server.js"></script>
+}
 

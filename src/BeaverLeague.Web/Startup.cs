@@ -22,6 +22,7 @@ namespace BeaverLeague.Web
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddRazorPages();
+            services.AddServerSideBlazor();
             services.AddScoped<LeagueData>();
             services.AddTransient<ISystemClock, SystemClock>();
             services.AddTransient<IMatchDayFinder, WednesdayMatchDayFinder>();
@@ -31,11 +32,12 @@ namespace BeaverLeague.Web
         public void Configure(IApplicationBuilder app, IWebHostEnvironment environment)
         {
             app.UseDeveloperExceptionPage();
-            app.UseFileServer();
+            app.UseStaticFiles();
             app.UseStatusCodePages();
             app.UseRouting();
             app.UseEndpoints(e =>
             {
+                e.MapBlazorHub();
                 e.MapRazorPages();
             });
         }

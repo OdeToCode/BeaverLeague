@@ -1,15 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
+﻿using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace BeaverLeague.Web.Pages.Admin.Seasons.Weeks
 {
     public class ScoresModel : PageModel
     {
-        public void OnGet(int weekId)
+        public int WeekID { get; set; }
+        public int SeasonID { get; set; }
+
+        public void OnGet(int weekId, int seasonId)
         {
 
         }
