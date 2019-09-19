@@ -1,5 +1,30 @@
-﻿<h3>WeeklyScoring</h3>
+﻿<h3>Weekly Scoring</h3>
+
+The Week Id is @WeekId 
+
+Count: @count
+
+<button @onclick="Increment">+</button>
 
 @code {
+    [Parameter]
+    public int WeekId { get; set; }
+
+    int count { get; set; }
+
+    void Increment()
+    {
+        count += 1;
+    }
+
+    protected override Task OnInitializedAsync()
+    {
+        return Task.CompletedTask;
+    }
+
+    protected override Task OnParametersSetAsync()
+    {
+        return Task.CompletedTask;
+    }
 
 }
