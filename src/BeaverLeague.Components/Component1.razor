@@ -1,0 +1,31 @@
+﻿@using Microsoft.JSInterop;
+@inject IJSRuntime jsRuntime
+
+<div class="my-component">
+    This Blazor component is defined in the <strong>BeaverLeague.Components</strong> package.
+</div>
+<div>
+    Count: @count
+</div>
+<div>
+    WeekId: @weekId
+</div>
+
+<button @onclick="Bump">+</button>
+
+
+@code {
+    int weekId = 0;
+    int count = 0;
+
+    void Bump()
+    {
+        count++;
+    }
+
+    override async Task OnParametersSetAsync()
+    {
+        await base.OnParametersSetAsync();
+        await jsRuntime.InvokeAsync<int>("Component1.WeekId");
+    }
+}
