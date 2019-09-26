@@ -43,7 +43,7 @@ namespace BeaverLeague.Tests.Pages.Admin.Weeks
             using var verifyScope = factory.Services.GetScopedDbContext<LeagueDbContext>();
             var set = verifyScope.Db.MatchSets.Where(w => w.SeasonId == season.Id);
             Assert.Single(set);
-            Assert.Equal(set.First().Date, new DateTime(2019, 09, 18));
+            Assert.Equal(new DateTime(2014, 10, 8), set.First().Date);
         }
     }
 }

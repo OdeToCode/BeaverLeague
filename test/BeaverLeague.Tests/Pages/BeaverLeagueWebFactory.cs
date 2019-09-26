@@ -1,4 +1,5 @@
-﻿using BeaverLeague.Data;
+﻿using BeaverLeague.Core.Services;
+using BeaverLeague.Data;
 using BeaverLeague.Tests.Helpers;
 using BeaverLeague.Web;
 using Microsoft.AspNetCore.Hosting;
@@ -18,9 +19,9 @@ namespace BeaverLeague.Tests.Pages
         {
             builder.ConfigureServices(services =>
             {
+                services.AddSingleton<ISystemClock, FixedClock>();
                 services.AddDbContext<LeagueDbContext>(options =>
                 {
-                    throw new Exception("WTF");
                     options.UseInMemoryDatabase(Name);
                 });
             });

@@ -19,6 +19,7 @@ namespace BeaverLeague.Tests.Pages.Admin.Seasons
         [Fact]
         public async Task CanShowSeasonDetails()
         {
+            var client = factory.CreateClient();
             using var scope = factory.Services.GetScopedDbContext<LeagueDbContext>();
             var season = new Season()
             {
@@ -30,7 +31,7 @@ namespace BeaverLeague.Tests.Pages.Admin.Seasons
             scope.Db.Add(season);
             scope.Db.SaveChanges();
 
-            var client = factory.CreateClient();
+            
             var response = await client.GetAsync($"/Admin/Seasons/Detail/{season.Id}");
             var document = await response.GetDocumentAsync();
             var header = document.QuerySelector("h2").TextContent;
