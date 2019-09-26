@@ -20,12 +20,9 @@ namespace BeaverLeague.Tests.Pages
             {
                 services.AddDbContext<LeagueDbContext>(options =>
                 {
+                    throw new Exception("WTF");
                     options.UseInMemoryDatabase(Name);
                 });
-            });
-            builder.ConfigureLogging(logging => 
-            {
-                logging.AddDebug();
             });
         }
 

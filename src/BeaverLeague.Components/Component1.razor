@@ -23,7 +23,7 @@
         count++;
     }
 
-    override async Task OnParametersSetAsync()
+    protected override async Task OnParametersSetAsync()
     {
         await base.OnParametersSetAsync();
         await jsRuntime.InvokeAsync<int>("Component1.WeekId");

@@ -26,7 +26,7 @@ namespace BeaverLeague.Web
             services.AddScoped<LeagueData>();
             services.AddTransient<ISystemClock, SystemClock>();
             services.AddTransient<IMatchDayFinder, WednesdayMatchDayFinder>();
-            services.AddDbContext<LeagueDbContext>(c => c.UseSqlServer(configuration.GetConnectionString("LeagueDb")));
+            //services.AddDbContext<LeagueDbContext>(c => c.UseSqlServer(configuration.GetConnectionString("LeagueDb")));
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment environment)
