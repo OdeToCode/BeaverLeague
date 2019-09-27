@@ -3,6 +3,9 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <RazorLangVersion>3.0</RazorLangVersion>
+    <LangVersion>8</LangVersion>
+    <Nullable>Enable</Nullable>
+    <WarningsAsErrors />
   </PropertyGroup>
 
 

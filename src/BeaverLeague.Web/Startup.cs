@@ -13,27 +13,33 @@ namespace BeaverLeague.Web
     public class Startup
     {
         private readonly IConfiguration configuration;
+        private readonly IWebHostEnvironment environment;
 
-        public Startup(IConfiguration configuration)
+        public Startup(IConfiguration configuration, IWebHostEnvironment environment)
         {
             this.configuration = configuration;
+            this.environment = environment;
         }
 
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddRazorPages();
             services.AddServerSideBlazor();
-            services.AddScoped<LeagueData>();
             services.AddTransient<ISystemClock, SystemClock>();
             services.AddTransient<IMatchDayFinder, WednesdayMatchDayFinder>();
-            //services.AddDbContext<LeagueDbContext>(c => c.UseSqlServer(configuration.GetConnectionString("LeagueDb")));
+            services.AddScoped<LeagueData>();
+
+            if(environment.IsDevelopment() || environment.IsProduction())
+            {
+                services.AddDbContextPool<LeagueDbContext>(c => c.UseSqlServer(configuration.GetConnectionString("LeagueDb")));
+            }
         }
 
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment environment)
+        public void Configure(IApplicationBuilder app)
         {
             app.UseDeveloperExceptionPage();
-            app.UseStaticFiles();
             app.UseStatusCodePages();
+            app.UseStaticFiles();
             app.UseRouting();
             app.UseEndpoints(e =>
             {

@@ -26,6 +26,6 @@
     protected override async Task OnParametersSetAsync()
     {
         await base.OnParametersSetAsync();
-        await jsRuntime.InvokeAsync<int>("Component1.WeekId");
+        weekId = await jsRuntime.InvokeAsync<int>("Component1.WeekId");
     }
 }

@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Hosting;
 using System;
 
 namespace BeaverLeague.Tests.Pages
@@ -15,12 +15,25 @@ namespace BeaverLeague.Tests.Pages
     {
         public string Name = Guid.NewGuid().ToString();
 
+        /// <summary>
+        /// Here is a work around to ensure EF uses an in-memory database.  
+        /// </summary>
+        protected override IHostBuilder CreateHostBuilder()
+        {
+            return Host.CreateDefaultBuilder()
+                       .ConfigureWebHostDefaults(c =>
+                       {
+                           c.UseStartup<Startup>();
+                       })
+                       .UseEnvironment("IntegrationTests");
+        }
+
         protected override void ConfigureWebHost(IWebHostBuilder builder)
         {
             builder.ConfigureServices(services =>
             {
                 services.AddSingleton<ISystemClock, FixedClock>();
-                services.AddDbContext<LeagueDbContext>(options =>
+                services.AddDbContextPool<LeagueDbContext>(options =>
                 {
                     options.UseInMemoryDatabase(Name);
                 });
