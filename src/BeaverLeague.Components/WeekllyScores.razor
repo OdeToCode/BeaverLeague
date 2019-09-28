@@ -1,0 +1,14 @@
+﻿@using Microsoft.JSInterop;
+@inject IJSRuntime jsRuntime
+
+    <h1>Scores for Week: @weekId </h1>
+
+@code {
+    int weekId = 0;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await base.OnInitializedAsync();
+        weekId = await jsRuntime.InvokeAsync<int>("BeaverLeague.Components.WeeklyScores.weekId");
+    }
+}

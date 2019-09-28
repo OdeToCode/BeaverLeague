@@ -15,16 +15,10 @@ namespace BeaverLeague.Tests.Pages
     {
         public string Name = Guid.NewGuid().ToString();
 
-        /// <summary>
-        /// Here is a work around to ensure EF uses an in-memory database.  
-        /// </summary>
         protected override IHostBuilder CreateHostBuilder()
         {
-            return Host.CreateDefaultBuilder()
-                       .ConfigureWebHostDefaults(c =>
-                       {
-                           c.UseStartup<Startup>();
-                       })
+            return base.CreateHostBuilder()
+                       /// Here is a work around to ensure EF uses an in-memory database.  
                        .UseEnvironment("IntegrationTests");
         }
 

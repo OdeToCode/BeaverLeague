@@ -9,7 +9,8 @@ namespace BeaverLeague.Web.Pages.Admin.Seasons.Weeks
 
         public void OnGet(int weekId, int seasonId)
         {
-
+            WeekID = weekId;
+            SeasonID = seasonId;
         }
     }
 }
