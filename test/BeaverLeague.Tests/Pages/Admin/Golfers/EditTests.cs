@@ -20,7 +20,6 @@ namespace BeaverLeague.Tests.Pages.Admin.Golfers
         public async Task CanLoadEditForm()
         {
             var client = factory.CreateClient();
-
             var response = await client.GetAsync("/Admin/Golfers/Edit");
             var document = await response.GetDocumentAsync();
             var header = document.QuerySelector("h2").TextContent;
