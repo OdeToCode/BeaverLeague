@@ -7,7 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\BeaverLeague.Components\BeaverLeague.Components.csproj" />
     <ProjectReference Include="..\BeaverLeague.Core\BeaverLeague.Core.csproj" />
     <ProjectReference Include="..\BeaverLeague.Data\BeaverLeague.Data.csproj" />
   </ItemGroup>

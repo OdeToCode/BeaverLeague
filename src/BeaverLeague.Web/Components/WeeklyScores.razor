@@ -1,0 +1,27 @@
+﻿@inject LeagueData leagueData
+@inject IJSRuntime jsRuntime
+
+    <h1>Scores: @(matchSet?.Date.ToLongDateString()) </h1>
+
+    
+    <button class="btn btn-primary" @onclick="NewMatch">Add Match</button>
+
+@code {
+
+    MatchSet? matchSet = null;
+
+    void NewMatch()
+    {
+
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        await base.OnInitializedAsync();
+
+        var weekId = await jsRuntime.InvokeAsync<int>("BeaverLeague.Components.WeeklyScores.weekId");
+
+        var query = new MatchSetByIdQuery(weekId);
+        matchSet = leagueData.Execute(query);
+    }
+}
