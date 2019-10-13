@@ -1,18 +1,13 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp3.0</TargetFramework>
+    <TargetFramework>netstandard2.1</TargetFramework>
     <Nullable>enable</Nullable>
     <WarningsAsErrors />
   </PropertyGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\BeaverLeague.Core\BeaverLeague.Core.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Migrations\" />
-    <Folder Include="Properties\" />
   </ItemGroup>
 
   <ItemGroup>

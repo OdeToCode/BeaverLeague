@@ -31,7 +31,8 @@ namespace BeaverLeague.Web
 
             if(environment.IsDevelopment() || environment.IsProduction())
             {
-                services.AddDbContextPool<LeagueDbContext>(c => c.UseSqlServer(configuration.GetConnectionString("LeagueDb")));
+                services.AddDbContextPool<LeagueDbContext>(
+                    c => c.UseSqlServer(configuration.GetConnectionString("LeagueDb")));
             }
         }
 
