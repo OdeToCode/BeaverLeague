@@ -1,18 +1,87 @@
 ﻿@inject LeagueData leagueData
 @inject IJSRuntime jsRuntime
 
+@if (initialized)
+{
     <h1>Scores: @(matchSet?.Date.ToLongDateString()) </h1>
 
-    
-    <button class="btn btn-primary" @onclick="NewMatch">Add Match</button>
+    @if (addMatch == null)
+    {
+        <button class="btn btn-primary" @onclick="NewMatch">Add Match</button>
+    }
+
+    @if (addMatch != null)
+    {
+        <form>
+            <h3>Add a match</h3>
+            <div class="card">
+                <div class="card-header">
+                    Golfer 1
+                </div>
+                <div class="card-body">
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label>Name</label>
+                            <select @bind="@addMatch.GolferOneId" class="form-control">
+                                <option value="1">Smith</option>
+                                <option value="2">Allen</option>
+                            </select>
+                        </div>
+                        <div class="form-group col-md-2">
+                            <label>Points</label>
+                            <input type="number" step="0.5" min="0" max="11" class="form-control" @addMatch.GolferOnePoints" />
+                        </div>
+                        <div class="form-group col-md-2">
+                            <label>Score</label>
+                            <input type="number" min="26" max="60" class="form-control" @bind="@addMatch.GolferOneScore" />
+                        </div>
+                        <div class="form-group col-md-2">
+                            <label>Play Next Week?</label>
+                            <div><input type="checkbox" @bind="@addMatch.GolferOnePlayNextWeek" /></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card pt-2">
+                <div class="card-header">
+                    Golfer 2
+                </div>
+                <div class="card-body">
+
+                </div>
+            </div>
+
+            <button class="btn btn-primary" @onclick="SaveMatch">Save</button>
+            <button class="btn btn-danger" @onclick="CancelMatch">Cancel</button>
+
+        </form>
+    }
+}
+else
+{
+    <div>Loading...</div>
+}
 
 @code {
 
+    bool initialized = false;
     MatchSet? matchSet = null;
+    AddMatchModel? addMatch = null;
 
     void NewMatch()
     {
+        addMatch = new AddMatchModel();
+    }
 
+    void SaveMatch()
+    {
+
+    }
+
+    void CancelMatch()
+    {
+        
     }
 
     protected override async Task OnInitializedAsync()
@@ -20,8 +89,8 @@
         await base.OnInitializedAsync();
 
         var weekId = await jsRuntime.InvokeAsync<int>("BeaverLeague.Components.WeeklyScores.weekId");
+        matchSet = leagueData.Execute(new MatchSetByIdQuery(weekId));
 
-        var query = new MatchSetByIdQuery(weekId);
-        matchSet = leagueData.Execute(query);
+        initialized = true;
     }
 }
