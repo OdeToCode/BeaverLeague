@@ -1,9 +1,238 @@
 ﻿@typeparam T
 @inherits ComboboxBase<T>
 
-COmbobox
+<div>
+    <div>
+        <input class="form-control" type="text" autocomplete="off"
+               placeholder="@Placeholder"/>
+    </div>
+</div>
 
 @code {
-    
+
 
 }
+
+
+@*@typeparam TItem
+    @inherits BlazoredTypeaheadBase<TItem>
+    @using Microsoft.AspNetCore.Components.Web
+
+    <div class="blazored-typeahead" @ref="typeahead">
+        <div class="blazored-typeahead__controls">
+            <input @ref="searchInput"
+                   class="blazored-typeahead__input @(!IsShowingSearchbar ? "blazored-typeahead__input-hidden" : null)"
+                   @bind-value="@SearchText"
+                   @bind-value:event="oninput"
+                   type="text"
+                   autocomplete="off"
+                   placeholder="@Placeholder" />
+            @if (IsShowingMask && Value != null)
+            {
+                <div class="blazored-typeahead__input-mask-wrapper">
+                    <div class="blazored-typeahead__input-mask" @onclick="HandleClickOnMask" @onkeyup="HandleKeyUpOnMask" tabindex="0" @ref="mask">
+                        @SelectedTemplate(Value)
+                    </div>
+                    <div class="blazored-typeahead__clear" @onclick="HandleClear" tabindex="-1">
+                        &#10005;
+                    </div>
+                </div>
+            }
+            <div class="blazored-typeahead__input__icon" @onclick="ShowMaximumSuggestions" @onkeyup="HandleKeyUpOnShowMaximum" tabindex="@(IsShowingSuggestions ? "-1" : "0")">
+                @if (IsSearching)
+                {
+                    <div class="blazored-typeahead__loader"></div>
+                }
+                else
+                {
+                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                        <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                            <polygon id="Shape" points="0 0 24 0 24 24 0 24" />
+                            <path d="M6.70710678,15.7071068 C6.31658249,16.0976311 5.68341751,16.0976311 5.29289322,15.7071068 C4.90236893,15.3165825 4.90236893,14.6834175 5.29289322,14.2928932 L11.2928932,8.29289322 C11.6714722,7.91431428 12.2810586,7.90106866 12.6757246,8.26284586 L18.6757246,13.7628459 C19.0828436,14.1360383 19.1103465,14.7686056 18.7371541,15.1757246 C18.3639617,15.5828436 17.7313944,15.6103465 17.3242754,15.2371541 L12.0300757,10.3841378 L6.70710678,15.7071068 Z" id="Path-94" fill="#000000" fill-rule="nonzero" transform="translate(12.000003, 11.999999) rotate(-180.000000) translate(-12.000003, -11.999999) " />
+                        </g>
+                    </svg>
+                }
+            </div>
+        </div>
+        @if (ShouldShowSuggestions())
+        {
+            <div class="blazored-typeahead__results">
+                @foreach (var item in Suggestions)
+                {
+                    <div @key="item" class="blazored-typeahead__result @GetSelectedSuggestionClass(item)" tabindex="0" @onclick="@(_ => SelectResult(item))" @onkeyup="@((e) => HandleKeyUpOnSuggestion(e,item))">
+                        @if (ResultTemplate != null)
+                        {
+                            @ResultTemplate(item)
+                        }
+                        else
+                        {
+                            @item.ToString()
+                        }
+                    </div>
+                }
+
+                @if (FooterTemplate != null)
+                {
+                    <div class="blazored-typeahead__results-footer">
+                        @FooterTemplate
+                    </div>
+                }
+            </div>
+        }
+        else if (ShowNotFound())
+        {
+            <div class="blazored-typeahead__results">
+                @if (NotFoundTemplate != null)
+                {
+                    <div class="blazored-typeahead__notfound">
+                        @NotFoundTemplate
+                    </div>
+                }
+                else
+                {
+                    <div class="blazored-typeahead__notfound">
+                        No Results Found
+                    </div>
+                }
+
+                @if (FooterTemplate != null)
+                {
+                    <div class="blazored-typeahead__results-footer">
+                        @FooterTemplate
+                    </div>
+                }
+            </div>
+        }
+    </div>*@
+
+
+@*@page "/"
+
+<h1>Blazored Typeahead - Form</h1>
+
+<EditForm Model="@FormModel" OnValidSubmit="@HandleFormSubmit">
+    <DataAnnotationsValidator />
+
+    <BlazoredTypeaheadInput SearchMethod="@GetPeopleLocal"
+                            @bind-Value="@FormModel.SelectedPerson"
+                            Placeholder="Search by first name...">
+        <SelectedTemplate Context="person">
+            @person.Firstname
+        </SelectedTemplate>
+        <ResultTemplate Context="person">
+            @person.Firstname @person.Lastname
+        </ResultTemplate>
+    </BlazoredTypeaheadInput>
+    <ValidationMessage For="@(() => FormModel.SelectedPerson)" />
+
+    <button class="btn btn-primary" type="submit">Submit</button>
+</EditForm>
+
+<hr />
+
+@if (FormModel.SelectedPerson != null)
+{
+    <br />
+    <p><strong>Selected Person:</strong> @FormModel.SelectedPerson.Firstname @FormModel.SelectedPerson.Lastname</p>
+}
+
+<hr />
+
+<h1>Blazored Typeahead - Standalone</h1>
+
+
+<BlazoredTypeahead SearchMethod="@GetPeopleLocal"
+                   @bind-Value="@SelectedPerson"
+                   Placeholder="Search by first name...">
+    <SelectedTemplate Context="person">
+        @person.Firstname
+    </SelectedTemplate>
+    <ResultTemplate Context="person">
+        @person.Firstname @person.Lastname
+    </ResultTemplate>
+</BlazoredTypeahead>
+
+<hr />
+
+@if (SelectedPerson != null)
+{
+    <p>Selected: @SelectedPerson.Firstname @SelectedPerson.Lastname</p>
+}
+
+
+@code {
+
+    private List<Person> People = new List<Person>();
+
+    private Person SelectedPerson;
+    private FormExample FormModel = new FormExample();
+
+    protected override void OnInitialized()
+    {
+        People.AddRange(new List<Person>() {
+            new Person() { Firstname = "Martelle", Lastname = "Cullon" },
+            new Person() { Firstname = "Zelda", Lastname = "Abrahamsson" },
+            new Person() { Firstname = "Benedetta", Lastname = "Posse" },
+            new Person() { Firstname = "Benoite", Lastname = "Gobel" },
+            new Person() { Firstname = "Charlot", Lastname = "Fullicks" },
+            new Person() { Firstname = "Vinson", Lastname = "Turbat" },
+            new Person() { Firstname = "Lenore", Lastname = "Malam" },
+            new Person() { Firstname = "Emanuele", Lastname = "Kolakovic" },
+            new Person() { Firstname = "Rosalyn", Lastname = "Mackin" },
+            new Person() { Firstname = "Yanaton", Lastname = "Krishtopaittis" },
+            new Person() { Firstname = "Frederik", Lastname = "McGeachie" },
+            new Person() { Firstname = "Parrnell", Lastname = "Ramsby" },
+            new Person() { Firstname = "Coreen", Lastname = "McGann" },
+            new Person() { Firstname = "Kyle", Lastname = "Coster" },
+            new Person() { Firstname = "Evangelia", Lastname = "Bowker" },
+            new Person() { Firstname = "Angeli", Lastname = "Collihole" },
+            new Person() { Firstname = "Bill", Lastname = "Lawther" },
+            new Person() { Firstname = "Kore", Lastname = "Reide" },
+            new Person() { Firstname = "Tracy", Lastname = "Gwinnell" },
+            new Person() { Firstname = "Lazaro", Lastname = "Partington" },
+            new Person() { Firstname = "Doretta", Lastname = "Aingell" },
+            new Person() { Firstname = "Olvan", Lastname = "Andraud" },
+            new Person() { Firstname = "Templeton", Lastname = "Chetwynd" },
+            new Person() { Firstname = "Daile", Lastname = "Kelsow" },
+            new Person() { Firstname = "Marcie", Lastname = "Brearty" },
+            new Person() { Firstname = "Irwinn", Lastname = "Lilian" },
+            new Person() { Firstname = "Niki", Lastname = "Moreland" },
+            new Person() { Firstname = "Honey", Lastname = "Waddup" },
+            new Person() { Firstname = "Amber", Lastname = "Hoopper" },
+            new Person() { Firstname = "Delilah", Lastname = "Dougary" },
+            new Person() { Firstname = "Tory", Lastname = "Ovington" },
+            new Person() { Firstname = "Doralin", Lastname = "Conrard" },
+            new Person() { Firstname = "Eugene", Lastname = "Custard" },
+            new Person() { Firstname = "Corella", Lastname = "Peotz" },
+            new Person() { Firstname = "Chris", Lastname = "Rayne" },
+            new Person() { Firstname = "Alexandro", Lastname = "Kwietek" },
+            new Person() { Firstname = "Selie", Lastname = "Tenwick" },
+            new Person() { Firstname = "Corliss", Lastname = "Haensel" },
+            new Person() { Firstname = "Misti", Lastname = "Jikylls" },
+            new Person() { Firstname = "Rosaline", Lastname = "Jephson" },
+            new Person() { Firstname = "Irene", Lastname = "Farnsworth" },
+            new Person() { Firstname = "Dominique", Lastname = "O'Shiels" },
+            new Person() { Firstname = "Mellie", Lastname = "Cyson" },
+            new Person() { Firstname = "Madelena", Lastname = "Chin" },
+            new Person() { Firstname = "Charlotte", Lastname = "Clixby" },
+            new Person() { Firstname = "Samara", Lastname = "Shavel" },
+            new Person() { Firstname = "Brod", Lastname = "Kitt" },
+            new Person() { Firstname = "Maridel", Lastname = "Dalley" },
+            new Person() { Firstname = "Wini", Lastname = "Hundley" },
+        });
+        SelectedPerson = new Person("Charles", "The Great", 66, "Belgium");
+    }
+
+
+
+    private async Task<IEnumerable<Person>> GetPeopleLocal(string searchText)
+    {
+        return await Task.FromResult(People.Where(x => x.Firstname.ToLower().Contains(searchText.ToLower())).ToList());
+    }
+
+    private void HandleFormSubmit()
+    {
+        Console.WriteLine("Form Submitted Successfully!");
+    }
+
+}*@

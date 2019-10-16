@@ -1,12 +1,11 @@
-﻿@inject LeagueData leagueData
-@inject IJSRuntime jsRuntime
+﻿@inherits WeeklyScoresBase
 
 @if (initialized)
 {
     <h1>Scores: @(matchSet?.Date.ToLongDateString()) </h1>
 
 
-    <Combobox T="string"></Combobox>
+    <Combobox T="string" Placeholder="Golfer name"></Combobox>
 
 
     @if (addMatch == null)
@@ -65,37 +64,4 @@
 else
 {
     <div>Loading...</div>
-}
-
-@code {
-
-    bool initialized = false;
-    MatchSet? matchSet = null;
-    AddMatchModel? addMatch = null;
-
-    void NewMatch()
-    {
-        addMatch = new AddMatchModel();
-    }
-
-    void SaveMatch()
-    {
-        var matchResult = new MatchResult();
-        matchResult.MatchSetId = matchSet.Id;
-    }
-
-    void CancelMatch()
-    {
-        addMatch = null;
-    }
-
-    protected override async Task OnInitializedAsync()
-    {
-        await base.OnInitializedAsync();
-
-        var weekId = await jsRuntime.InvokeAsync<int>("BeaverLeague.Components.WeeklyScores.weekId");
-        matchSet = leagueData.Execute(new MatchSetByIdQuery(weekId));
-
-        initialized = true;
-    }
 }
