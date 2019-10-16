@@ -26,9 +26,19 @@ namespace BeaverLeague.Web.Components
         [Parameter]
         public RenderFragment<T>? ItemTemplate { get; set; }
 
+        [Parameter]
+        public Func<T, string> SelectedItemFormat { get; set; } = _ => "";
+
         public IEnumerable<T> SuggestedItems { get; set; } = Enumerable.Empty<T>();
 
         public string Text { get; set; } = "";
+
+        public void OnSelectItem(T item)
+        {
+            SelectedItem = item;
+            Text = SelectedItemFormat(item);
+            SuggestedItems = Enumerable.Empty<T>();
+        }
 
         public void OnFocusIn(FocusEventArgs _)
         {

@@ -5,18 +5,6 @@
 {
     <h1>Scores: @(matchSet?.Date.ToLongDateString()) </h1>
 
-
-    <Combobox T="Golfer" 
-              Placeholder="Golfer name" 
-              Items="@Golfers" 
-              ItemFilter="@GolferFilter"
-              MaxSuggestions="5">
-        <ItemTemplate Context="golfer">
-            @golfer.FirstName @golfer.LastName
-        </ItemTemplate>
-    </Combobox>
-
-
     @if (addMatch == null)
     {
         <button class="btn btn-primary" @onclick="NewMatch">Add Match</button>
@@ -34,10 +22,16 @@
                     <div class="form-row">
                         <div class="form-group col-md-6">
                             <label>Name</label>
-                            <select @bind="@addMatch.GolferOneId" class="form-control">
-                                <option value="1">Smith</option>
-                                <option value="2">Allen</option>
-                            </select>
+                            <Combobox T="Golfer"
+                                      Placeholder="Name"
+                                      Items="@Golfers"
+                                      ItemFilter="@GolferFilter"
+                                      MaxSuggestions="5"
+                                      SelectedItemFormat="FormatGolfer">
+                                <ItemTemplate Context="golfer">
+                                    <span>@golfer.FirstName @golfer.LastName</span>
+                                </ItemTemplate>
+                            </Combobox>
                         </div>
                         <div class="form-group col-md-2">
                             <label>Points</label>
@@ -45,7 +39,7 @@
                         </div>
                         <div class="form-group col-md-2">
                             <label>Score</label>
-                            <input type="number" min="26" max="60" class="form-control" @bind="@addMatch.GolferOneScore" />
+                            <input type="number" class="form-control" @bind="@addMatch.GolferOneScore" />
                         </div>
                         <div class="form-group col-md-2">
                             <label>Play Next Week?</label>
@@ -60,13 +54,37 @@
                     Golfer 2
                 </div>
                 <div class="card-body">
-
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label>Name</label>
+                            <Combobox T="Golfer"
+                                      Placeholder="Name"
+                                      Items="@Golfers"
+                                      ItemFilter="@GolferFilter"
+                                      MaxSuggestions="5"
+                                      SelectedItemFormat="FormatGolfer">
+                                <ItemTemplate Context="golfer">
+                                    <span>@golfer.FirstName @golfer.LastName</span>
+                                </ItemTemplate>
+                            </Combobox>
+                        </div>
+                        <div class="form-group col-md-2">
+                            <label>Points</label>
+                            <input type="number" step="0.5" min="0" max="11" class="form-control" @addMatch.GolferOnePoints" />
+                        </div>
+                        <div class="form-group col-md-2">
+                            <label>Score</label>
+                            <input type="number" class="form-control" @bind="@addMatch.GolferOneScore" />
+                        </div>
+                        <div class="form-group col-md-2">
+                            <label>Play Next Week?</label>
+                            <div><input type="checkbox" @bind="@addMatch.GolferOnePlayNextWeek" /></div>
+                        </div>
+                    </div>
                 </div>
             </div>
-
             <button class="btn btn-primary" @onclick="SaveMatch">Save</button>
             <button class="btn btn-danger" @onclick="CancelMatch">Cancel</button>
-
         </form>
     }
 }
