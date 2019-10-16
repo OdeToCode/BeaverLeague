@@ -1,11 +1,20 @@
-﻿@inherits WeeklyScoresBase
+﻿@using BeaverLeague.Core.Models;
+@inherits WeeklyScoresBase
 
 @if (initialized)
 {
     <h1>Scores: @(matchSet?.Date.ToLongDateString()) </h1>
 
 
-    <Combobox T="string" Placeholder="Golfer name"></Combobox>
+    <Combobox T="Golfer" 
+              Placeholder="Golfer name" 
+              Items="@Golfers" 
+              ItemFilter="@GolferFilter"
+              MaxSuggestions="5">
+        <ItemTemplate Context="golfer">
+            @golfer.FirstName @golfer.LastName
+        </ItemTemplate>
+    </Combobox>
 
 
     @if (addMatch == null)
