@@ -5,6 +5,10 @@
 {
     <h1>Scores: @(matchSet?.Date.ToLongDateString()) </h1>
 
+
+    <Combobox T="string"></Combobox>
+
+
     @if (addMatch == null)
     {
         <button class="btn btn-primary" @onclick="NewMatch">Add Match</button>
@@ -76,12 +80,13 @@ else
 
     void SaveMatch()
     {
-
+        var matchResult = new MatchResult();
+        matchResult.MatchSetId = matchSet.Id;
     }
 
     void CancelMatch()
     {
-        
+        addMatch = null;
     }
 
     protected override async Task OnInitializedAsync()
