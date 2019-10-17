@@ -18,7 +18,6 @@ namespace BeaverLeague.Tests.Pages
         protected override IHostBuilder CreateHostBuilder()
         {
             return base.CreateHostBuilder()
-                       /// Here is a work around to ensure EF uses an in-memory database.  
                        .UseEnvironment("IntegrationTests");
         }
 

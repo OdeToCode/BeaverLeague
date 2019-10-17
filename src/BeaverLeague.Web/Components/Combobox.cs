@@ -6,7 +6,7 @@ using System.Linq;
 
 namespace BeaverLeague.Web.Components
 {
-    public class ComboboxBase<T> : ComponentBase
+    public class ComboboxBase<T> : ComponentBase 
     {
         [Parameter]
         public T SelectedItem { get; set; }

@@ -53,11 +53,10 @@ namespace BeaverLeague.Web.Components
         protected override async Task OnInitializedAsync()
         {
             await base.OnInitializedAsync();
-
+                
             var weekId = await jsRuntime.InvokeAsync<int>("BeaverLeague.Components.WeeklyScores.weekId");
             matchSet = leagueData.Execute(new MatchSetByIdQuery(weekId));
-            Golfers = leagueData.Execute(new AllActiveGolfersQuery())
-                                .Union(Enumerable.Repeat(new MatchedCardGolfer(), 1))
+            Golfers = leagueData.Execute(new AllGolfersQuery(activeOnly:true, includeCardMatch: true))
                                 .ToList();
             SelectedGolfer = Golfers.FirstOrDefault();
             initialized = true;

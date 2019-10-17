@@ -10,8 +10,8 @@ namespace BeaverLeague.Core.Models
         [Display(Name = "18 hole Course Handicap"), Range(-36, 36)]
         public int LeagueHandicap { get; set; } = 18;
 
-        [Display(Name ="Active")]
-        public bool IsActive { get; set; }
+        [Display(Name = "Active")]
+        public bool IsActive { get; set; } = true;
 
         [MaxLength(80), Required, Display(Name ="First Name")]
         public string FirstName { get; set; } = "";
@@ -27,5 +27,6 @@ namespace BeaverLeague.Core.Models
 
         public TeeType Tee { get; set; } = TeeType.White;
 
+        public bool IsCardMatch { get; set; } = false;
     }
 }
