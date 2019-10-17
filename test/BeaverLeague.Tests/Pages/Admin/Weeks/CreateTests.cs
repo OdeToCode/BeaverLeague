@@ -3,6 +3,7 @@ using BeaverLeague.Data;
 using BeaverLeague.Tests.Helpers;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 using Xunit;
@@ -29,12 +30,12 @@ namespace BeaverLeague.Tests.Pages.Admin.Weeks
             scope.Db.Add(season);
             scope.Db.SaveChanges();
 
-            var emptyForm = await client.GetAsync($"/Admin/Seasons/{season.Id}/Weeks/Create");
+            var emptyForm = await client.GetAsync(new Uri($"/Admin/Seasons/{season.Id}/Weeks/Create"));
             var formDocument = await emptyForm.GetDocumentAsync();
 
             var formData = new Dictionary<string, string>()
             {
-                { "MatchSet.SeasonId", season.Id.ToString() }
+                { "MatchSet.SeasonId", season.Id.ToString(CultureInfo.CurrentCulture) }
             };
 
             var formPost = await client.SendFormAsync(formDocument, formData);

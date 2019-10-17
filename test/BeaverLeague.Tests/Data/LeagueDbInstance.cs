@@ -11,7 +11,13 @@ namespace BeaverLeague.Tests.Data
 
         public void Dispose()
         {
-            var db = NewContext();
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            using var db = NewContext();
             db.Database.EnsureDeleted();
         }
     }

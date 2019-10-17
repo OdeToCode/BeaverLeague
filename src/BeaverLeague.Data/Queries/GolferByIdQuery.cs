@@ -14,6 +14,8 @@ namespace BeaverLeague.Data.Queries
 
         public Golfer Execute(DbSet<Golfer> db)
         {
+            if (db is null) throw new System.ArgumentNullException(nameof(db));
+
             var golfer = db.Find(id);
             return golfer;
         }

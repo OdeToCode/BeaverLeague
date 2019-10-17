@@ -4,6 +4,7 @@ using BeaverLeague.Tests.Helpers;
 using System.Linq;
 using BeaverLeague.Core.Models;
 using BeaverLeague.Data;
+using System;
 
 namespace BeaverLeague.Tests.Pages.Admin.Golfers
 {
@@ -20,7 +21,7 @@ namespace BeaverLeague.Tests.Pages.Admin.Golfers
         public async Task CanLoadEditForm()
         {
             var client = factory.CreateClient();
-            var response = await client.GetAsync("/Admin/Golfers/Edit");
+            var response = await client.GetAsync(new Uri("/Admin/Golfers/Edit"));
             var document = await response.GetDocumentAsync();
             var header = document.QuerySelector("h2").TextContent;
 
@@ -31,13 +32,13 @@ namespace BeaverLeague.Tests.Pages.Admin.Golfers
         public async Task InvalidGolferFailsValidation()
         {
             var client = factory.CreateClient();
-            var emptyForm = await client.GetAsync("/Admin/Golfers/Edit");
+            var emptyForm = await client.GetAsync(new Uri("/Admin/Golfers/Edit"));
             var formDocument = await emptyForm.GetDocumentAsync();
 
             var formPost = await client.SendFormAsync(formDocument);
             var errorDocument = await formPost.GetDocumentAsync();
             var spans = errorDocument.QuerySelectorAll("span");
-            var validationMessage = spans.Where(s => s.TextContent.Contains("The First Name field is required"));
+            var validationMessage = spans.Where(s => s.TextContent.Contains("The First Name field is required", StringComparison.InvariantCultureIgnoreCase));
 
             Assert.Single(validationMessage);
         }
@@ -46,7 +47,7 @@ namespace BeaverLeague.Tests.Pages.Admin.Golfers
         public async Task CanCreateGolfer()
         {
             var client = factory.CreateClient();
-            var emptyForm = await client.GetAsync("/Admin/Golfers/Edit");
+            var emptyForm = await client.GetAsync(new Uri("/Admin/Golfers/Edit"));
             var formDocument = await emptyForm.GetDocumentAsync();
 
             var golfer = new Golfer()

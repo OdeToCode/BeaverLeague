@@ -32,11 +32,11 @@ namespace BeaverLeague.Tests.Pages.Admin.Seasons
             scope.Db.SaveChanges();
 
             
-            var response = await client.GetAsync($"/Admin/Seasons/Detail/{season.Id}");
+            var response = await client.GetAsync(new Uri($"/Admin/Seasons/Detail/{season.Id}"));
             var document = await response.GetDocumentAsync();
             var header = document.QuerySelector("h2").TextContent;
 
-            Assert.EndsWith(season.Name, header);
+            Assert.EndsWith(season.Name, header, StringComparison.InvariantCultureIgnoreCase);
         }
     }
 }

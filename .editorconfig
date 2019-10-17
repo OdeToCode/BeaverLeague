@@ -1,0 +1,13 @@
+﻿[*.cs]
+
+# CA1822: Mark members as static
+dotnet_diagnostic.CA1822.severity = none
+
+#CA1707: No underscores
+dotnet_diagnostic.CA1707.severity = none
+
+# CA2007: Use ConfigureAwait
+dotnet_diagnostic.CA2007.severity = none
+
+# CA1303: USe resource files for exception messages
+dotnet_diagnostic.CA1303.severity = none

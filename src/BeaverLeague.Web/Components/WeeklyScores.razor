@@ -1,16 +1,16 @@
 ﻿@using BeaverLeague.Core.Models;
 @inherits WeeklyScoresBase
 
-@if (initialized)
+@if (Initialized)
 {
-    <h1>Scores: @(matchSet?.Date.ToLongDateString()) </h1>
+    <h1>Scores: @(MatchSet?.Date.ToLongDateString()) </h1>
 
-    @if (addMatch == null)
+    @if (AddMatch == null)
     {
         <button class="btn btn-primary" @onclick="NewMatch">Add Match</button>
     }
 
-    @if (addMatch != null)
+    @if (AddMatch != null)
     {
         <form>
             <h3>Add a match</h3>
@@ -39,11 +39,11 @@
                         </div>
                         <div class="form-group col-md-2">
                             <label>Score</label>
-                            <input type="number" class="form-control" @bind="@addMatch.GolferOneScore" />
+                            <input type="number" class="form-control" @bind="@AddMatch.GolferOneScore" />
                         </div>
                         <div class="form-group col-md-2">
                             <label>Play Next Week?</label>
-                            <div><input type="checkbox" @bind="@addMatch.GolferOnePlayNextWeek" /></div>
+                            <div><input type="checkbox" @bind="@AddMatch.GolferOnePlayNextWeek" /></div>
                         </div>
                     </div>
                 </div>
@@ -74,11 +74,11 @@
                         </div>
                         <div class="form-group col-md-2">
                             <label>Score</label>
-                            <input type="number" class="form-control" @bind="@addMatch.GolferOneScore" />
+                            <input type="number" class="form-control" @bind="@AddMatch.GolferOneScore" />
                         </div>
                         <div class="form-group col-md-2">
                             <label>Play Next Week?</label>
-                            <div><input type="checkbox" @bind="@addMatch.GolferOnePlayNextWeek" /></div>
+                            <div><input type="checkbox" @bind="@AddMatch.GolferOnePlayNextWeek" /></div>
                         </div>
                     </div>
                 </div>

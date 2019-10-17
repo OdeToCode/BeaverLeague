@@ -4,6 +4,7 @@ using BeaverLeague.Data.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System;
+using System.Globalization;
 
 namespace BeaverLeague.Web.Pages.Admin.Seasons
 {
@@ -14,7 +15,7 @@ namespace BeaverLeague.Web.Pages.Admin.Seasons
         public string Header { get; set; } = "Create a new season";
 
         [BindProperty]
-        public Season Season { get; set; } = new Season { Name = DateTime.Now.Year.ToString() };
+        public Season Season { get; set; } = new Season { Name = DateTime.Now.Year.ToString(CultureInfo.CurrentCulture) };
 
         public EditModel(LeagueData leagueData)
         {

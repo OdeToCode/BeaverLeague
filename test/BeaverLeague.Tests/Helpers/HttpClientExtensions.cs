@@ -14,6 +14,9 @@ namespace BeaverLeague.Tests.Helpers
         public static Task<HttpResponseMessage> SendFormAsync(
             this HttpClient client, IHtmlDocument content, string formDataPrefix, object formData)
         {
+            if (content is null) throw new ArgumentNullException(nameof(content));
+            if (formData is null) throw new ArgumentNullException(nameof(formData));
+
             var form = (IHtmlFormElement)content.QuerySelector("#form");
             Assert.NotNull(form);
 
@@ -30,6 +33,8 @@ namespace BeaverLeague.Tests.Helpers
         public static Task<HttpResponseMessage> SendFormAsync(
             this HttpClient client, IHtmlDocument content, IEnumerable<KeyValuePair<string, string>> formValues)
         {
+            if (content is null) throw new ArgumentNullException(nameof(content));
+            
             var form = (IHtmlFormElement)content.QuerySelector("#form");
             Assert.NotNull(form);
 
@@ -42,6 +47,8 @@ namespace BeaverLeague.Tests.Helpers
         public static Task<HttpResponseMessage> SendFormAsync(
             this HttpClient client, IHtmlDocument content)
         {
+            if (content is null) throw new ArgumentNullException(nameof(content));
+
             var form = (IHtmlFormElement)content.QuerySelector("#form");
             Assert.NotNull(form);
 
@@ -64,6 +71,8 @@ namespace BeaverLeague.Tests.Helpers
             IHtmlFormElement form,
             IEnumerable<KeyValuePair<string, string>> formValues)
         {
+            if (form is null) throw new ArgumentNullException(nameof(form));
+
             var submitElement = Assert.Single(form.QuerySelectorAll("[type=submit]"));
             var submitButton = Assert.IsAssignableFrom<IHtmlElement>(submitElement);
 
@@ -76,6 +85,11 @@ namespace BeaverLeague.Tests.Helpers
             IHtmlElement submitButton,
             IEnumerable<KeyValuePair<string, string>> formValues)
         {
+            if (client is null) throw new ArgumentNullException(nameof(client));
+            if (form is null) throw new ArgumentNullException(nameof(form));
+            if (submitButton is null) throw new ArgumentNullException(nameof(submitButton));
+            if (formValues is null) throw new ArgumentNullException(nameof(formValues));
+
             foreach (var kvp in formValues)
             {
                 var element = form[kvp.Key];
@@ -100,7 +114,8 @@ namespace BeaverLeague.Tests.Helpers
                 var formaction = submitButton.GetAttribute("formaction");
                 target = new Uri(formaction, UriKind.Relative);
             }
-            var submision = new HttpRequestMessage(new HttpMethod(submit.Method.ToString()), target)
+            
+            using var submision = new HttpRequestMessage(new HttpMethod(submit.Method.ToString()), target)
             {
                 Content = new StreamContent(submit.Body)
             };

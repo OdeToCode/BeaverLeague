@@ -16,7 +16,13 @@ namespace BeaverLeague.Tests.Helpers
 
         public T Db { get; }
 
-        public virtual void Dispose()
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        protected virtual void Dispose(bool disposing)
         {
             scope.Dispose();
         }

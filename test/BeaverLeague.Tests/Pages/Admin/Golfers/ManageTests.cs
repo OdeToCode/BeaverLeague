@@ -1,6 +1,7 @@
 ﻿using BeaverLeague.Core.Models;
 using BeaverLeague.Data;
 using BeaverLeague.Tests.Helpers;
+using System;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -26,7 +27,7 @@ namespace BeaverLeague.Tests.Pages.Admin.Golfers
             db.SaveChanges();
 
             var client = factory.CreateClient();
-            var response = await client.GetAsync("/Admin/Golfers/Manage");
+            var response = await client.GetAsync(new Uri("/Admin/Golfers/Manage"));
             var document = await response.GetDocumentAsync();
             var rows = document.QuerySelectorAll("#golfers tbody tr");
 

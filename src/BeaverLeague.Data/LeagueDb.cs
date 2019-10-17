@@ -1,5 +1,6 @@
 ﻿using BeaverLeague.Core.Models;
 using Microsoft.EntityFrameworkCore;
+using System;
 
 namespace BeaverLeague.Data
 {
@@ -11,7 +12,9 @@ namespace BeaverLeague.Data
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {           
+        {
+            if (modelBuilder == null) throw new ArgumentNullException(nameof(modelBuilder));
+            
             base.OnModelCreating(modelBuilder);
             
             modelBuilder.Entity<Golfer>()

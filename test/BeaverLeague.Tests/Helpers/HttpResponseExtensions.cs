@@ -13,7 +13,9 @@ namespace BeaverLeague.Tests.Helpers
     {
         public static async Task<IHtmlDocument> GetDocumentAsync(this HttpResponseMessage response)
         {
-            if(!response.IsSuccessStatusCode)
+            if (response is null) throw new System.ArgumentNullException(nameof(response));
+
+            if (!response.IsSuccessStatusCode)
             {
                 var error = await response.Content.ReadAsStringAsync();
                 throw new XunitException(error);

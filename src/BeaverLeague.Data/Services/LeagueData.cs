@@ -12,8 +12,10 @@ namespace BeaverLeague.Data.Services
             this.db = db;
         }
 
-        public TResult Execute<TSet, TResult>(IQuery<TSet, TResult> query) where TSet: class
+        public TResult Execute<TSet, TResult>(IQuery<TSet, TResult> query) where TSet : class
         {
+            if (query is null) throw new System.ArgumentNullException(nameof(query));
+
             var set = db.Set<TSet>();
             return query.Execute(set);
         }

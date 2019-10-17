@@ -22,7 +22,7 @@ namespace BeaverLeague.Core.Models
 
         [DataType(DataType.Date)]
         public DateTime Date { get; set; }
-        public ICollection<MatchResult> Matches { get; set; }
+        public ICollection<MatchResult> Matches { get; }
 
         public MatchResult AddResult(Golfer playerA, int playerAScore, decimal playerAPoints, bool playerANextWeek, 
                                           Golfer playerB, int playerBScore, decimal playerBPoints, bool playerBNextWeek)

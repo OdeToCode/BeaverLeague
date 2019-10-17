@@ -2,6 +2,7 @@
 using BeaverLeague.Data;
 using BeaverLeague.Tests.Helpers;
 using System;
+using System.Globalization;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
@@ -22,7 +23,7 @@ namespace BeaverLeague.Tests.Pages.Admin.Seasons
         public async Task CanCreateNewSeason()
         {
             var client = factory.CreateClient();
-            var emptyForm = await client.GetAsync("/Admin/Seasons/Edit");
+            var emptyForm = await client.GetAsync(new Uri("/Admin/Seasons/Edit"));
             var formDocument = await emptyForm.GetDocumentAsync();
 
             var name = Guid.NewGuid().ToString();
@@ -47,11 +48,11 @@ namespace BeaverLeague.Tests.Pages.Admin.Seasons
             db.SaveChanges();
 
             var client = factory.CreateClient();
-            var form = await client.GetAsync($"/Admin/Seasons/Edit/{season.Id}");
+            var form = await client.GetAsync(new Uri($"/Admin/Seasons/Edit/{season.Id}"));
             var document = await form.GetDocumentAsync();
 
             var input = document.QuerySelector($"#Season_Id").Attributes["value"].Value;
-            Assert.Equal(season.Id.ToString(), input);
+            Assert.Equal(season.Id.ToString(CultureInfo.CurrentCulture), input);
         }
     }
 }

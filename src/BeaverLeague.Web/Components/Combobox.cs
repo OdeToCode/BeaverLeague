@@ -8,8 +8,10 @@ namespace BeaverLeague.Web.Components
 {
     public class ComboboxBase<T> : ComponentBase 
     {
+        #nullable disable
         [Parameter]
         public T SelectedItem { get; set; }
+        #nullable restore
 
         [Parameter]
         public IEnumerable<T> Items { get; set; } = Enumerable.Empty<T>();
@@ -52,6 +54,8 @@ namespace BeaverLeague.Web.Components
 
         public void OnChange(ChangeEventArgs e)
         {
+            if (e is null) throw new ArgumentNullException(nameof(e));
+
             Text = e.Value.ToString() ?? "";
             UpdateSuggestedItems();
         }

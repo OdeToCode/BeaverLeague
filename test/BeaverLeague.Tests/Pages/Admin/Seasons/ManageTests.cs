@@ -32,7 +32,7 @@ namespace BeaverLeague.Tests.Pages.Admin.Seasons
             db.SaveChanges();
 
             var client = factory.CreateClient();
-            var response = await client.GetAsync("/Admin/Seasons/Manage");
+            var response = await client.GetAsync(new Uri("/Admin/Seasons/Manage"));
             var document = await response.GetDocumentAsync();
             var seasonName = document.QuerySelector("#current-season")?.TextContent;
             var weeks = document.QuerySelectorAll("#seasons tbody tr");

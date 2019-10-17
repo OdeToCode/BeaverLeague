@@ -17,49 +17,56 @@ namespace BeaverLeague.Web.Components
         [Inject] public IJSRuntime jsRuntime { get; set; } = null!;
 
 
-        public Golfer SelectedGolfer { get; set; }
-        public IList<Golfer> Golfers { get; set; }
+        public Golfer? SelectedGolfer { get; set; }
+        public IList<Golfer>? Golfers { get; private set; }
 
-        public Func<Golfer, string> FormatGolfer = g =>
+        public Func<Golfer, string> FormatGolfer { get; } = g =>
         {
-            return $"{g.FirstName} {g.LastName}";
+              return $"{g.FirstName} {g.LastName}";
         };
 
-        public Func<string, Func<Golfer, bool>> GolferFilter = s =>
+        public Func<string, Func<Golfer, bool>> GolferFilter { get; } = s =>
         {
             return g => g.FirstName.Contains(s, StringComparison.CurrentCultureIgnoreCase) || g.LastName.Contains(s, StringComparison.CurrentCultureIgnoreCase);
         };
 
-        protected bool initialized = false;
-        protected MatchSet? matchSet = null;
-        protected AddMatchModel? addMatch = null;
+        protected bool Initialized { get; set; } = false;
+        protected MatchSet? MatchSet { get; set; } = null;
+        protected AddMatchModel? AddMatch { get; set; } = null;
 
         protected void NewMatch()
         {
-            addMatch = new AddMatchModel();
+            AddMatch = new AddMatchModel();
         }
 
         protected void SaveMatch()
         {
-            var matchResult = new MatchResult();
-            matchResult.MatchSetId = matchSet.Id;
+            if (MatchSet != null)
+            {
+                var matchResult = new MatchResult();
+                matchResult.MatchSetId = MatchSet.Id;
+            }
+            else
+            {
+                throw new InvalidOperationException($"{nameof(MatchSet)} is currently null");
+            }
         }
 
         protected void CancelMatch()
         {
-            addMatch = null;
+            AddMatch = null;
         }
 
         protected override async Task OnInitializedAsync()
         {
             await base.OnInitializedAsync();
-                
+
             var weekId = await jsRuntime.InvokeAsync<int>("BeaverLeague.Components.WeeklyScores.weekId");
-            matchSet = leagueData.Execute(new MatchSetByIdQuery(weekId));
-            Golfers = leagueData.Execute(new AllGolfersQuery(activeOnly:true, includeCardMatch: true))
+            MatchSet = leagueData.Execute(new MatchSetByIdQuery(weekId));
+            Golfers = leagueData.Execute(new AllGolfersQuery(activeOnly: true, includeCardMatch: true))
                                 .ToList();
             SelectedGolfer = Golfers.FirstOrDefault();
-            initialized = true;
+            Initialized = true;
         }
     }
 }

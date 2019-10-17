@@ -13,7 +13,7 @@ namespace BeaverLeague.Tests.Pages
 {
     public class BeaverLeagueWebFactory : WebApplicationFactory<Startup>
     {
-        public string Name = Guid.NewGuid().ToString();
+        public string Name { get; } = Guid.NewGuid().ToString();
 
         protected override IHostBuilder CreateHostBuilder()
         {
@@ -23,6 +23,8 @@ namespace BeaverLeague.Tests.Pages
 
         protected override void ConfigureWebHost(IWebHostBuilder builder)
         {
+            if (builder is null) throw new ArgumentNullException(nameof(builder));
+            
             builder.ConfigureServices(services =>
             {
                 services.AddSingleton<ISystemClock, FixedClock>();

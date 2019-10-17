@@ -14,6 +14,8 @@ namespace BeaverLeague.Data.Queries
 
         public MatchSet Execute(DbSet<MatchSet> dbSet)
         {
+            if (dbSet is null) throw new System.ArgumentNullException(nameof(dbSet));
+
             return dbSet.Find(matchSetId);
         }
     }

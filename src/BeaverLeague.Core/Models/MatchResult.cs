@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace BeaverLeague.Core.Models
 {
@@ -11,10 +12,12 @@ namespace BeaverLeague.Core.Models
 
         public int Id { get; set; }
         public int MatchSetId { get; set; }
-        public ICollection<PlayerResult> Players { get; set; }
+        public ICollection<PlayerResult> Players { get; }
 
         public PlayerResult AddPlayer(Golfer golfer, int score, decimal points, bool playNextWeek)
         {
+            if (golfer == null) throw new ArgumentNullException(nameof(golfer));
+
             var player = new PlayerResult
             {
                 Golfer = golfer,
