@@ -6,6 +6,8 @@ namespace BeaverLeague.Data.Migrations
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            if (migrationBuilder is null) throw new System.ArgumentNullException(nameof(migrationBuilder));
+
             migrationBuilder.AddColumn<bool>(
                 name: "IsCardMatch",
                 table: "Golfers",
@@ -15,6 +17,8 @@ namespace BeaverLeague.Data.Migrations
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            if (migrationBuilder is null) throw new System.ArgumentNullException(nameof(migrationBuilder));
+
             migrationBuilder.DropColumn(
                 name: "IsCardMatch",
                 table: "Golfers");
