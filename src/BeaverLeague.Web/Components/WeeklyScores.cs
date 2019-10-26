@@ -22,7 +22,7 @@ namespace BeaverLeague.Web.Components
 
         public Func<Golfer, string> FormatGolfer { get; } = g =>
         {
-              return $"{g.FirstName} {g.LastName}";
+            return $"{g.FirstName} {g.LastName}";
         };
 
         public Func<string, Func<Golfer, bool>> GolferFilter { get; } = s =>
@@ -37,6 +37,24 @@ namespace BeaverLeague.Web.Components
         protected void NewMatch()
         {
             AddMatch = new AddMatchModel();
+        }
+
+        protected void UpdateGolferTwoPoints()
+        {
+            if (AddMatch == null) return;
+            if (AddMatch.GolferOnePoints + AddMatch.GolferTwoPoints != 11.0m)
+            {
+                AddMatch.GolferTwoPoints = 11.0m - AddMatch.GolferOnePoints;
+            }
+        }
+
+        protected void UpdateGolferOnePoints()
+        {
+            if (AddMatch == null) return;
+            if (AddMatch.GolferOnePoints + AddMatch.GolferTwoPoints != 11.0m)
+            {
+                AddMatch.GolferOnePoints = 11.0m - AddMatch.GolferTwoPoints;
+            }
         }
 
         protected void SaveMatch()

@@ -35,7 +35,8 @@
                         </div>
                         <div class="form-group col-md-2">
                             <label>Points</label>
-                            <input type="number" step="0.5" min="0" max="11" class="form-control" @addMatch.GolferOnePoints" />
+                            <input type="number" step="0.5" min="0" max="11" class="form-control" 
+                                   @bind="@AddMatch.GolferOnePoints" @onfocusout="UpdateGolferTwoPoints" />
                         </div>
                         <div class="form-group col-md-2">
                             <label>Score</label>
@@ -70,7 +71,8 @@
                         </div>
                         <div class="form-group col-md-2">
                             <label>Points</label>
-                            <input type="number" step="0.5" min="0" max="11" class="form-control" @addMatch.GolferOnePoints" />
+                            <input type="number" step="0.5" min="0" max="11" class="form-control" 
+                                   @bind="@AddMatch.GolferTwoPoints" @onfocusout="UpdateGolferOnePoints" /> />
                         </div>
                         <div class="form-group col-md-2">
                             <label>Score</label>
