@@ -5,15 +5,36 @@
     <DataAnnotationsValidator ></DataAnnotationsValidator>
     <ValidationSummary></ValidationSummary>
     
-    <Combobox T="Golfer"></Combobox>
+    <Combobox T="Golfer" 
+              Items="Items"
+              @bind-Value="golfer" 
+              Placeholder="Golfer" > 
+        <ItemTemplate Context="golfer">
+            <span>@golfer.FirstName @golfer.LastName</span>
+        </ItemTemplate>
+    </Combobox>
 
-    <button type="submit"></button>
+    <button type="submit">Save</button>
 
 </EditForm>
 
 @code {
 
     Golfer golfer = new Golfer();
+    List<Golfer> golfers = new List<Golfer>
+    {
+        new Golfer { Id = 1, FirstName = "Scott", LastName = "Allen" },
+        new Golfer { Id = 2, FirstName = "Alex", LastName = "Allen" },
+        new Golfer { Id = 3, FirstName = "Alex", LastName = "Lifeson" },
+        new Golfer { Id = 4, FirstName = "Neil", LastName = "Peart" },
+        new Golfer { Id = 5, FirstName = "Geddy", LastName = "Lee" },
+    };
+    Dictionary<string, Golfer> Items;
+
+    protected override void OnInitialized()
+    {
+        Items = golfers.ToDictionary(g => $"{g.FirstName} {g.LastName}");
+    }
 
 }
 

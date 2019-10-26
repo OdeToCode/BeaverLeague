@@ -1,35 +1,33 @@
 ﻿@typeparam T
 @inherits ComboBoxBase<T>
 
-@*<div>
-    <div>
+<div>
+    <input type="text" autocomplete="off" class="form-control"
+           placeholder="@Placeholder"
+           @onfocusin="OnFocusIn"
+           @onfocusout="OnFocusOut" 
+           @oninput="OnInput" 
+           @bind="Text" />
 
-        <input class="form-control" type="text" autocomplete="off"
-               placeholder="@Placeholder" 
-               @bind-value="Text"
-               @onfocusin="OnFocusIn"
-               @onfocusout="OnFocusOut"
-               @oninput="OnChange" />
+    @if (SuggestedItems.Any())
+    {
+        <div class="suggestions">
+            <ul class="list-group suggestions-content">
+                @foreach (var item in SuggestedItems)
+                {
+                    <li class="list-group-item" @onmousedown="@(e => OnSelectItem(item))">
+                        @if (ItemTemplate != null)
+                        {
+                            @ItemTemplate(item.Value);
+                        }
+                        else
+                        {
+                            <span>@item.Key</span>
+                        }
+                    </li>
+                }
+            </ul>
+        </div>
+    }
+</div>
 
-        @if (SuggestedItems.Any())
-        {
-            <div class="suggestions">
-                <ul class="list-group suggestions-content">
-                    @foreach (var item in SuggestedItems)
-                    {
-                        <li class="list-group-item" @onmousedown="@(e => OnSelectItem(item))">
-                            @if (ItemTemplate != null)
-                            {
-                                @ItemTemplate(item);
-                            }
-                            else
-                            {
-                                item.ToString();
-                            }
-                        </li>
-                    }
-                </ul>
-            </div>
-        }
-    </div>
-</div>*@

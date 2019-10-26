@@ -10,103 +10,70 @@ namespace BeaverLeague.Web.Components
 {
     public class ComboBoxBase<T> : InputBase<T>
     {
+        [Parameter]
+        public string Placeholder { get; set; } = "";
+
+        [Parameter]
+        public Dictionary<string, T> Items { get; set; }
+
+        [Parameter]
+        public RenderFragment<T> ItemTemplate { get; set; }
+
+        [Parameter]
+        public int MaxSuggestions { get; set; } = 7;
+
+        public IEnumerable<KeyValuePair<string, T>> SuggestedItems { get; set; } = empty;
+
+        public string Text { get; set; } = "";
+
+        static Dictionary<string, T> empty = new Dictionary<string, T>();
+
+        public void OnInput(ChangeEventArgs e)
+        {
+            if (e is null) throw new ArgumentNullException(nameof(e));
+
+            Text = e.Value.ToString() ?? "";
+            UpdateSuggestedItems();
+        }
+
+        public void UpdateSuggestedItems()
+        {
+            SuggestedItems = Items.Where(i => i.Key.Contains(Text, StringComparison.OrdinalIgnoreCase))
+                                  .Take(MaxSuggestions);
+        }
+
+        public void OnFocusIn(FocusEventArgs _)
+        {
+            UpdateSuggestedItems();
+        }
+
+        public void OnFocusOut(FocusEventArgs _)
+        {
+            SuggestedItems = empty;
+        }
+
+        public void OnSelectItem(KeyValuePair<string, T> item)
+        {
+            Text = item.Key;
+            SuggestedItems = empty;
+        }
+
         protected override bool TryParseValueFromString(
             string value, out T result, out string validationErrorMessage)
         {
-            throw new NotImplementedException();
+            if (Items.ContainsKey(value))
+            {
+                result = Items[value];
+                validationErrorMessage = null;
+                return true;
+            }
+            else
+            {
+                result = default(T);
+                validationErrorMessage = "Couldn't find that value";
+                return false;
+            }
         }
     }
-
-
-    //public class ComboboxBase<T> : InputBase<T> 
-    //{
-    //    [Parameter]
-    //    public T SelectedItem { get; set; }
-
-    //    [Parameter]
-    //    public IEnumerable<T> Items { get; set; } = Enumerable.Empty<T>();
-
-    //    [Parameter]
-    //    public Func<string, Func<T, bool>> ItemFilter { get; set; } = _ => _ => true;
-
-    //    [Parameter]
-    //    public string Placeholder { get; set; } = "";
-
-    //    [Parameter]
-    //    public int MaxSuggestions { get; set; } = 10;
-
-    //    [Parameter]
-    //    public RenderFragment<T> ItemTemplate { get; set; }
-
-    //    [Parameter]
-    //    public Func<T, string> SelectedItemFormat { get; set; } = _ => "";
-
-    //    public IEnumerable<T> SuggestedItems { get; set; } = Enumerable.Empty<T>();
-
-    //    public string Text { get; set; } = "";
-
-    //    public void OnSelectItem(T item)
-    //    {
-    //        SelectedItem = item;
-    //        Text = SelectedItemFormat(item);
-    //        SuggestedItems = Enumerable.Empty<T>();
-    //    }
-
-    //    public void OnFocusIn(FocusEventArgs _)
-    //    {
-    //        UpdateSuggestedItems();
-    //    }
-
-    //    public void OnFocusOut(FocusEventArgs _)
-    //    {
-    //        SuggestedItems = Enumerable.Empty<T>();
-    //    }
-
-    //    public void OnChange(ChangeEventArgs e)
-    //    {
-    //        if (e is null) throw new ArgumentNullException(nameof(e));
-
-    //        Text = e.Value.ToString() ?? "";
-    //        UpdateSuggestedItems();
-    //    }
-
-    //    protected void UpdateSuggestedItems()
-    //    {
-    //        if (!String.IsNullOrEmpty(Text))
-    //        {
-    //            SuggestedItems = Items.Where(ItemFilter(Text)).Take(MaxSuggestions);
-    //        }
-    //        else
-    //        {
-    //            SuggestedItems = Items.Take(MaxSuggestions);    
-    //        }
-    //    }
-
-    //    protected override bool TryParseValueFromString(string value, out T result, out string validationErrorMessage)
-    //    {
-    //        if (SelectedItemFormat(SelectedItem).Equals(value, StringComparison.OrdinalIgnoreCase))
-    //        {
-    //            result = SelectedItem;
-    //            validationErrorMessage = null;
-    //            return true;
-    //        }
-    //        else
-    //        {
-    //            foreach (var item in Items)
-    //            {
-    //                if (SelectedItemFormat(item).Equals(value, StringComparison.OrdinalIgnoreCase))
-    //                {
-    //                    SelectedItem = item;
-    //                    result = SelectedItem;
-    //                    validationErrorMessage = null;
-    //                    return true;
-    //                }
-    //            }
-    //        }
-    //        result = default(T);
-    //        validationErrorMessage = "Could not find golfer name";
-    //        return false;
-    //    }
-    //}
 }
 #nullable restore
