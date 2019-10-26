@@ -1,7 +1,23 @@
 ﻿@using BeaverLeague.Core.Models;
-@inherits WeeklyScoresBase
+@*@inherits WeeklyScoresBase*@
 
-@if (Initialized)
+<EditForm Model="golfer">
+    <DataAnnotationsValidator ></DataAnnotationsValidator>
+    <ValidationSummary></ValidationSummary>
+    
+    <Combobox T="Golfer"></Combobox>
+
+    <button type="submit"></button>
+
+</EditForm>
+
+@code {
+
+    Golfer golfer = new Golfer();
+
+}
+
+@*@if (Initialized)
 {
     <h1>Scores: @(MatchSet?.Date.ToLongDateString()) </h1>
 
@@ -12,8 +28,13 @@
 
     @if (AddMatch != null)
     {
-        <form>
+        <EditForm Model="@AddMatch">
+            
             <h3>Add a match</h3>
+            
+            <DataAnnotationsValidator />
+            <ValidationSummary />
+
             <div class="card">
                 <div class="card-header">
                     Golfer 1
@@ -24,6 +45,7 @@
                             <label>Name</label>
                             <Combobox T="Golfer"
                                       Placeholder="Name"
+                                      @bind-Value="@SelectedGolfer"
                                       Items="@Golfers"
                                       ItemFilter="@GolferFilter"
                                       MaxSuggestions="5"
@@ -35,7 +57,7 @@
                         </div>
                         <div class="form-group col-md-2">
                             <label>Points</label>
-                            <input type="number" step="0.5" min="0" max="11" class="form-control" 
+                            <input type="number" step="0.5" min="0" max="11" class="form-control"
                                    @bind="@AddMatch.GolferOnePoints" @onfocusout="UpdateGolferTwoPoints" />
                         </div>
                         <div class="form-group col-md-2">
@@ -71,8 +93,8 @@
                         </div>
                         <div class="form-group col-md-2">
                             <label>Points</label>
-                            <input type="number" step="0.5" min="0" max="11" class="form-control" 
-                                   @bind="@AddMatch.GolferTwoPoints" @onfocusout="UpdateGolferOnePoints" /> />
+                            <input type="number" step="0.5" min="0" max="11" class="form-control"
+                                   @bind="@AddMatch.GolferTwoPoints" @onfocusout="UpdateGolferOnePoints" />
                         </div>
                         <div class="form-group col-md-2">
                             <label>Score</label>
@@ -87,10 +109,10 @@
             </div>
             <button class="btn btn-primary" @onclick="SaveMatch">Save</button>
             <button class="btn btn-danger" @onclick="CancelMatch">Cancel</button>
-        </form>
+        </EditForm>
     }
 }
 else
 {
     <div>Loading...</div>
-}
+}*@
