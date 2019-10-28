@@ -1,7 +1,7 @@
 ﻿@using BeaverLeague.Core.Models;
 @*@inherits WeeklyScoresBase*@
 
-<EditForm Model="golfer">
+<EditForm Model="EditContext">
     <DataAnnotationsValidator ></DataAnnotationsValidator>
     <ValidationSummary></ValidationSummary>
     
@@ -32,6 +32,12 @@
         new Golfer { Id = 5, FirstName = "Geddy", LastName = "Lee" },
     };
     Dictionary<string, Golfer> Items;
+    EditContext EditContext; 
+
+    public WeeklyScores()
+    {
+        EditContext = new EditContext(golfer);
+    }
 
     protected override void OnInitialized()
     {

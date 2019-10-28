@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Components;
+﻿using BeaverLeague.Core.Models;
+using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Forms;
 using Microsoft.AspNetCore.Components.Web;
 using System;
@@ -8,7 +9,7 @@ using System.Linq;
 #nullable disable
 namespace BeaverLeague.Web.Components
 {
-    public class ComboBoxBase<T> : InputBase<T>
+    public class ComboBoxBase<T> : InputText
     {
         [Parameter]
         public string Placeholder { get; set; } = "";
@@ -24,21 +25,20 @@ namespace BeaverLeague.Web.Components
 
         public IEnumerable<KeyValuePair<string, T>> SuggestedItems { get; set; } = empty;
 
-        public string Text { get; set; } = "";
-
         static Dictionary<string, T> empty = new Dictionary<string, T>();
 
         public void OnInput(ChangeEventArgs e)
         {
-            if (e is null) throw new ArgumentNullException(nameof(e));
-
-            Text = e.Value.ToString() ?? "";
+            if (e is null) throw new ArgumentNullException(nameof(e));  
+            
+            CurrentValueAsString = e.Value.ToString() ?? "";
             UpdateSuggestedItems();
         }
 
         public void UpdateSuggestedItems()
         {
-            SuggestedItems = Items.Where(i => i.Key.Contains(Text, StringComparison.OrdinalIgnoreCase))
+            Console.WriteLine("updatesuggest " + CurrentValueAsString);
+            SuggestedItems = Items.Where(i => i.Key.Contains(CurrentValueAsString ?? "", StringComparison.OrdinalIgnoreCase))
                                   .Take(MaxSuggestions);
         }
 
@@ -54,25 +54,13 @@ namespace BeaverLeague.Web.Components
 
         public void OnSelectItem(KeyValuePair<string, T> item)
         {
-            Text = item.Key;
+            CurrentValue = item.Key;
             SuggestedItems = empty;
         }
 
-        protected override bool TryParseValueFromString(
-            string value, out T result, out string validationErrorMessage)
+        protected override void OnParametersSet()
         {
-            if (Items.ContainsKey(value))
-            {
-                result = Items[value];
-                validationErrorMessage = null;
-                return true;
-            }
-            else
-            {
-                result = default(T);
-                validationErrorMessage = "Couldn't find that value";
-                return false;
-            }
+            base.OnParametersSet();
         }
     }
 }
