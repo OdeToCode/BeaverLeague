@@ -39,7 +39,10 @@ namespace BeaverLeague.Web
 
         public void Configure(IApplicationBuilder app)
         {
-            app.UseDeveloperExceptionPage();
+            if (environment.IsDevelopment())
+            {
+                app.UseDeveloperExceptionPage();
+            }
             app.UseStatusCodePages();
             app.UseStaticFiles();
             app.UseRouting();

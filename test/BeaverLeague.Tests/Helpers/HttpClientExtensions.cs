@@ -114,11 +114,13 @@ namespace BeaverLeague.Tests.Helpers
                 var formaction = submitButton.GetAttribute("formaction");
                 target = new Uri(formaction, UriKind.Relative);
             }
-            
-            using var submision = new HttpRequestMessage(new HttpMethod(submit.Method.ToString()), target)
+
+#pragma warning disable CA2000 // Dispose objects before losing scope
+            var submision = new HttpRequestMessage(new HttpMethod(submit.Method.ToString()), target)
             {
                 Content = new StreamContent(submit.Body)
             };
+#pragma warning restore CA2000 // Dispose objects before losing scope
 
             foreach (var header in submit.Headers)
             {

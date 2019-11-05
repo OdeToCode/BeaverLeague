@@ -30,7 +30,7 @@ namespace BeaverLeague.Tests.Pages.Admin.Weeks
             scope.Db.Add(season);
             scope.Db.SaveChanges();
 
-            var emptyForm = await client.GetAsync(new Uri($"/Admin/Seasons/{season.Id}/Weeks/Create"));
+            var emptyForm = await client.GetAsync(new Uri($"/Admin/Seasons/{season.Id}/Weeks/Create", UriKind.Relative));
             var formDocument = await emptyForm.GetDocumentAsync();
 
             var formData = new Dictionary<string, string>()

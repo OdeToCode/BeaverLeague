@@ -27,7 +27,7 @@ namespace BeaverLeague.Tests.Pages.Admin.Golfers
             db.SaveChanges();
 
             var client = factory.CreateClient();
-            var response = await client.GetAsync(new Uri("/Admin/Golfers/Manage"));
+            var response = await client.GetAsync(new Uri("/Admin/Golfers/Manage", UriKind.Relative));
             var document = await response.GetDocumentAsync();
             var rows = document.QuerySelectorAll("#golfers tbody tr");
 

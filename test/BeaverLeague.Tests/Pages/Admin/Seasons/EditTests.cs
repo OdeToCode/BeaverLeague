@@ -23,7 +23,7 @@ namespace BeaverLeague.Tests.Pages.Admin.Seasons
         public async Task CanCreateNewSeason()
         {
             var client = factory.CreateClient();
-            var emptyForm = await client.GetAsync(new Uri("/Admin/Seasons/Edit"));
+            var emptyForm = await client.GetAsync(new Uri("/Admin/Seasons/Edit", UriKind.Relative));
             var formDocument = await emptyForm.GetDocumentAsync();
 
             var name = Guid.NewGuid().ToString();
@@ -48,7 +48,7 @@ namespace BeaverLeague.Tests.Pages.Admin.Seasons
             db.SaveChanges();
 
             var client = factory.CreateClient();
-            var form = await client.GetAsync(new Uri($"/Admin/Seasons/Edit/{season.Id}"));
+            var form = await client.GetAsync(new Uri($"/Admin/Seasons/Edit/{season.Id}", UriKind.Relative));
             var document = await form.GetDocumentAsync();
 
             var input = document.QuerySelector($"#Season_Id").Attributes["value"].Value;
