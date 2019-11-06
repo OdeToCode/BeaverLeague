@@ -1,7 +1,7 @@
 ﻿using BeaverLeague.Core.Models;
 using BeaverLeague.Data.Queries;
 using BeaverLeague.Data.Services;
-using BeaverLeague.Web.Components.Models;
+using BeaverLeague.Web.Components;
 using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
 using System;

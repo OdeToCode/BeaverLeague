@@ -5,7 +5,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
-using System.Threading.Tasks;
 
 #nullable disable
 namespace BeaverLeague.Web.Components
@@ -48,26 +47,14 @@ namespace BeaverLeague.Web.Components
         {
             if (e is null) throw new ArgumentNullException(nameof(e));
 
-            Console.WriteLine($"On input {e.Value}");
-
             var text = e.Value.ToString() ?? "";
-            if (Items.ContainsKey(text))
-            {
-                OnSelectItem(text);
-            }
-            else 
-            {
-                Value = default(T);
-                ValueAsString = e.Value.ToString() ?? "";
-                UpdateSuggestedItems();
-            }
+            OnSelectItem(text);
         }
 
         public void UpdateSuggestedItems()
         {
             SuggestedItems = Items.Where(i => i.Key.Contains(ValueAsString ?? "", StringComparison.OrdinalIgnoreCase))
                                   .Take(MaxSuggestions);
-            Console.WriteLine($"Select items: {ValueAsString}:{SuggestedItems.Count()}");
         }
 
         public void OnFocusIn(FocusEventArgs _)
@@ -86,9 +73,16 @@ namespace BeaverLeague.Web.Components
             {
                 Value = Items[key];
                 ValueAsString = key;
-                SuggestedItems = empty;
-                ValueChanged.InvokeAsync(Value);
+                SuggestedItems = empty;                
             }
+            else
+            {
+                Value = default(T);
+                ValueAsString = key;
+                UpdateSuggestedItems();
+            }
+            ValueChanged.InvokeAsync(Value);
+            EditContext.NotifyFieldChanged(FieldIdentifier);
         }
 
         protected override void OnInitialized()

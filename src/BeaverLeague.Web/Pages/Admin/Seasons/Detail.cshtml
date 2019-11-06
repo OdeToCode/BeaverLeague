@@ -25,26 +25,29 @@
             <thead>
                 <tr>
                     <th>Week</th>
-                    <th>Date</th
+                    <th>Date</th>
                     <th></th>
                 </tr>
             </thead>
             <tbody>
                 @foreach (var entry in Model.Season.Weeks.OrderBy(w => w.Date).Select((week, index) => new { week, index }))
                 {
-                <tr>
-                    <td>@(entry.index + 1)</td>
-                    <td>@entry.week.Date.ToString("MM/dd/yyyy")</td>
-                    <td>
-                        <a asp-page="/Admin/Seasons/Edit" asp-route-id="3" class="btn btn btn-secondary">
-                            <span class="fa fa-clipboard-list pr-2" title="Edit"></span>Schedule
-                        </a>
-                        <a asp-page="/Admin/Seasons/Scores/List" asp-route-weekid="@entry.week.Id" 
-                                class="btn btn btn-secondary">
-                            <span class="fa fa-poll pr-2" title="Details"></span>Scores
-                        </a>
-                    </td>
-                </tr>
+                    <tr>
+                        <td>@(entry.index + 1)</td>
+                        <td>@entry.week.Date.ToString("MM/dd/yyyy")</td>
+                        <td>
+                            <a asp-page="" 
+                               class="btn btn btn-secondary">
+                                <span class="fa fa-clipboard-list pr-2" title="Edit"></span>Schedule
+                            </a>
+                            <a asp-page="/Admin/Seasons/Weeks/Scores"
+                               asp-route-weekid="@entry.week.Id"
+                               asp-route-seasonid="@Model.Season.Id"
+                               class="btn btn btn-secondary">
+                                <span class="fa fa-poll pr-2" title="Details"></span>Scores
+                            </a>
+                        </td>
+                    </tr>
                 }
             </tbody>
         </table>
