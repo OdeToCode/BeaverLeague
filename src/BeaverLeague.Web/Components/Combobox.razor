@@ -6,8 +6,7 @@
            placeholder="@Placeholder"
            @onfocusin="OnFocusIn"
            @onfocusout="OnFocusOut" 
-           @oninput="OnInput" 
-           @bind-value="CurrentValueAsString" />
+           @oninput="OnInput" @bind="ValueAsString" />
 
     @if (SuggestedItems.Any())
     {
@@ -15,7 +14,7 @@
             <ul class="list-group suggestions-content">
                 @foreach (var item in SuggestedItems)
                 {
-                    <li class="list-group-item" @onmousedown="@(e => OnSelectItem(item))">
+                    <li class="list-group-item" @onmousedown="@(e => OnSelectItem(item.Key))">
                         @if (ItemTemplate != null)
                         {
                             @ItemTemplate(item.Value);
