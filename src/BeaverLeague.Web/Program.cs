@@ -9,9 +9,6 @@ namespace BeaverLeague.Web
         {
             var builder = CreateHostBuilder(args);
             var host = builder.Build();
-
-            // ... 
-
             host.Run();
         }
 

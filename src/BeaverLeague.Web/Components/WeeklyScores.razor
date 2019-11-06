@@ -1,43 +1,46 @@
 ﻿@using BeaverLeague.Core.Models;
+
 @*@inherits WeeklyScoresBase*@
 
 <EditForm Model="EditContext">
-    <DataAnnotationsValidator ></DataAnnotationsValidator>
+    <DataAnnotationsValidator></DataAnnotationsValidator>
     <ValidationSummary></ValidationSummary>
-    
-    <Combobox T="Golfer" 
+
+    <Combobox T="Golfer"
+              Placeholder="Golfer"
               Items="Items"
-              @bind-Value="golfer" 
-              Placeholder="Golfer" > 
+              @bind-Value="golfer">
         <ItemTemplate Context="golfer">
             <span>@golfer.FirstName @golfer.LastName</span>
         </ItemTemplate>
     </Combobox>
 
-    <button type="submit">Save</button>
-
+    <button type="submit" class="btn btn-primary">Save</button>
 </EditForm>
 
-<div>Selected: @golfer.LastName, @golfer.FirstName</div>
+<div>Selected: @golfer?.LastName, @golfer?.FirstName</div>
 
 @code {
+
+    EditContext EditContext;
+
+    public WeeklyScores()
+    {
+        EditContext = new EditContext(new { });
+    }
+
 
     Golfer golfer = new Golfer();
     List<Golfer> golfers = new List<Golfer>
     {
-        new Golfer { Id = 1, FirstName = "Scott", LastName = "Allen" },
-        new Golfer { Id = 2, FirstName = "Alex", LastName = "Allen" },
-        new Golfer { Id = 3, FirstName = "Alex", LastName = "Lifeson" },
-        new Golfer { Id = 4, FirstName = "Neil", LastName = "Peart" },
-        new Golfer { Id = 5, FirstName = "Geddy", LastName = "Lee" },
-    };
+            new Golfer { Id = 1, FirstName = "Scott", LastName = "Allen" },
+            new Golfer { Id = 2, FirstName = "Alex", LastName = "Allen" },
+            new Golfer { Id = 3, FirstName = "Alex", LastName = "Lifeson" },
+            new Golfer { Id = 4, FirstName = "Neil", LastName = "Peart" },
+            new Golfer { Id = 5, FirstName = "Geddy", LastName = "Lee" },
+        };
     Dictionary<string, Golfer> Items;
-    EditContext EditContext; 
 
-    public WeeklyScores()
-    {
-        EditContext = new EditContext(golfer);
-    }
 
     protected override void OnInitialized()
     {
@@ -47,7 +50,7 @@
 }
 
 @*@if (Initialized)
-{
+            {
     <h1>Scores: @(MatchSet?.Date.ToLongDateString()) </h1>
 
     @if (AddMatch == null)
@@ -58,9 +61,9 @@
     @if (AddMatch != null)
     {
         <EditForm Model="@AddMatch">
-            
+
             <h3>Add a match</h3>
-            
+
             <DataAnnotationsValidator />
             <ValidationSummary />
 
@@ -140,8 +143,8 @@
             <button class="btn btn-danger" @onclick="CancelMatch">Cancel</button>
         </EditForm>
     }
-}
-else
-{
+            }
+            else
+            {
     <div>Loading...</div>
-}*@
+            }*@

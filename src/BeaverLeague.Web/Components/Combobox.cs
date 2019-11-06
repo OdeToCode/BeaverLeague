@@ -1,16 +1,20 @@
-﻿using BeaverLeague.Core.Models;
-using Microsoft.AspNetCore.Components;
+﻿using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Forms;
 using Microsoft.AspNetCore.Components.Web;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
+using System.Threading.Tasks;
 
 #nullable disable
 namespace BeaverLeague.Web.Components
 {
-    public class ComboBoxBase<T> : InputText
+    public class ComboBoxBase<T> : ComponentBase
     {
+        [CascadingParameter] 
+        EditContext EditContext { get; set; }
+
         [Parameter]
         public string Placeholder { get; set; } = "";
 
@@ -21,7 +25,20 @@ namespace BeaverLeague.Web.Components
         public RenderFragment<T> ItemTemplate { get; set; }
 
         [Parameter]
-        public int MaxSuggestions { get; set; } = 7;
+        public int MaxSuggestions { get; set; } = 5;
+
+        [Parameter] 
+        public T Value { get; set; }
+        
+        [Parameter] 
+        public EventCallback<T> ValueChanged { get; set; }
+
+        [Parameter] 
+        public Expression<Func<T>> ValueExpression { get; set; }
+
+        public FieldIdentifier FieldIdentifier { get; set; }
+
+        public string ValueAsString { get; set; }
 
         public IEnumerable<KeyValuePair<string, T>> SuggestedItems { get; set; } = empty;
 
@@ -29,17 +46,28 @@ namespace BeaverLeague.Web.Components
 
         public void OnInput(ChangeEventArgs e)
         {
-            if (e is null) throw new ArgumentNullException(nameof(e));  
-            
-            CurrentValueAsString = e.Value.ToString() ?? "";
-            UpdateSuggestedItems();
+            if (e is null) throw new ArgumentNullException(nameof(e));
+
+            Console.WriteLine($"On input {e.Value}");
+
+            var text = e.Value.ToString() ?? "";
+            if (Items.ContainsKey(text))
+            {
+                OnSelectItem(text);
+            }
+            else 
+            {
+                Value = default(T);
+                ValueAsString = e.Value.ToString() ?? "";
+                UpdateSuggestedItems();
+            }
         }
 
         public void UpdateSuggestedItems()
         {
-            Console.WriteLine("updatesuggest " + CurrentValueAsString);
-            SuggestedItems = Items.Where(i => i.Key.Contains(CurrentValueAsString ?? "", StringComparison.OrdinalIgnoreCase))
+            SuggestedItems = Items.Where(i => i.Key.Contains(ValueAsString ?? "", StringComparison.OrdinalIgnoreCase))
                                   .Take(MaxSuggestions);
+            Console.WriteLine($"Select items: {ValueAsString}:{SuggestedItems.Count()}");
         }
 
         public void OnFocusIn(FocusEventArgs _)
@@ -52,15 +80,21 @@ namespace BeaverLeague.Web.Components
             SuggestedItems = empty;
         }
 
-        public void OnSelectItem(KeyValuePair<string, T> item)
+        public void OnSelectItem(string key)
         {
-            CurrentValue = item.Key;
-            SuggestedItems = empty;
+            if (Items.ContainsKey(key))
+            {
+                Value = Items[key];
+                ValueAsString = key;
+                SuggestedItems = empty;
+                ValueChanged.InvokeAsync(Value);
+            }
         }
 
-        protected override void OnParametersSet()
+        protected override void OnInitialized()
         {
-            base.OnParametersSet();
+            base.OnInitialized();
+            FieldIdentifier = FieldIdentifier.Create(ValueExpression);
         }
     }
 }
