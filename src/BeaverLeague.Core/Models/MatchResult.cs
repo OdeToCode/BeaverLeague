@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace BeaverLeague.Core.Models
 {
@@ -7,12 +8,12 @@ namespace BeaverLeague.Core.Models
     {
         public MatchResult()
         {
-            Players = new HashSet<PlayerResult>();
+            Players = new List<PlayerResult>();
         }
 
         public int Id { get; set; }
         public int MatchSetId { get; set; }
-        public ICollection<PlayerResult> Players { get; }
+        public IList<PlayerResult> Players { get; }
 
         public PlayerResult AddPlayer(Golfer golfer, int score, decimal points, bool playNextWeek)
         {

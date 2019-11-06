@@ -18,7 +18,9 @@ namespace BeaverLeague.Web.Components
         public string Placeholder { get; set; } = "";
 
         [Parameter]
+#pragma warning disable CA2227 // Collection properties should be read only
         public Dictionary<string, T> Items { get; set; }
+#pragma warning restore CA2227 // Collection properties should be read only
 
         [Parameter]
         public RenderFragment<T> ItemTemplate { get; set; }

@@ -1,150 +1,117 @@
 ﻿@using BeaverLeague.Core.Models;
+@inherits WeeklyScoresBase
 
-@*@inherits WeeklyScoresBase*@
+@if (MatchSet != null)
+{
+    <h3 class="mb-3">Scores for @(MatchSet.Date.ToLongDateString()) </h3>
 
-<EditForm Model="EditContext">
-    <DataAnnotationsValidator></DataAnnotationsValidator>
-    <ValidationSummary></ValidationSummary>
-
-    <Combobox T="Golfer"
-              Placeholder="Golfer"
-              Items="Items"
-              @bind-Value="golfer">
-        <ItemTemplate Context="golfer">
-            <span>@golfer.FirstName @golfer.LastName</span>
-        </ItemTemplate>
-    </Combobox>
-
-    <button type="submit" class="btn btn-primary">Save</button>
-</EditForm>
-
-<div>Selected: @golfer?.LastName, @golfer?.FirstName</div>
-
-@code {
-
-    EditContext EditContext;
-
-    public WeeklyScores()
+    @foreach (var match in MatchSet.Matches)
     {
-        EditContext = new EditContext(new { });
+        <div class="container p-2 score">
+            <div class="row">
+                <div class="col-3 text-right border-right">
+                    <span class="@ComputeBackground(match, 0)">
+                    </span>
+                    @match.Players[0].Golfer.FirstName @match.Players[0].Golfer.LastName
+                    <span class="p-2">
+                        @match.Players[0].Points.ToString("N1")
+                    </span>
+                </div>
+                <div class="col-3 text-left">
+                    <span class="p-2">
+                        @match.Players[1].Points.ToString("N1")
+                    </span>
+                    @match.Players[1].Golfer.FirstName @match.Players[1].Golfer.LastName
+                    <span class="@ComputeBackground(match, 1)">
+                    </span>
+                </div>
+            </div>
+        </div>
     }
-
-
-    Golfer golfer = new Golfer();
-    List<Golfer> golfers = new List<Golfer>
-    {
-            new Golfer { Id = 1, FirstName = "Scott", LastName = "Allen" },
-            new Golfer { Id = 2, FirstName = "Alex", LastName = "Allen" },
-            new Golfer { Id = 3, FirstName = "Alex", LastName = "Lifeson" },
-            new Golfer { Id = 4, FirstName = "Neil", LastName = "Peart" },
-            new Golfer { Id = 5, FirstName = "Geddy", LastName = "Lee" },
-        };
-    Dictionary<string, Golfer> Items;
-
-
-    protected override void OnInitialized()
-    {
-        Items = golfers.ToDictionary(g => $"{g.FirstName} {g.LastName}");
-    }
-
+}
+else
+{
+    <div>Loading...</div>
+}
+@if (EditModel == null)
+{
+    <button class="btn btn-primary mt-3" @onclick="AddNewMatch">Add Match</button>
 }
 
-@*@if (Initialized)
-            {
-    <h1>Scores: @(MatchSet?.Date.ToLongDateString()) </h1>
+@if (EditModel != null)
+{
+    <EditForm Model="@EditModel" OnValidSubmit="SaveMatch">
+        <DataAnnotationsValidator></DataAnnotationsValidator>
+        <ValidationSummary></ValidationSummary>
 
-    @if (AddMatch == null)
-    {
-        <button class="btn btn-primary" @onclick="NewMatch">Add Match</button>
-    }
-
-    @if (AddMatch != null)
-    {
-        <EditForm Model="@AddMatch">
-
-            <h3>Add a match</h3>
-
-            <DataAnnotationsValidator />
-            <ValidationSummary />
-
-            <div class="card">
-                <div class="card-header">
-                    Golfer 1
-                </div>
-                <div class="card-body">
-                    <div class="form-row">
-                        <div class="form-group col-md-6">
-                            <label>Name</label>
-                            <Combobox T="Golfer"
-                                      Placeholder="Name"
-                                      @bind-Value="@SelectedGolfer"
-                                      Items="@Golfers"
-                                      ItemFilter="@GolferFilter"
-                                      MaxSuggestions="5"
-                                      SelectedItemFormat="FormatGolfer">
-                                <ItemTemplate Context="golfer">
-                                    <span>@golfer.FirstName @golfer.LastName</span>
-                                </ItemTemplate>
-                            </Combobox>
-                        </div>
-                        <div class="form-group col-md-2">
-                            <label>Points</label>
-                            <input type="number" step="0.5" min="0" max="11" class="form-control"
-                                   @bind="@AddMatch.GolferOnePoints" @onfocusout="UpdateGolferTwoPoints" />
-                        </div>
-                        <div class="form-group col-md-2">
-                            <label>Score</label>
-                            <input type="number" class="form-control" @bind="@AddMatch.GolferOneScore" />
-                        </div>
-                        <div class="form-group col-md-2">
-                            <label>Play Next Week?</label>
-                            <div><input type="checkbox" @bind="@AddMatch.GolferOnePlayNextWeek" /></div>
-                        </div>
+        <div class="card">
+            <div class="card-header">
+                Golfer 1
+            </div>
+            <div class="card-body">
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label>Name</label>
+                        <Combobox T="Golfer"
+                                  Placeholder="Name"
+                                  @bind-Value="@EditModel.GolferA"
+                                  Items="@Golfers">
+                            <ItemTemplate Context="golfer">
+                                <span>@golfer.FirstName @golfer.LastName</span>
+                            </ItemTemplate>
+                        </Combobox>
+                    </div>
+                    <div class="form-group col-md-2">
+                        <label>Points</label>
+                        <input type="number" step="0.5" min="0" max="11" class="form-control"
+                               @bind="@EditModel.PointsA" @onfocusout="UpdateGolferBPoints" />
+                    </div>
+                    <div class="form-group col-md-2">
+                        <label>Score</label>
+                        <input type="number" class="form-control" @bind="@EditModel.ScoreA" />
+                    </div>
+                    <div class="form-group col-md-2">
+                        <label>Play Next Week?</label>
+                        <div><input type="checkbox" @bind="@EditModel.PlayAgainA" /></div>
                     </div>
                 </div>
             </div>
+        </div>
 
-            <div class="card pt-2">
-                <div class="card-header">
-                    Golfer 2
-                </div>
-                <div class="card-body">
-                    <div class="form-row">
-                        <div class="form-group col-md-6">
-                            <label>Name</label>
-                            <Combobox T="Golfer"
-                                      Placeholder="Name"
-                                      Items="@Golfers"
-                                      ItemFilter="@GolferFilter"
-                                      MaxSuggestions="5"
-                                      SelectedItemFormat="FormatGolfer">
-                                <ItemTemplate Context="golfer">
-                                    <span>@golfer.FirstName @golfer.LastName</span>
-                                </ItemTemplate>
-                            </Combobox>
-                        </div>
-                        <div class="form-group col-md-2">
-                            <label>Points</label>
-                            <input type="number" step="0.5" min="0" max="11" class="form-control"
-                                   @bind="@AddMatch.GolferTwoPoints" @onfocusout="UpdateGolferOnePoints" />
-                        </div>
-                        <div class="form-group col-md-2">
-                            <label>Score</label>
-                            <input type="number" class="form-control" @bind="@AddMatch.GolferOneScore" />
-                        </div>
-                        <div class="form-group col-md-2">
-                            <label>Play Next Week?</label>
-                            <div><input type="checkbox" @bind="@AddMatch.GolferOnePlayNextWeek" /></div>
-                        </div>
+        <div class="card pt-2">
+            <div class="card-header">
+                Golfer 2
+            </div>
+            <div class="card-body">
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label>Name</label>
+                        <Combobox T="Golfer"
+                                  Placeholder="Name"
+                                  @bind-Value="@EditModel.GolferB"
+                                  Items="@Golfers">
+                            <ItemTemplate Context="golfer">
+                                <span>@golfer.FirstName @golfer.LastName</span>
+                            </ItemTemplate>
+                        </Combobox>
+                    </div>
+                    <div class="form-group col-md-2">
+                        <label>Points</label>
+                        <input type="number" step="0.5" min="0" max="11" class="form-control"
+                               @bind="@EditModel.PointsB" @onfocusout="UpdateGolferAPoints" />
+                    </div>
+                    <div class="form-group col-md-2">
+                        <label>Score</label>
+                        <input type="number" class="form-control" @bind="@EditModel.ScoreB" />
+                    </div>
+                    <div class="form-group col-md-2">
+                        <label>Play Next Week?</label>
+                        <div><input type="checkbox" @bind="@EditModel.PlayAgainB" /></div>
                     </div>
                 </div>
             </div>
-            <button class="btn btn-primary" @onclick="SaveMatch">Save</button>
-            <button class="btn btn-danger" @onclick="CancelMatch">Cancel</button>
-        </EditForm>
-    }
-            }
-            else
-            {
-    <div>Loading...</div>
-            }*@
+        </div>
+        <button class="btn btn-primary" type="submit">Save</button>
+        <button class="btn btn-danger" @onclick="CancelMatch">Cancel</button>
+    </EditForm>
+}

@@ -25,7 +25,7 @@ namespace BeaverLeague.Core.Models
         public ICollection<MatchResult> Matches { get; }
 
         public MatchResult AddResult(Golfer playerA, int playerAScore, decimal playerAPoints, bool playerANextWeek, 
-                                          Golfer playerB, int playerBScore, decimal playerBPoints, bool playerBNextWeek)
+                                     Golfer playerB, int playerBScore, decimal playerBPoints, bool playerBNextWeek)
         {
             var match = new MatchResult();
             match.AddPlayer(playerA, playerAScore, playerAPoints, playerANextWeek);

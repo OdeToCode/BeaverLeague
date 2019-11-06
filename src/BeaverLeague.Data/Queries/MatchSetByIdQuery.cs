@@ -1,5 +1,6 @@
 ﻿using BeaverLeague.Core.Models;
 using Microsoft.EntityFrameworkCore;
+using System.Linq;
 
 namespace BeaverLeague.Data.Queries
 {
@@ -16,7 +17,11 @@ namespace BeaverLeague.Data.Queries
         {
             if (dbSet is null) throw new System.ArgumentNullException(nameof(dbSet));
 
-            return dbSet.Find(matchSetId);
+            return dbSet
+                .Include(m => m.Matches)
+                .ThenInclude(r => r.Players)
+                .ThenInclude(z => z.Golfer)
+                .FirstOrDefault(m => m.Id == matchSetId);
         }
     }
 }
