@@ -52,13 +52,26 @@ namespace BeaverLeague.Web.Components
         public MatchSet? MatchSet { get; private set; }
         public Dictionary<string, Golfer>? Golfers { get; private set; }
         public MatchSetEditModel? EditModel { get; set; }
+        public int WeekId { get; private set; }
 
         protected override async Task OnInitializedAsync()
         {
             await base.OnInitializedAsync();
-            var weekId = await jsRuntime.InvokeAsync<int>("BeaverLeague.Components.WeeklyScores.weekId");
-            MatchSet = leagueData.Execute(new MatchSetByIdQuery(weekId));
+            WeekId = await jsRuntime.InvokeAsync<int>("BeaverLeague.Components.WeeklyScores.weekId");
+            RefreshData();
+        }
+
+        private void RefreshData()
+        {
+            MatchSet = leagueData.Execute(new MatchSetByIdQuery(WeekId));
+
+            var golfersIn = MatchSet.Matches
+                                    .SelectMany(m => m.Players)
+                                    .Select(r => r.Golfer);
+
             Golfers = leagueData.Execute(new AllGolfersQuery(activeOnly: true, includeCardMatch: true))
+                                .AsEnumerable()
+                                .Where(g => !golfersIn.Contains(g))
                                 .ToDictionary(g => $"{g.FirstName} {g.LastName}");
         }
 
@@ -116,6 +129,7 @@ namespace BeaverLeague.Web.Components
 
             leagueData.Add(match);
             leagueData.Commit();
+            RefreshData();
 
             EditModel = null;
         }
