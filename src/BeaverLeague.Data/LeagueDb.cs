@@ -27,7 +27,7 @@ namespace BeaverLeague.Data
                             Id = -1,
                             FirstName = "Card",
                             LastName = "Match",
-                            IsActive = true,
+                            IsActive = false,
                             IsCardMatch = true
                         });
 

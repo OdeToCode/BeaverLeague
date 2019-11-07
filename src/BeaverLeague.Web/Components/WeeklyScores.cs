@@ -67,7 +67,8 @@ namespace BeaverLeague.Web.Components
 
             var golfersIn = MatchSet.Matches
                                     .SelectMany(m => m.Players)
-                                    .Select(r => r.Golfer);
+                                    .Select(r => r.Golfer)
+                                    .ToList();
 
             Golfers = leagueData.Execute(new AllGolfersQuery(activeOnly: true, includeCardMatch: true))
                                 .AsEnumerable()

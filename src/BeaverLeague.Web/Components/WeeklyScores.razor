@@ -3,13 +3,13 @@
 
 @if (MatchSet != null)
 {
-    <h3 class="mb-3">Scores for @(MatchSet.Date.ToLongDateString()) </h3>
+    <div class="container p-2">
+        <h3 class="mb-3 text-center">Scores for @(MatchSet.Date.ToLongDateString()) </h3>
 
-    @foreach (var match in MatchSet.Matches)
-    {
-        <div class="container p-2 score">
-            <div class="row">
-                <div class="col-3 text-right border-right">
+        @foreach (var match in MatchSet.Matches)
+        {
+            <div class="row bg-light">
+                <div class="col-6 text-right border-dark border-right">
                     <span class="@ComputeBackground(match, 0)">
                     </span>
                     @match.Players[0].Golfer.FirstName @match.Players[0].Golfer.LastName
@@ -17,7 +17,7 @@
                         @match.Players[0].Points.ToString("N1")
                     </span>
                 </div>
-                <div class="col-3 text-left">
+                <div class="col-6 text-left">
                     <span class="p-2">
                         @match.Players[1].Points.ToString("N1")
                     </span>
@@ -26,8 +26,8 @@
                     </span>
                 </div>
             </div>
-        </div>
-    }
+        }
+    </div>
 }
 else
 {
@@ -40,6 +40,8 @@ else
 
 @if (EditModel != null)
 {
+    <hr />
+
     <EditForm Model="@EditModel" OnValidSubmit="SaveMatch">
         <DataAnnotationsValidator></DataAnnotationsValidator>
         <ValidationSummary></ValidationSummary>
@@ -111,7 +113,9 @@ else
                 </div>
             </div>
         </div>
-        <button class="btn btn-primary" type="submit">Save</button>
-        <button class="btn btn-danger" @onclick="CancelMatch">Cancel</button>
+        <div class="m-2">
+            <button class="btn btn-primary" type="submit">Save</button>
+            <button class="btn btn-danger" @onclick="CancelMatch">Cancel</button>
+        </div>
     </EditForm>
 }
