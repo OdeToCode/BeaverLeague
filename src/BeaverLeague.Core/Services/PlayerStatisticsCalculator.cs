@@ -13,12 +13,9 @@ namespace BeaverLeague.Core.Services
 
             foreach (var set in sets.OrderByDescending(s => s.Date))
             {
-                foreach(var match in set.Matches)
+                foreach (var player in set.Matches.SelectMany(m => m.Players))
                 {
-                    foreach(var player in match.Players)
-                    {
-                        AddResult(stats, player);
-                    }
+                    AddResult(stats, player);
                 }
             }
 
@@ -29,25 +26,25 @@ namespace BeaverLeague.Core.Services
 
         private void Summarize(List<PlayerStats> stats)
         {
-            foreach(var entry in stats)
+            foreach (var entry in stats)
             {
-                entry.TwelveBestPoints = entry.AllPoints.OrderBy(n => n).Take(12).Sum(n => n);
+                entry.TwelveBestPoints = entry.AllPoints.OrderByDescending(n => n).Take(12).Sum(n => n);
             }
 
-            var rankedStats = stats.OrderBy(s => s.TwelveBestPoints)
-                                   .ThenBy(s => s.LastPoints)
-                                   .ThenBy(s => s.GrossScore)
-                                   .Select((s, i) =>
-                                   {
-                                       s.Rank = i + 1;
-                                       return s;
-                                   });
+            var rankedStats = stats.OrderByDescending(s => s.TwelveBestPoints)
+                                   .ThenByDescending(s => s.LastPoints)
+                                   .ThenByDescending(s => s.GrossScore);
+            
+            for(var i = 0; i < rankedStats.Count(); i++)
+            {
+                rankedStats.ElementAt(i).Rank = i + 1;
+            }
         }
 
         private void AddResult(List<PlayerStats> stats, PlayerResult player)
         {
             var existing = stats.FirstOrDefault(s => s.GolferId == player.Golfer.Id);
-            if(existing != null)
+            if (existing != null)
             {
                 AddToExisting(existing, player);
             }
@@ -74,6 +71,8 @@ namespace BeaverLeague.Core.Services
             playerStats.Name = $"{player.Golfer.FirstName} {player.Golfer.LastName[0]}.";
             playerStats.NetScore = player.Score - player.Golfer.LeagueHandicap;
             AddToExisting(playerStats, player);
+            
+            stats.Add(playerStats);
         }
     }
 }
