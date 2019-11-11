@@ -4,7 +4,46 @@
     ViewData["Title"] = "Home";
 }
 
-    <div class="container p-2">
-        <h3 class="mb-3 text-center">Standings</h3>
+@if (Model.Results == null)
+{
+    <div>Loading...</div>
+}
+else
+{
+
+<div class="container p-2">
+    <h3 class="mb-3 text-center">Standings</h3>
+    <div class="row pb-2 border-bottom">
+        <div class="col-3 text-right">
+            <strong>Rank</strong>
+        </div>
+        <div class="col-3">
+            Name
+        </div>
+        <div class="col-3">
+            12 Best Points
+        </div>
+        <div class="col-md-3">
+            Rounds
+        </div>
     </div>
+    @foreach (var player in Model.Results.OrderBy(r => r.Rank))
+    {
+        <div class="row">
+            <div class="col-3 text-right">
+                <strong>@player.Rank</strong>
+            </div>
+            <div class="col-3">
+                @player.Name
+            </div>
+            <div class="col-3">
+                @player.TwelveBestPoints
+            </div>
+            <div class="col-md-3">
+                @player.TotalRounds
+            </div>
+        </div>
+    }
+</div>
+}
 

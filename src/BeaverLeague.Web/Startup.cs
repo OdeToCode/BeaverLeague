@@ -28,6 +28,7 @@ namespace BeaverLeague.Web
             services.AddServerSideBlazor();
             services.AddTransient<ISystemClock, SystemClock>();
             services.AddTransient<IMatchDayFinder, WednesdayMatchDayFinder>();
+            services.AddTransient<PlayerStatisticsCalculator>();
             services.AddScoped<LeagueData>();
 
             if(environment.IsDevelopment() || environment.IsProduction())
