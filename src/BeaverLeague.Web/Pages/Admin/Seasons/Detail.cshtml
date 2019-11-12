@@ -36,7 +36,9 @@
                         <td>@(entry.index + 1)</td>
                         <td>@entry.week.Date.ToString("MM/dd/yyyy")</td>
                         <td>
-                            <a asp-page="" 
+                            <a asp-page="/Admin/Seasons/Weeks/Schedule"
+                               asp-route-weekid="@entry.week.Id"
+                               asp-route-seasonid="@Model.Season.Id"
                                class="btn btn btn-secondary">
                                 <span class="fa fa-clipboard-list pr-2" title="Edit"></span>Schedule
                             </a>
